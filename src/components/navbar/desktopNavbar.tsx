@@ -6,7 +6,9 @@ import { ArrowUpRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/lib/i18n/languageContext";
 import { BrandLogo } from "./brandLogo";
+import { LanguageSwitcher } from "./languageSwitcher";
 import { navLinks } from "./navLinks";
 
 function isActiveRoute(pathname: string, href: string) {
@@ -15,6 +17,7 @@ function isActiveRoute(pathname: string, href: string) {
 
 export function DesktopNavbar() {
   const pathname = usePathname();
+  const { t } = useLanguage();
 
   return (
     <nav
@@ -39,34 +42,38 @@ export function DesktopNavbar() {
                     : "text-muted-foreground",
                 )}
               >
-                {link.label}
+                {t(link.key)}
               </Link>
             </li>
           );
         })}
       </ul>
 
-      <div
-        role="group"
-        aria-label="Account actions"
-        className="flex items-center gap-1 rounded-full border border-border/60 bg-muted/50 p-1 dark:border-white/10 dark:bg-white/5"
-      >
-        <Button
-          variant="ghost"
-          className="h-10 rounded-full px-4 text-muted-foreground transition-all hover:bg-background/70 hover:text-foreground dark:hover:bg-white/10"
-          nativeButton={false}
-          render={<Link href="/login" />}
+      <div className="flex items-center gap-2">
+        <LanguageSwitcher />
+
+        <div
+          role="group"
+          aria-label="Account actions"
+          className="flex items-center gap-1 rounded-full border border-border/60 bg-muted/50 p-1 dark:border-white/10 dark:bg-white/5"
         >
-          Log in
-        </Button>
-        <Button
-          className="h-10 rounded-full bg-primary px-4 text-white shadow-[0_6px_16px_-8px_rgba(0,151,107,0.6)] transition-all [background-image:var(--brand-gradient)] hover:text-white hover:shadow-[0_8px_20px_-8px_rgba(0,151,107,0.7)] hover:brightness-[1.03]"
-          nativeButton={false}
-          render={<Link href="/create-website" />}
-        >
-          Create your website
-          <ArrowUpRight className="size-4" />
-        </Button>
+          <Button
+            variant="ghost"
+            className="h-10 rounded-full px-4 text-muted-foreground transition-all hover:bg-background/70 hover:text-foreground dark:hover:bg-white/10"
+            nativeButton={false}
+            render={<Link href="/login" />}
+          >
+            {t("nav.login")}
+          </Button>
+          <Button
+            className="h-10 rounded-full bg-primary px-4 text-white shadow-[0_6px_16px_-8px_rgba(0,151,107,0.6)] transition-all [background-image:var(--brand-gradient)] hover:text-white hover:shadow-[0_8px_20px_-8px_rgba(0,151,107,0.7)] hover:brightness-[1.03]"
+            nativeButton={false}
+            render={<Link href="/create-website" />}
+          >
+            {t("nav.createWebsite")}
+            <ArrowUpRight className="size-4" />
+          </Button>
+        </div>
       </div>
     </nav>
   );

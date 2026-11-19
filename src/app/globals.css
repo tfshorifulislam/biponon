@@ -253,6 +253,56 @@
   .font-inter {
     font-family: var(--font-inter, "Inter"), ui-sans-serif, system-ui, sans-serif;
   }
+  .font-bangla {
+    font-family: var(--font-hind-siliguri, "Hind Siliguri"), "Noto Sans Bengali", sans-serif;
+  }
+}
+
+/* =========================================
+   5.1. BANGLA TYPOGRAPHY SYSTEM
+========================================= */
+
+html[lang="bn"],
+html[data-lang="bn"],
+[data-lang="bn"] {
+  font-family: var(--font-hind-siliguri, "Hind Siliguri"), "Noto Sans Bengali", sans-serif !important;
+}
+
+html[lang="bn"] .font-heading,
+html[data-lang="bn"] .font-heading,
+html[lang="bn"] .section-heading,
+html[data-lang="bn"] .section-heading,
+html[lang="bn"] h1,
+html[lang="bn"] h2,
+html[lang="bn"] h3,
+html[lang="bn"] h4,
+html[lang="bn"] h5,
+html[lang="bn"] h6,
+[data-lang="bn"] h1,
+[data-lang="bn"] h2,
+[data-lang="bn"] h3,
+[data-lang="bn"] h4,
+[data-lang="bn"] h5,
+[data-lang="bn"] h6 {
+  font-family: var(--font-hind-siliguri, "Hind Siliguri"), "Noto Sans Bengali", sans-serif !important;
+  line-height: 1.25 !important;
+  letter-spacing: normal !important;
+}
+
+html[lang="bn"] .section-description,
+html[data-lang="bn"] .section-description,
+html[lang="bn"] p,
+[data-lang="bn"] p {
+  line-height: 1.65;
+}
+
+html[lang="bn"] button,
+html[data-lang="bn"] button,
+html[lang="bn"] input,
+html[data-lang="bn"] input,
+html[lang="bn"] textarea,
+html[data-lang="bn"] textarea {
+  font-family: var(--font-hind-siliguri, "Hind Siliguri"), "Noto Sans Bengali", sans-serif !important;
 }
 
 /* =========================================

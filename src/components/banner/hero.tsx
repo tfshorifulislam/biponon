@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -9,31 +11,38 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/lib/i18n/languageContext";
 
-const products = [
+const productItems = [
   {
-    name: "Everyday Ceramic Mug",
+    key: "hero.preview.products.ceramicMug",
+    fallbackName: "Everyday Ceramic Mug",
     price: "$24",
     image: "/products/ceramic-mug.svg",
   },
   {
-    name: "Canvas Tote Bag",
+    key: "hero.preview.products.canvasTote",
+    fallbackName: "Canvas Tote Bag",
     price: "$38",
     image: "/products/canvas-tote.svg",
   },
   {
-    name: "Studio Headphones",
+    key: "hero.preview.products.studioHeadphones",
+    fallbackName: "Studio Headphones",
     price: "$89",
     image: "/products/studio-headphones.svg",
   },
   {
-    name: "Fiddle Leaf Plant",
+    key: "hero.preview.products.fiddleLeafPlant",
+    fallbackName: "Fiddle Leaf Plant",
     price: "$32",
     image: "/products/fiddle-leaf-plant.svg",
   },
 ];
 
 export default function HeroSection() {
+  const { t } = useLanguage();
+
   return (
     <section className="relative isolate w-full overflow-hidden pb-20 pt-24 sm:pb-24 sm:pt-26 lg:pt-34">
       <div
@@ -44,31 +53,30 @@ export default function HeroSection() {
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-4 text-center sm:px-6 lg:px-8">
         <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/50 bg-white/65 px-4 py-2 text-center text-[9px] font-semibold uppercase tracking-[0.1em] text-muted-foreground shadow-sm backdrop-blur-xl sm:text-[11px] sm:tracking-[0.18em] dark:border-white/10 dark:bg-black/25">
           <span className="size-1.5 shrink-0 rounded-full bg-brand-secondary" />
-          YOUR BUSINESS. YOUR BRAND. YOUR ONLINE STORE.
+          {t("hero.badge")}
         </span>
 
-        <h1 className="section-heading mt-6 max-w-4xl text-4xl leading-[1.1] tracking-tight sm:mt-7 sm:text-5xl lg:text-6xl">
+        <h1 className="section-heading mt-6 max-w-4xl text-4xl leading-[1.15] tracking-tight sm:mt-7 sm:text-5xl lg:text-6xl">
           <span className="brand-gradient-text">
-            Start Your Online Business.
+            {t("hero.headingGradient")}
           </span>
           <span className="section-heading-normal mt-1.5 sm:mt-2">
-            Build. Sell. Grow with Biponon.
+            {t("hero.headingNormal")}
           </span>
         </h1>
 
         <p className="section-description mt-5 max-w-xl text-balance sm:mt-6">
-          Everything you need to create, manage, and grow your online store —
-          all in one platform.
+          {t("hero.description")}
         </p>
 
         <div className="mt-8 flex w-full flex-col items-center justify-center gap-3 sm:mt-10 sm:w-auto sm:flex-row sm:gap-4">
           <Button
             size="lg"
             nativeButton={false}
-            render={<Link href="/signup" />}
+            render={<Link href="/create-website" />}
             className="h-11 w-full bg-primary px-6 text-white shadow-[0_12px_28px_-14px_rgba(0,151,107,0.7)] [background-image:var(--brand-gradient)] transition-all hover:text-white hover:shadow-[0_16px_34px_-14px_rgba(0,151,107,0.8)] sm:h-12 sm:w-auto"
           >
-            Start Selling for Free
+            {t("hero.ctaPrimary")}
             <ArrowRight className="size-4 transition-transform group-hover/button:translate-x-0.5" />
           </Button>
 
@@ -80,7 +88,7 @@ export default function HeroSection() {
             className="h-11 w-full bg-background/80 px-6 backdrop-blur transition-colors hover:bg-muted sm:h-12 sm:w-auto"
           >
             <PlayCircle className="size-4" />
-            See How It Works
+            {t("hero.ctaSecondary")}
           </Button>
         </div>
 
@@ -101,6 +109,8 @@ export default function HeroSection() {
 }
 
 function StorePreview() {
+  const { t } = useLanguage();
+
   return (
     <div className="overflow-hidden rounded-[1.4rem] border border-border bg-card text-left shadow-[0_36px_80px_-36px_rgba(15,23,42,0.45)] ring-1 ring-foreground/5 dark:ring-white/10">
       <BrowserBar />
@@ -109,34 +119,34 @@ function StorePreview() {
         <StoreNavbar />
 
         <div className="border-b border-border bg-accent px-4 py-1.5 text-center text-[10px] font-medium text-accent-foreground">
-          Free delivery on orders over $50
+          {t("hero.preview.banner")}
         </div>
 
         <div className="p-3 sm:p-4">
           <div className="mb-3 flex items-end justify-between gap-3">
             <div>
               <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                New arrivals
+                {t("hero.preview.newArrivals")}
               </p>
               <p className="font-heading text-sm font-semibold text-foreground">
-                Made for everyday
+                {t("hero.preview.madeForEveryday")}
               </p>
             </div>
             <span className="hidden text-[10px] font-medium text-primary sm:inline">
-              View all
+              {t("hero.preview.viewAll")}
             </span>
           </div>
 
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {products.map((product) => (
+            {productItems.map((product) => (
               <div
-                key={product.name}
+                key={product.key}
                 className="overflow-hidden rounded-lg border border-border bg-card"
               >
                 <div className="aspect-square overflow-hidden bg-muted">
                   <Image
                     src={product.image}
-                    alt={product.name}
+                    alt={t(product.key)}
                     width={320}
                     height={320}
                     unoptimized
@@ -145,7 +155,7 @@ function StorePreview() {
                 </div>
                 <div className="px-2 py-2">
                   <p className="truncate text-[10px] font-medium text-foreground">
-                    {product.name}
+                    {t(product.key)}
                   </p>
                   <div className="mt-0.5 flex items-center justify-between">
                     <p className="text-[10px] font-semibold text-primary">
@@ -185,6 +195,8 @@ function BrowserBar() {
 }
 
 function StoreNavbar() {
+  const { t } = useLanguage();
+
   return (
     <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-3 sm:px-5">
       <div className="flex min-w-0 items-center gap-2">
@@ -192,14 +204,14 @@ function StoreNavbar() {
           N
         </span>
         <span className="truncate font-heading text-sm font-semibold tracking-tight text-foreground">
-          Nokshi Studio
+          {t("hero.preview.storeName")}
         </span>
       </div>
 
       <div className="hidden items-center gap-4 text-[11px] font-medium text-muted-foreground sm:flex">
-        <span className="text-foreground">Shop</span>
-        <span>New in</span>
-        <span>About</span>
+        <span className="text-foreground">{t("hero.preview.navShop")}</span>
+        <span>{t("hero.preview.navNewIn")}</span>
+        <span>{t("hero.preview.navAbout")}</span>
       </div>
 
       <div className="flex shrink-0 items-center gap-2.5 text-muted-foreground">
