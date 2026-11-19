@@ -101,30 +101,38 @@ export const translations = {
       },
     },
 
-    // How It Works Section & Page
+    // How It Works Section
     howItWorks: {
-      badge: "SIMPLE 3-STEP PROCESS",
-      title: "How Biponon Works",
-      subtitle:
-        "Launch your professional e-commerce store in less than 5 minutes and start selling to customers nationwide.",
+      badge: "HOW IT WORKS",
+      headingLine1: "From Your First Step",
+      headingGradient: "To Your First Sale.",
+      description:
+        "Getting started with Biponon is simple. Follow four straightforward steps to launch your online store and start selling.",
+      cta: "Start Your Business",
       steps: {
         step1: {
           number: "01",
-          title: "Create Your Store",
+          title: "Set Up Your Account",
           description:
-            "Sign up for free, choose a unique store name, and customize your theme to match your brand style.",
+            "Create your Biponon account and get your business workspace ready. Start without unnecessary setup or complicated processes.",
         },
         step2: {
           number: "02",
           title: "Add Your Products",
           description:
-            "Upload product images, set prices, write descriptions, and organize items into organized categories.",
+            "Showcase your products by adding images, descriptions, prices, and available stock.",
         },
         step3: {
           number: "03",
-          title: "Start Selling & Growing",
+          title: "Build Your Storefront",
           description:
-            "Share your store link on Facebook, Instagram, or WhatsApp, receive orders, and get paid directly.",
+            "Choose a visual style, customize your storefront, and preview how your store looks before publishing.",
+        },
+        step4: {
+          number: "04",
+          title: "Launch and Start Selling",
+          description:
+            "Publish your store, share its link with customers, and manage incoming orders from your dashboard.",
         },
       },
     },
@@ -405,30 +413,38 @@ export const translations = {
       },
     },
 
-    // How It Works Section & Page
+    // How It Works Section
     howItWorks: {
-      badge: "সহজ ৩টি ধাপ",
-      title: "Biponon কীভাবে কাজ করে",
-      subtitle:
-        "মাত্র ৫ মিনিটের মধ্যে আপনার প্রফেশনাল ই-কমার্স স্টোর চালু করুন এবং দেশজুড়ে বিক্রি শুরু করুন।",
+      badge: "কীভাবে কাজ করে",
+      headingLine1: "আপনার প্রথম ধাপ থেকে",
+      headingGradient: "প্রথম বিক্রয় পর্যন্ত।",
+      description:
+        "Biponon দিয়ে শুরু করা একদম সহজ। আপনার অনলাইন স্টোর চালু করতে এবং বিক্রি শুরু করতে মাত্র চারটি সহজ ধাপ অনুসরণ করুন।",
+      cta: "আপনার ব্যবসা শুরু করুন",
       steps: {
         step1: {
           number: "০১",
-          title: "স্টোর তৈরি করুন",
+          title: "আপনার অ্যাকাউন্ট সেটআপ করুন",
           description:
-            "ফ্রিতে সাইন আপ করুন, স্টোরের নাম দিন এবং আপনার ব্র্যান্ডের সাথে মানানসই থিম বেছে নিন।",
+            "আপনার Biponon অ্যাকাউন্ট তৈরি করুন এবং ব্যবসার ওয়ার্কস্পেস প্রস্তুত করুন। কোনো জটিল প্রক্রিয়া ছাড়াই সহজে শুরু করুন।",
         },
         step2: {
           number: "০২",
           title: "পণ্য যুক্ত করুন",
           description:
-            "পণ্যের আকর্ষণীয় ছবি, বিবরণ, দাম এবং ক্যাটাগরি যুক্ত করুন খুব সহজেই।",
+            "ছবি, বিবরণ, দাম এবং মজুত সংখ্যা যুক্ত করে আপনার পণ্য প্রদর্শন করুন।",
         },
         step3: {
           number: "০৩",
-          title: "বিক্রি শুরু করুন ও এগিয়ে যান",
+          title: "স্টোরফ্রন্ট সাজান",
           description:
-            "ফেসবুক বা সোশ্যাল মিডিয়ায় স্টোরের লিংক শেয়ার করুন, অর্ডার গ্রহণ করুন এবং সরাসরি পেমেন্ট পান।",
+            "পছন্দের ভিজ্যুয়াল স্টাইল বেছে নিন, স্টোর কাস্টমাইজ করুন এবং প্রকাশের আগেই প্রিভিউ দেখুন।",
+        },
+        step4: {
+          number: "০৪",
+          title: "লঞ্চ করুন ও বিক্রি শুরু করুন",
+          description:
+            "আপনার স্টোর প্রকাশ করুন, গ্রাহকদের সাথে লিঙ্ক শেয়ার করুন এবং ড্যাশবোর্ড থেকে অর্ডার পরিচালনা করুন।",
         },
       },
     },
