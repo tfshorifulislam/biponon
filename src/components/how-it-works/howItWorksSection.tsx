@@ -220,7 +220,7 @@ export function HowItWorksSection() {
         <div
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className="mt-12 grid grid-cols-1 items-center gap-8 lg:mt-16 lg:grid-cols-12 lg:gap-10 xl:gap-14"
+          className="mt-12 grid grid-cols-1 items-stretch gap-8 lg:mt-16 lg:grid-cols-12 lg:gap-10 xl:gap-14"
         >
           {/* Left Column: 4 Vertically Stacked Steps */}
           <div className="flex flex-col gap-3.5 lg:col-span-5">
@@ -305,7 +305,7 @@ export function HowItWorksSection() {
           </div>
 
           {/* Right Column: One Shared Dynamic Store Preview */}
-          <div className="relative w-full lg:col-span-7">
+          <div className="relative flex flex-col w-full lg:col-span-7 lg:h-full">
             {/* Subtle atmospheric ambient glow behind preview */}
             <div
               aria-hidden
@@ -317,9 +317,9 @@ export function HowItWorksSection() {
             />
 
             {/* Browser Frame */}
-            <div className="overflow-hidden rounded-2xl border border-border/80 bg-card shadow-[0_20px_50px_-20px_rgba(15,23,42,0.2),0_1px_3px_rgba(0,0,0,0.05)] ring-1 ring-black/5 dark:border-white/10 dark:bg-card/95 dark:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.7)] dark:ring-white/10">
+            <div className="flex flex-col flex-1 h-full w-full overflow-hidden rounded-2xl border border-border/80 bg-card shadow-[0_20px_50px_-20px_rgba(15,23,42,0.2),0_1px_3px_rgba(0,0,0,0.05)] ring-1 ring-black/5 dark:border-white/10 dark:bg-card/95 dark:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.7)] dark:ring-white/10">
               {/* Browser Top Navigation Bar */}
-              <div className="relative flex items-center justify-between border-b border-border/70 bg-muted/60 px-4 py-2.5 dark:bg-white/5">
+              <div className="relative flex shrink-0 items-center justify-between border-b border-border/70 bg-muted/60 px-4 py-2.5 dark:bg-white/5">
                 {/* 3 browser dots */}
                 <div className="flex items-center gap-1.5" aria-hidden>
                   <span className="size-2.5 rounded-full bg-foreground/15 dark:bg-white/20" />
@@ -346,8 +346,8 @@ export function HowItWorksSection() {
               </div>
 
               {/* Dynamic Content Body (Changes based on activeStep) */}
-              <div className="relative h-[430px] sm:h-[440px] w-full overflow-hidden bg-background p-4 sm:p-5">
-                <div key={activeStep} className="h-full w-full animate-in fade-in zoom-in-95 duration-300">
+              <div className="relative flex flex-1 flex-col w-full overflow-hidden bg-background p-4 sm:p-5 lg:p-6 min-h-[440px] lg:min-h-0">
+                <div key={activeStep} className="flex flex-1 flex-col h-full w-full min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-300">
                   {activeStep === 0 && <Step1AccountSetup />}
                   {activeStep === 1 && <Step2AddProducts />}
                   {activeStep === 2 && <Step3StorefrontDesign />}
@@ -403,9 +403,9 @@ function Step1AccountSetup() {
   ];
 
   return (
-    <div className="flex h-full flex-col justify-between">
+    <div className="flex h-full flex-1 flex-col justify-between gap-4">
       {/* Workspace Header */}
-      <div>
+      <div className="flex flex-col gap-3 sm:gap-3.5">
         <div className="flex items-center justify-between rounded-xl border border-border/70 bg-muted/40 p-3.5 dark:bg-card/70">
           <div className="flex items-center gap-3">
             <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary text-base font-bold text-white [background-image:var(--brand-gradient)] shadow-xs">
@@ -416,7 +416,7 @@ function Step1AccountSetup() {
                 <h4 className="font-heading text-sm font-bold text-foreground">
                   Nokshi Studio
                 </h4>
-                <span className="inline-flex items-center gap-1 rounded-full border border-primary/25 bg-primary/10 px-2 py-0.2 text-[9px] font-semibold text-primary">
+                <span className="inline-flex items-center gap-1 rounded-full border border-primary/25 bg-primary/10 px-2 py-0.5 text-[9px] font-semibold text-primary">
                   <span className="size-1 rounded-full bg-primary" />
                   Workspace Ready
                 </span>
@@ -427,21 +427,21 @@ function Step1AccountSetup() {
             </div>
           </div>
 
-          <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-md">
+          <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md">
             <Check className="size-3" />
             100% Set Up
           </span>
         </div>
 
         {/* Onboarding Checklist */}
-        <div className="mt-4 space-y-2">
+        <div className="space-y-2 sm:space-y-2.5">
           <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
             Onboarding Verification
           </p>
           {checklist.map((item, idx) => (
             <div
               key={item.title}
-              className="flex items-center justify-between rounded-lg border border-border/50 bg-background/90 p-2.5 dark:bg-card/50"
+              className="flex items-center justify-between rounded-lg border border-border/50 bg-background/90 p-2.5 sm:p-3 dark:bg-card/50"
               style={{
                 animationDelay: `${idx * 100}ms`,
               }}
@@ -466,7 +466,7 @@ function Step1AccountSetup() {
       </div>
 
       {/* Bottom Action Notification */}
-      <div className="rounded-xl border border-primary/20 bg-primary/10 p-3 text-center text-xs font-medium text-primary dark:bg-primary/15">
+      <div className="rounded-xl border border-primary/20 bg-primary/10 p-3 sm:p-3.5 text-center text-xs font-medium text-primary dark:bg-primary/15">
         🎉 Setup complete! You are ready to start listing your first products.
       </div>
     </div>
@@ -513,8 +513,8 @@ function Step2AddProducts() {
   ];
 
   return (
-    <div className="flex h-full flex-col justify-between">
-      <div>
+    <div className="flex h-full flex-1 flex-col justify-between gap-4">
+      <div className="flex flex-col gap-3">
         {/* Catalog Control Bar */}
         <div className="flex items-center justify-between border-b border-border/70 pb-3">
           <div className="flex items-center gap-2">
@@ -539,22 +539,22 @@ function Step2AddProducts() {
         </div>
 
         {/* Product Items List */}
-        <div className="mt-3 space-y-2">
+        <div className="space-y-2 sm:space-y-2.5">
           {products.map((prod, idx) => (
             <div
               key={prod.sku}
-              className="flex items-center justify-between rounded-xl border border-border/60 bg-background/90 p-2.5 transition-all hover:border-primary/40 dark:bg-card/70"
+              className="flex items-center justify-between rounded-xl border border-border/60 bg-background/90 p-2.5 sm:p-3 transition-all hover:border-primary/40 dark:bg-card/70"
               style={{
                 animationDelay: `${idx * 80}ms`,
               }}
             >
               <div className="flex items-center gap-3 min-w-0">
-                <div className="size-11 shrink-0 overflow-hidden rounded-lg border border-border/60 bg-muted/60">
+                <div className="size-11 sm:size-12 shrink-0 overflow-hidden rounded-lg border border-border/60 bg-muted/60">
                   <Image
                     src={prod.image}
                     alt={prod.name}
-                    width={44}
-                    height={44}
+                    width={48}
+                    height={48}
                     unoptimized
                     className="size-full object-cover"
                   />
@@ -571,7 +571,7 @@ function Step2AddProducts() {
 
               <div className="text-right shrink-0">
                 <p className="text-xs font-bold text-primary">{prod.price}</p>
-                <span className="inline-block rounded-xs bg-emerald-500/10 px-1.5 py-0.2 text-[9px] font-semibold text-emerald-600 dark:text-emerald-400">
+                <span className="inline-block rounded-xs bg-emerald-500/10 px-1.5 py-0.5 text-[9px] font-semibold text-emerald-600 dark:text-emerald-400">
                   {prod.stock}
                 </span>
               </div>
@@ -581,7 +581,7 @@ function Step2AddProducts() {
       </div>
 
       {/* Catalog Status Bar */}
-      <div className="flex items-center justify-between rounded-lg border border-border/50 bg-muted/40 px-3 py-2 text-[10px] text-muted-foreground dark:bg-card/40">
+      <div className="flex items-center justify-between rounded-lg border border-border/50 bg-muted/40 px-3 py-2.5 text-[10px] text-muted-foreground dark:bg-card/40">
         <span>Inventory status: Healthy</span>
         <span className="font-semibold text-primary">All products active</span>
       </div>
@@ -595,34 +595,34 @@ function Step2AddProducts() {
 function Step3StorefrontDesign() {
   const storeProducts = [
     {
-      name: "Ceramic Mug",
+      name: "Everyday Ceramic Mug",
       price: "৳ 850",
       image: "/products/ceramic-mug.svg",
     },
     {
-      name: "Canvas Tote",
+      name: "Canvas Tote Bag",
       price: "৳ 1,200",
       image: "/products/canvas-tote.svg",
     },
     {
-      name: "Headphones",
+      name: "Studio Headphones",
       price: "৳ 4,500",
       image: "/products/studio-headphones.svg",
     },
     {
-      name: "Leaf Plant",
+      name: "Fiddle Leaf Plant",
       price: "৳ 950",
       image: "/products/fiddle-leaf-plant.svg",
     },
   ];
 
   return (
-    <div className="flex h-full flex-col justify-between">
-      <div>
+    <div className="flex h-full flex-1 flex-col justify-between gap-2.5 sm:gap-3 min-h-0 overflow-hidden">
+      <div className="flex flex-col gap-2 sm:gap-2.5 min-h-0">
         {/* Storefront Mini Nav */}
-        <div className="flex items-center justify-between border-b border-border/70 pb-2.5">
+        <div className="flex items-center justify-between border-b border-border/70 pb-2">
           <div className="flex items-center gap-2">
-            <span className="grid size-6 place-items-center rounded-lg bg-primary text-[10px] font-bold text-white">
+            <span className="grid size-5 sm:size-6 place-items-center rounded-lg bg-primary text-[9px] sm:text-[10px] font-bold text-white">
               N
             </span>
             <span className="font-heading text-xs font-bold text-foreground">
@@ -648,38 +648,38 @@ function Step3StorefrontDesign() {
         </div>
 
         {/* Promo Hero Banner inside Preview */}
-        <div className="mt-2.5 rounded-xl border border-primary/25 bg-primary/10 p-2.5 text-center dark:bg-primary/15">
-          <p className="text-[10px] font-bold text-primary">
-            Handcrafted for Everyday Living • Free Nationwide Shipping Over ৳ 2,000
+        <div className="rounded-lg border border-primary/25 bg-primary/10 px-2.5 py-1.5 text-center dark:bg-primary/15">
+          <p className="text-[9px] sm:text-[10px] font-bold text-primary truncate">
+            Handcrafted for Everyday Living • Free Shipping Over ৳ 2,000
           </p>
         </div>
 
         {/* Live Storefront Grid */}
-        <div className="mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3">
+        <div className="grid grid-cols-2 gap-2 sm:gap-2.5 min-h-0">
           {storeProducts.map((p) => (
             <div
               key={p.name}
-              className="group overflow-hidden rounded-lg border border-border/70 bg-card p-1.5 shadow-2xs"
+              className="group flex flex-col overflow-hidden rounded-lg sm:rounded-xl border border-border/70 bg-card p-1.5 sm:p-2 shadow-2xs transition-all hover:border-primary/40"
             >
-              <div className="aspect-square overflow-hidden rounded-md bg-muted/60">
+              <div className="h-16 sm:h-20 w-full overflow-hidden rounded-md sm:rounded-lg bg-muted/60">
                 <Image
                   src={p.image}
                   alt={p.name}
-                  width={120}
-                  height={120}
+                  width={140}
+                  height={80}
                   unoptimized
                   className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
-              <div className="mt-1.5">
-                <p className="truncate text-[10px] font-semibold text-foreground">
+              <div className="mt-1.5 flex flex-1 flex-col justify-between">
+                <p className="truncate text-[10px] sm:text-[11px] font-semibold text-foreground">
                   {p.name}
                 </p>
                 <div className="mt-0.5 flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-primary">
+                  <span className="text-[10px] sm:text-xs font-bold text-primary">
                     {p.price}
                   </span>
-                  <span className="grid size-3.5 place-items-center rounded-full bg-primary/10 text-[9px] font-bold text-primary">
+                  <span className="grid size-3.5 sm:size-4 place-items-center rounded-full bg-primary/10 text-[9px] sm:text-[10px] font-bold text-primary">
                     +
                   </span>
                 </div>
@@ -690,7 +690,7 @@ function Step3StorefrontDesign() {
       </div>
 
       {/* Theme Control Bar */}
-      <div className="flex items-center justify-between rounded-lg border border-border/50 bg-muted/40 px-3 py-1.5 text-[10px] text-muted-foreground dark:bg-card/40">
+      <div className="flex items-center justify-between rounded-lg border border-border/50 bg-muted/40 px-3 py-1.5 text-[9px] sm:text-[10px] text-muted-foreground dark:bg-card/40">
         <span className="flex items-center gap-1.5">
           <span className="size-2 rounded-full bg-primary" />
           Theme: Emerald Minimal
@@ -736,8 +736,8 @@ function Step4LaunchAndOrders() {
   ];
 
   return (
-    <div className="flex h-full flex-col justify-between">
-      <div>
+    <div className="flex h-full flex-1 flex-col justify-between gap-4">
+      <div className="flex flex-col gap-3">
         {/* Orders Header & Live Stats */}
         <div className="border-b border-border/70 pb-3">
           <div className="flex items-center justify-between">
@@ -757,27 +757,27 @@ function Step4LaunchAndOrders() {
 
           {/* Quick Metrics */}
           <div className="mt-3 grid grid-cols-3 gap-2 text-center">
-            <div className="rounded-lg border border-border/50 bg-background/80 p-1.5 dark:bg-card/70">
+            <div className="rounded-lg border border-border/50 bg-background/80 p-2 sm:p-2.5 dark:bg-card/70">
               <p className="text-[9px] text-muted-foreground">Today&apos;s Revenue</p>
-              <p className="text-xs font-bold text-foreground">৳ 7,400</p>
+              <p className="text-xs sm:text-sm font-bold text-foreground">৳ 7,400</p>
             </div>
-            <div className="rounded-lg border border-border/50 bg-background/80 p-1.5 dark:bg-card/70">
+            <div className="rounded-lg border border-border/50 bg-background/80 p-2 sm:p-2.5 dark:bg-card/70">
               <p className="text-[9px] text-muted-foreground">Orders Today</p>
-              <p className="text-xs font-bold text-primary">3 New</p>
+              <p className="text-xs sm:text-sm font-bold text-primary">3 New</p>
             </div>
-            <div className="rounded-lg border border-border/50 bg-background/80 p-1.5 dark:bg-card/70">
+            <div className="rounded-lg border border-border/50 bg-background/80 p-2 sm:p-2.5 dark:bg-card/70">
               <p className="text-[9px] text-muted-foreground">Fulfillment</p>
-              <p className="text-xs font-bold text-foreground">100%</p>
+              <p className="text-xs sm:text-sm font-bold text-foreground">100%</p>
             </div>
           </div>
         </div>
 
         {/* Live Orders Table */}
-        <div className="mt-3 space-y-2">
+        <div className="space-y-2 sm:space-y-2.5">
           {recentOrders.map((ord, idx) => (
             <div
               key={ord.id}
-              className="flex items-center justify-between rounded-xl border border-border/60 bg-background/90 p-2.5 transition-all hover:border-primary/40 dark:bg-card/70"
+              className="flex items-center justify-between rounded-xl border border-border/60 bg-background/90 p-2.5 sm:p-3 transition-all hover:border-primary/40 dark:bg-card/70"
               style={{
                 animationDelay: `${idx * 80}ms`,
               }}
@@ -799,7 +799,7 @@ function Step4LaunchAndOrders() {
               <div className="text-right shrink-0">
                 <p className="text-xs font-bold text-foreground">{ord.amount}</p>
                 <span
-                  className={`inline-block rounded-xs px-1.5 py-0.2 text-[9px] font-semibold ${ord.badge}`}
+                  className={`inline-block rounded-xs px-1.5 py-0.5 text-[9px] font-semibold ${ord.badge}`}
                 >
                   {ord.status}
                 </span>
@@ -810,7 +810,7 @@ function Step4LaunchAndOrders() {
       </div>
 
       {/* Ticker Activity */}
-      <div className="flex items-center gap-1.5 rounded-lg border border-primary/20 bg-primary/10 px-3 py-2 text-[10px] font-medium text-primary dark:bg-primary/15">
+      <div className="flex items-center gap-1.5 rounded-lg border border-primary/20 bg-primary/10 px-3.5 py-2.5 text-[10px] font-medium text-primary dark:bg-primary/15">
         <Clock className="size-3 shrink-0" />
         <span className="truncate">
           Payment confirmed via bKash for Order #BPN-2043 • Dispatching soon
