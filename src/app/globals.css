@@ -5,7 +5,132 @@
 @custom-variant dark (&:is(.dark *));
 
 /* =========================================
-   THEME CONFIGURATION
+   1. DESIGN TOKENS — LIGHT THEME
+========================================= */
+
+:root {
+  /* Font families */
+  --font-inter: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-hind-siliguri: "Hind Siliguri", "Noto Sans Bengali", sans-serif;
+  --font-geist-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Brand identity */
+  --brand-primary: #00976b;
+  --brand-secondary: #00bb7d;
+  --brand-soft: #e8f7f1;
+  --brand-gradient: linear-gradient(120deg, #00976b 0%, #00bb7d 100%);
+
+  /* Radius */
+  --radius: 0.625rem;
+
+  color-scheme: light;
+
+  /* shadcn/ui theme tokens */
+  --background: #ffffff;
+  --foreground: #111827;
+
+  --card: #ffffff;
+  --card-foreground: #111827;
+
+  --popover: #ffffff;
+  --popover-foreground: #111827;
+
+  --primary: var(--brand-primary);
+  --primary-foreground: #ffffff;
+
+  --secondary: var(--brand-secondary);
+  --secondary-foreground: #04140e;
+
+  --muted: #f4f7f6;
+  --muted-foreground: #64748b;
+
+  --accent: var(--brand-soft);
+  --accent-foreground: var(--brand-primary);
+
+  --destructive: #dc2626;
+
+  --border: #e5e7eb;
+  --input: #e5e7eb;
+  --ring: var(--brand-primary);
+
+  /* Charts */
+  --chart-1: var(--brand-primary);
+  --chart-2: var(--brand-secondary);
+  --chart-3: #007a57;
+  --chart-4: #64748b;
+  --chart-5: #a7f3d0;
+
+  /* Sidebar */
+  --sidebar: #f9fafb;
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--brand-primary);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--brand-soft);
+  --sidebar-accent-foreground: var(--brand-primary);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--brand-primary);
+}
+
+/* =========================================
+   2. DESIGN TOKENS — DARK THEME
+========================================= */
+
+.dark {
+  /* Brand identity (swapped for dark surfaces) */
+  --brand-primary: #00bb7d;
+  --brand-secondary: #00976b;
+  --brand-soft: #15372a;
+
+  color-scheme: dark;
+
+  /* shadcn/ui theme tokens */
+  --background: #090d0b;
+  --foreground: #ffffff;
+
+  --card: #111916;
+  --card-foreground: #ffffff;
+
+  --popover: #111916;
+  --popover-foreground: #ffffff;
+
+  --primary: var(--brand-primary);
+  --primary-foreground: #04140e;
+
+  --secondary: var(--brand-secondary);
+  --secondary-foreground: #ffffff;
+
+  --muted: #17211c;
+  --muted-foreground: #9ca3af;
+
+  --accent: var(--brand-soft);
+  --accent-foreground: var(--brand-primary);
+
+  --destructive: #ef4444;
+
+  --border: #26352e;
+  --input: #26352e;
+  --ring: var(--brand-primary);
+
+  /* Charts */
+  --chart-1: #00bb7d;
+  --chart-2: #00976b;
+  --chart-3: #34d399;
+  --chart-4: #94a3b8;
+  --chart-5: #a7f3d0;
+
+  /* Sidebar */
+  --sidebar: #0d1410;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #00bb7d;
+  --sidebar-primary-foreground: #04140e;
+  --sidebar-accent: #15372a;
+  --sidebar-accent-foreground: #00bb7d;
+  --sidebar-border: #26352e;
+  --sidebar-ring: #00bb7d;
+}
+
+/* =========================================
+   3. TAILWIND THEME MAPPING
 ========================================= */
 
 @theme inline {
@@ -15,12 +140,13 @@
   --font-bangla: var(--font-hind-siliguri);
   --font-mono: var(--font-geist-mono);
 
-  /* Brand Colors */
-  --color-brand: #00976b;
-  --color-brand-light: #00bb7d;
-  --color-brand-dark: #007a57;
+  /* Brand colors */
+  --color-brand: var(--brand-primary);
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-soft: var(--brand-soft);
 
-  /* Theme Colors */
+  /* Theme colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
@@ -47,14 +173,14 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* Chart Colors */
+  /* Chart colors */
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
 
-  /* Sidebar Colors */
+  /* Sidebar colors */
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -64,7 +190,7 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* Border Radius */
+  /* Border radius */
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -75,132 +201,7 @@
 }
 
 /* =========================================
-   BRAND DESIGN TOKENS
-========================================= */
-
-:root {
-  /* Brand */
-  --brand: #00976b;
-  --brand-light: #00bb7d;
-  --brand-dark: #007a57;
-
-  --brand-gradient: linear-gradient(120deg, #00976b 0%, #00bb7d 100%);
-
-  /* Typography */
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-
-  /* Radius */
-  --radius: 0.625rem;
-
-  /* =====================================
-     LIGHT THEME
-  ===================================== */
-
-  color-scheme: light;
-
-  --background: #ffffff;
-  --foreground: #111827;
-
-  --card: #ffffff;
-  --card-foreground: #111827;
-
-  --popover: #ffffff;
-  --popover-foreground: #111827;
-
-  --primary: #00976b;
-  --primary-foreground: #ffffff;
-
-  --secondary: #e8f7f1;
-  --secondary-foreground: #007a57;
-
-  --muted: #f4f7f6;
-  --muted-foreground: #64748b;
-
-  --accent: #e8f7f1;
-  --accent-foreground: #007a57;
-
-  --destructive: #dc2626;
-
-  --border: #e5e7eb;
-  --input: #e5e7eb;
-  --ring: #00976b;
-
-  /* Charts */
-  --chart-1: #00976b;
-  --chart-2: #00bb7d;
-  --chart-3: #007a57;
-  --chart-4: #64748b;
-  --chart-5: #a7f3d0;
-
-  /* Sidebar */
-  --sidebar: #f9fafb;
-  --sidebar-foreground: #111827;
-  --sidebar-primary: #00976b;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #e8f7f1;
-  --sidebar-accent-foreground: #007a57;
-  --sidebar-border: #e5e7eb;
-  --sidebar-ring: #00976b;
-}
-
-/* =========================================
-   DARK THEME
-========================================= */
-
-.dark {
-  color-scheme: dark;
-
-  --background: #090d0b;
-  --foreground: #f9fafb;
-
-  --card: #111916;
-  --card-foreground: #f9fafb;
-
-  --popover: #111916;
-  --popover-foreground: #f9fafb;
-
-  --primary: #00bb7d;
-  --primary-foreground: #04140e;
-
-  --secondary: #152a22;
-  --secondary-foreground: #00bb7d;
-
-  --muted: #17211c;
-  --muted-foreground: #9ca3af;
-
-  --accent: #15372a;
-  --accent-foreground: #00bb7d;
-
-  --destructive: #ef4444;
-
-  --border: #26352e;
-  --input: #26352e;
-  --ring: #00bb7d;
-
-  /* Charts */
-  --chart-1: #00bb7d;
-  --chart-2: #00976b;
-  --chart-3: #34d399;
-  --chart-4: #94a3b8;
-  --chart-5: #a7f3d0;
-
-  /* Sidebar */
-  --sidebar: #0d1410;
-  --sidebar-foreground: #f9fafb;
-  --sidebar-primary: #00bb7d;
-  --sidebar-primary-foreground: #04140e;
-  --sidebar-accent: #15372a;
-  --sidebar-accent-foreground: #00bb7d;
-  --sidebar-border: #26352e;
-  --sidebar-ring: #00bb7d;
-}
-
-/* =========================================
-   BASE STYLES
+   4. BASE STYLES
 ========================================= */
 
 @layer base {
@@ -217,7 +218,6 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: var(--font-inter), sans-serif;
     transition:
       background-color 200ms ease,
       color 200ms ease;
@@ -235,7 +235,7 @@
   }
 
   ::selection {
-    background: #00bb7d40;
+    background: color-mix(in srgb, var(--brand-secondary) 30%, transparent);
     color: inherit;
   }
 
@@ -251,34 +251,32 @@
 }
 
 /* =========================================
-   TYPOGRAPHY UTILITIES
+   5. TYPOGRAPHY UTILITIES
 ========================================= */
 
 @layer utilities {
   .font-inter {
-    font-family: var(--font-inter), sans-serif;
+    font-family: var(--font-inter);
+  }
+}
+
+/* =========================================
+   6. GRADIENT SYSTEM
+========================================= */
+
+@layer utilities {
+  .brand-gradient,
+  .hero-gradient {
+    background: var(--brand-gradient);
   }
 
-  .font-bangla {
-    font-family: var(--font-hind-siliguri), sans-serif;
+  .hero-gradient {
+    color: #ffffff;
   }
+}
 
-  .font-heading {
-    font-family: var(--font-inter), sans-serif;
-  }
-
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  /* Section Headings */
-
-  .section-heading {
-    @apply text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl;
-    line-height: 1.15;
-    text-wrap: balance;
-  }
-
+@layer components {
+  .brand-gradient-text,
   .section-heading-gradient {
     display: block;
     background: var(--brand-gradient);
@@ -286,6 +284,19 @@
     -webkit-background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
+  }
+}
+
+/* =========================================
+   7. SECTION HEADINGS
+========================================= */
+
+@layer components {
+  .section-heading {
+    @apply text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl;
+    font-family: var(--font-inter);
+    line-height: 1.15;
+    text-wrap: balance;
   }
 
   .section-heading-normal {
@@ -299,142 +310,72 @@
   }
 }
 
-/* =========================================
-   BRAND COLOR UTILITIES
-========================================= */
-
-@layer utilities {
-  /* Text */
-
-  .text-brand {
-    color: var(--brand);
+/* Hero contrast overrides — the hero gradient never changes between themes */
+@layer components {
+  .hero-gradient .section-heading,
+  .hero-gradient .section-heading-normal {
+    color: #ffffff;
   }
 
-  .text-brand-light {
-    color: var(--brand-light);
+  .hero-gradient .section-heading-gradient,
+  .hero-gradient .brand-gradient-text {
+    background: none;
+    color: #ffffff;
+    -webkit-text-fill-color: currentColor;
   }
 
-  .text-brand-dark {
-    color: var(--brand-dark);
-  }
-
-  /* Background */
-
-  .bg-brand {
-    background-color: var(--brand);
-  }
-
-  .bg-brand-light {
-    background-color: var(--brand-light);
-  }
-
-  .bg-brand-dark {
-    background-color: var(--brand-dark);
-  }
-
-  .bg-brand-soft {
-    background-color: #e8f7f1;
-  }
-
-  .dark .bg-brand-soft {
-    background-color: #15372a;
-  }
-
-  /* Border */
-
-  .border-brand {
-    border-color: var(--brand);
-  }
-
-  .border-brand-light {
-    border-color: var(--brand-light);
-  }
-
-  /* Gradient */
-
-  .brand-gradient {
-    background: var(--brand-gradient);
-  }
-
-  .brand-gradient-text {
-    background: var(--brand-gradient);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
-  }
-
-  /* Hover */
-
-  .hover-brand:hover {
-    color: var(--brand);
-  }
-
-  .hover-bg-brand:hover {
-    background-color: var(--brand-dark);
+  .hero-gradient .section-description {
+    color: rgb(255 255 255 / 0.88);
   }
 }
 
 /* =========================================
-   BUTTON UTILITIES
+   8. COMPONENT UTILITIES
 ========================================= */
 
 @layer components {
   .btn-brand {
-    @apply inline-flex items-center justify-center gap-2
-      rounded-lg px-6 py-3 font-semibold text-white
-      transition-all duration-200;
-
-    background: var(--brand);
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 font-semibold transition-all duration-200;
+    background-color: var(--primary);
+    color: var(--primary-foreground);
   }
 
   .btn-brand:hover {
-    background: var(--brand-dark);
+    filter: brightness(0.95);
   }
 
   .btn-brand:focus-visible {
-    outline: 2px solid var(--brand-light);
+    outline: 2px solid var(--brand-secondary);
     outline-offset: 3px;
   }
 
   .btn-brand-outline {
-    @apply inline-flex items-center justify-center gap-2
-      rounded-lg border border-brand px-6 py-3
-      font-semibold transition-all duration-200;
-
-    color: var(--brand);
-    background: transparent;
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border px-6 py-3 font-semibold transition-all duration-200;
+    border-color: var(--primary);
+    color: var(--primary);
+    background-color: transparent;
   }
 
   .btn-brand-outline:hover {
-    background: #00976b10;
+    background-color: color-mix(in srgb, var(--primary) 10%, transparent);
   }
-}
 
-/* =========================================
-   THEME-AWARE COMPONENT UTILITIES
-========================================= */
+  .btn-brand-outline:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+  }
 
-@layer utilities {
   .surface {
-    @apply bg-card text-card-foreground border border-border;
+    @apply border border-border bg-card text-card-foreground;
   }
 
   .surface-muted {
     @apply bg-muted text-foreground;
   }
-
-  .text-secondary {
-    @apply text-muted-foreground;
-  }
-
-  .divider {
-    @apply border-border;
-  }
 }
 
 /* =========================================
-   SCROLLBAR
+   9. SCROLLBAR
 ========================================= */
 
 @layer utilities {
@@ -459,7 +400,7 @@
 }
 
 /* =========================================
-   REDUCED MOTION
+   10. REDUCED MOTION
 ========================================= */
 
 @media (prefers-reduced-motion: reduce) {
@@ -470,36 +411,5 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-  }
-}
-
-@layer utilities {
-  .surface {
-    background-color: var(--card);
-    color: var(--card-foreground);
-    border: 1px solid var(--border);
-  }
-
-  .text-primary {
-    color: var(--primary);
-  }
-
-  .bg-background {
-    background-color: var(--background);
-  }
-
-  .text-foreground {
-    color: var(--foreground);
-  }
-
-  .btn-brand {
-    background-color: #00976b;
-    color: #ffffff;
-    padding: 12px 24px;
-    border-radius: 8px;
-  }
-
-  .btn-brand:hover {
-    background-color: #007a57;
   }
 }
