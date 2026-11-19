@@ -137,6 +137,27 @@ export const translations = {
       },
     },
 
+    // 10-Step Store Builder Section
+    storeBuilder: {
+      badge: "YOUR STORE, YOUR WAY",
+      headingLine1: "Design Your Storefront",
+      headingGradient: "Exactly the Way You Imagine.",
+      description:
+        "Create a storefront that reflects your brand. Follow a guided setup process to customize your design, organize your products, configure essential settings, and prepare your store for launch.",
+      steps: {
+        step1: { name: "Store Identity", desc: "Logo, name & branding" },
+        step2: { name: "Product Catalog", desc: "Items, prices & stock" },
+        step3: { name: "Homepage Layout", desc: "Banners & grid structure" },
+        step4: { name: "Promotional Sections", desc: "Deals & discount alerts" },
+        step5: { name: "Brand Styling", desc: "Colors & typography" },
+        step6: { name: "Customer Feedback", desc: "Reviews & social proof" },
+        step7: { name: "Help & Support", desc: "FAQ & live chat channel" },
+        step8: { name: "Delivery Setup", desc: "Shipping zones & fees" },
+        step9: { name: "Payment Setup", desc: "bKash, cards & COD" },
+        step10: { name: "Final Review", desc: "Pre-launch verification" },
+      },
+    },
+
     // Pricing Section & Page
     pricing: {
       badge: "TRANSPARENT PRICING",
@@ -446,6 +467,27 @@ export const translations = {
           description:
             "আপনার স্টোর প্রকাশ করুন, গ্রাহকদের সাথে লিঙ্ক শেয়ার করুন এবং ড্যাশবোর্ড থেকে অর্ডার পরিচালনা করুন।",
         },
+      },
+    },
+
+    // 10-Step Store Builder Section
+    storeBuilder: {
+      badge: "আপনার স্টোর, আপনার মতো",
+      headingLine1: "ডিজাইন করুন আপনার স্টোরফ্রন্ট",
+      headingGradient: "ঠিক যেমন আপনি চান।",
+      description:
+        "আপনার ব্র্যান্ডের সাথে মানানসই স্টোরফ্রন্ট তৈরি করুন। সহজ ধাপে ধাপে ডিজাইন সাজান, পণ্য যুক্ত করুন, প্রয়োজনীয় সেটিংস ঠিক করুন এবং স্টোর চালুর জন্য প্রস্তুত হোন।",
+      steps: {
+        step1: { name: "স্টোর পরিচয়", desc: "লোগো, নাম ও ব্র্যান্ডিং" },
+        step2: { name: "পণ্য ক্যাটালগ", desc: "আইটেম, দাম ও স্টক" },
+        step3: { name: "হোমপেজ লেআউট", desc: "ব্যানার ও গ্রিড বিন্যাস" },
+        step4: { name: "প্রমোশনাল সেকশন", desc: "অফার ও ডিসকাউন্ট ব্যানার" },
+        step5: { name: "ব্র্যান্ড স্টাইলিং", desc: "রং ও টাইপোগ্রাফি" },
+        step6: { name: "গ্রাহক মতামত", desc: "রিভিউ ও রেটিং" },
+        step7: { name: "সহায়তা ও সাপোর্ট", desc: "সরাসরি যোগাযোগ ও চ্যাট" },
+        step8: { name: "ডেলিভারি সেটআপ", desc: "শিপিং জোন ও চার্জ" },
+        step9: { name: "পেমেন্ট সেটআপ", desc: "বিকাশ, কার্ড ও ক্যাশ অন ডেলিভারি" },
+        step10: { name: "চূড়ান্ত পর্যালোচনা", desc: "লঞ্চের পূর্বপ্রস্তুতি" },
       },
     },
 
