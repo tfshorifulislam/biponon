@@ -31,9 +31,9 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
         onClick={toggleLanguage}
         aria-label={ariaLabel}
         title={ariaLabel}
-        className="inline-flex h-8 items-center justify-center gap-1.5 rounded-full px-2.5 text-xs font-bold tracking-wider text-primary transition-all duration-200 hover:bg-primary/20 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 dark:text-primary dark:hover:bg-primary/25"
+        className="flex h-5 items-center justify-center rounded-full px-1 text-xs font-bold text-primary transition-all duration-200 "
       >
-        <Globe className="size-3.5 shrink-0 opacity-80" aria-hidden="true" />
+        {/* <Globe className="size-3.5 shrink-0 opacity-80" aria-hidden="true" /> */}
         <span>{displayAction}</span>
       </button>
     </div>
