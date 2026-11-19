@@ -60,42 +60,42 @@ export const translations = {
       uptime: "Uptime",
     },
 
-    // Features Section & Page
+    // Features Section
     features: {
-      badge: "POWERFUL FEATURES",
-      title: "Everything You Need to Succeed",
-      subtitle:
-        "Biponon gives you the tools to sell anywhere, manage inventory, and grow your revenue effortlessly.",
+      badge: "BUILT FOR YOUR BUSINESS",
+      heading: "Everything Your Online Business Needs to Move Forward.",
+      description:
+        "Launch your store, simplify daily operations, connect with customers, and make smarter business decisions. Biponon brings your essential e-commerce tools together in one place.",
       items: {
-        storeBuilder: {
-          title: "Drag & Drop Store Builder",
+        fulfillment: {
+          title: "Effortless Order Fulfillment",
           description:
-            "Create high-converting, mobile-ready online storefronts without writing a single line of code.",
-        },
-        payments: {
-          title: "Automated Payments",
-          description:
-            "Accept bKash, Nagad, cards, and mobile banking instantly with automated checkout verification.",
-        },
-        inventory: {
-          title: "Smart Inventory Tracking",
-          description:
-            "Monitor stock levels in real time, receive low-stock alerts, and manage multiple warehouses.",
-        },
-        courier: {
-          title: "Courier & Logistics Integration",
-          description:
-            "Direct integration with leading delivery services for one-click parcel dispatch and live tracking.",
+            "Organize incoming orders, coordinate deliveries, and keep every purchase moving smoothly.",
         },
         marketing: {
-          title: "Marketing & Discounts",
+          title: "Connected Marketing",
           description:
-            "Create custom coupon codes, run timed flash sales, and reward loyal customers to boost orders.",
+            "Bring your marketing channels together and understand which campaigns are bringing customers to your store.",
         },
-        analytics: {
-          title: "Actionable Analytics",
+        insights: {
+          title: "Business Performance Insights",
           description:
-            "Track daily revenue, customer trends, top-selling items, and conversion funnels with clarity.",
+            "Track important business metrics, discover sales trends, and make informed decisions using clear reports.",
+        },
+        experience: {
+          title: "A Seamless Shopping Experience",
+          description:
+            "Give customers a consistent and easy shopping experience across computers, tablets, and smartphones.",
+        },
+        operations: {
+          title: "Simplified Business Operations",
+          description:
+            "Keep track of purchases, customer information, and daily store activities from one organized workspace.",
+        },
+        customization: {
+          title: "Your Store, Your Style",
+          description:
+            "Shape your storefront's appearance and organize its content to reflect your brand identity.",
         },
       },
     },
@@ -363,42 +363,42 @@ export const translations = {
       uptime: "আপটাইম",
     },
 
-    // Features Section & Page
+    // Features Section
     features: {
-      badge: "শক্তিশালী ফিচার্স",
-      title: "অনলাইন ব্যবসায় সফল হওয়ার সবকিছু",
-      subtitle:
-        "Biponon আপনাকে যেকোনো জায়গায় বিক্রি, ইনভেন্টরি ম্যানেজ এবং বিক্রয় বৃদ্ধির সব আধুনিক সুবিধা দেয়।",
+      badge: "আপনার ব্যবসার জন্য তৈরি",
+      heading: "আপনার অনলাইন ব্যবসাকে এগিয়ে নিতে প্রয়োজনীয় সবকিছু।",
+      description:
+        "স্টোর চালু করুন, দৈনন্দিন কার্যক্রম সহজ করুন, গ্রাহকদের সাথে যুক্ত হোন এবং নির্ভুল সিদ্ধান্ত নিন। Biponon আপনার সব প্রয়োজনীয় ই-কমার্স টুল এক জায়গায় এনে দেয়।",
       items: {
-        storeBuilder: {
-          title: "ড্র্যাগ অ্যান্ড ড্রপ স্টোর বিল্ডার",
+        fulfillment: {
+          title: "ঝামেলাহীন অর্ডার সরবরাহ",
           description:
-            "কোনো কোডিং ছাড়াই আকর্ষণীয় এবং দ্রুতগতির রেসপন্সিভ অনলাইন স্টোর তৈরি করুন।",
-        },
-        payments: {
-          title: "স্বয়ংক্রিয় পেমেন্ট গ্রহণ",
-          description:
-            "বিকাশ, নগদ, কার্ড এবং মোবাইল ব্যাংকিংয়ের মাধ্যমে সহজে ও নিরাপদভাবে পেমেন্ট গ্রহণ করুন।",
-        },
-        inventory: {
-          title: "স্মার্ট ইনভেন্টরি ট্র্যাকিং",
-          description:
-            "রিয়েল-টাইম স্টক ট্র্যাকিং, লো-স্টক সতর্কতা এবং একাধিক গোডাউন পরিচালনা করুন এক ক্লিকে।",
-        },
-        courier: {
-          title: "কুরিয়ার ও ডেলিভারি ইন্টিগ্রেশন",
-          description:
-            "শীর্ষস্থানীয় ডেলিভারি সার্ভিসের সাথে অটোমেটেড পার্সেল বুকিং ও লাইভ ট্র্যাকিং সুবিধা।",
+            "নতুন অর্ডার সাজান, ডেলিভারি সমন্বয় করুন এবং প্রতিটি পণ্য নিরাপদে পৌঁছান।",
         },
         marketing: {
-          title: "মার্কেটিং ও ডিসকাউন্ট",
+          title: "সমন্বিত মার্কেটিং",
           description:
-            "প্রোমো কোড, ফ্ল্যাশ সেলস এবং কুপনের মাধ্যমে বিক্রি ও কাস্টমার এনগেজমেন্ট বাড়ান।",
+            "আপনার সকল প্রচার চ্যানেল যুক্ত করুন এবং জানুন কোন ক্যাম্পেইন থেকে গ্রাহক আসছে।",
         },
-        analytics: {
-          title: "সহজ অ্যানালিটিক্স ও রিপোর্ট",
+        insights: {
+          title: "ব্যবসার পারফরম্যান্স ইনসাইটস",
           description:
-            "প্রতিদিনের সেলস রিপোর্ট, সেরা বিক্রিত পণ্য এবং কাস্টমার ইনসাইট দেখুন পরিষ্কারভাবে।",
+            "মূল মেট্রিক ট্র্যাক করুন, বিক্রয় ট্রেন্ড বুঝুন এবং স্পষ্ট রিপোর্টের মাধ্যমে সিদ্ধান্ত নিন।",
+        },
+        experience: {
+          title: "নিরবচ্ছিন্ন কেনাকাটার অভিজ্ঞতা",
+          description:
+            "কম্পিউটার, ট্যাবলেট ও স্মার্টফোনে গ্রাহকদের দিন সহজ ও সাবলীল কেনাকাটার সুযোগ।",
+        },
+        operations: {
+          title: "সহজ বিজনেস অপারেশনস",
+          description:
+            "এক গোছানো ওয়ার্কস্পেস থেকেই বিক্রয়, গ্রাহকের তথ্য এবং দৈনিক কার্যকলাপ পরিচালনা করুন।",
+        },
+        customization: {
+          title: "আপনার স্টোর, আপনার স্টাইল",
+          description:
+            "আপনার ব্র্যান্ড পরিচয়ের সাথে মিলিয়ে স্টোরের ডিজাইন সাজান এবং কনটেন্ট গুছিয়ে নিন।",
         },
       },
     },
