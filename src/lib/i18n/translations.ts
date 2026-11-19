@@ -63,7 +63,8 @@ export const translations = {
     // Features Section
     features: {
       badge: "BUILT FOR YOUR BUSINESS",
-      heading: "Everything Your Online Business Needs to Move Forward.",
+      headingLine1: "Everything Your Online Business",
+      headingGradient: "Needs to Move Forward.",
       description:
         "Launch your store, simplify daily operations, connect with customers, and make smarter business decisions. Biponon brings your essential e-commerce tools together in one place.",
       items: {
@@ -366,7 +367,8 @@ export const translations = {
     // Features Section
     features: {
       badge: "আপনার ব্যবসার জন্য তৈরি",
-      heading: "আপনার অনলাইন ব্যবসাকে এগিয়ে নিতে প্রয়োজনীয় সবকিছু।",
+      headingLine1: "আপনার অনলাইন ব্যবসাকে",
+      headingGradient: "এগিয়ে নিতে প্রয়োজনীয় সবকিছু।",
       description:
         "স্টোর চালু করুন, দৈনন্দিন কার্যক্রম সহজ করুন, গ্রাহকদের সাথে যুক্ত হোন এবং নির্ভুল সিদ্ধান্ত নিন। Biponon আপনার সব প্রয়োজনীয় ই-কমার্স টুল এক জায়গায় এনে দেয়।",
       items: {
