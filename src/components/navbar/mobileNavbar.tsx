@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowRight, Menu } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import {
   Sheet,
   SheetContent,
@@ -17,7 +19,12 @@ import {
 import { BrandLogo } from "./brandLogo";
 import { navLinks } from "./navLinks";
 
+function isActiveRoute(pathname: string, href: string) {
+  return href === "/" ? pathname === "/" : pathname.startsWith(href);
+}
+
 export function MobileNavbar() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
   return (
@@ -51,18 +58,35 @@ export function MobileNavbar() {
             className="flex-1 overflow-y-auto p-3"
           >
             <ul className="flex flex-col gap-1">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className="flex items-center justify-between rounded-lg px-3 py-2.5 text-base font-medium text-foreground transition-colors hover:bg-muted hover:text-brand"
-                  >
-                    {link.label}
-                    <ArrowRight className="size-4 text-muted-foreground" />
-                  </Link>
-                </li>
-              ))}
+              {navLinks.map((link) => {
+                const active = isActiveRoute(pathname, link.href);
+
+                return (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      aria-current={active ? "page" : undefined}
+                      className={cn(
+                        "flex items-center justify-between rounded-lg px-3 py-2.5 text-base font-medium transition-colors hover:bg-muted hover:text-brand",
+                        active
+                          ? "bg-brand-soft text-brand"
+                          : "text-foreground",
+                      )}
+                    >
+                      {link.label}
+                      <ArrowRight
+                        className={cn(
+                          "size-4",
+                          active
+                            ? "text-brand"
+                            : "text-muted-foreground",
+                        )}
+                      />
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
 
