@@ -3,6 +3,7 @@ import { Hind_Siliguri, Inter } from "next/font/google";
 
 import { MainNavbar } from "@/components/navbar/mainNavbar";
 import { LanguageProvider } from "@/lib/i18n/languageContext";
+import { SmoothScrollProvider } from "@/components/providers/smoothScrollProvider";
 
 import "./globals.css";
 
@@ -31,11 +32,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${inter.variable} ${hindSiliguri.variable} ${inter.className} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="flex min-h-full flex-col">
+       {/* <div
+        aria-hidden
+        className="hero-background pointer-events-none absolute inset-0 -z-10"
+      /> */}
+
+      <body className="flex min-h-full flex-col ">
         <LanguageProvider>
-          <MainNavbar />
-          <main className="w-full flex-1">{children}</main>
-         
+          <SmoothScrollProvider>
+            <MainNavbar />
+            <main className="w-full flex-1">{children}</main>
+          </SmoothScrollProvider>
         </LanguageProvider>
       </body>
     </html>
