@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Canvas tote bag">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eaf1e8"/>
+      <stop offset="1" stop-color="#d8e5d7"/>
+    </linearGradient>
+    <linearGradient id="bag" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f6efdf"/>
+      <stop offset="0.6" stop-color="#efe6d2"/>
+      <stop offset="1" stop-color="#e3d6bd"/>
+    </linearGradient>
+    <radialGradient id="shadow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#44603f" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#44603f" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="400" height="400" fill="url(#bg)"/>
+  <ellipse cx="200" cy="338" rx="116" ry="24" fill="url(#shadow)"/>
+
+  <path d="M152 150c0-34 20-58 48-58s48 24 48 58" fill="none" stroke="#c6b393" stroke-width="14" stroke-linecap="round"/>
+  <path d="M160 152c0-28 16-48 40-48s40 20 40 48" fill="none" stroke="#d8c8ab" stroke-width="6" stroke-linecap="round" opacity="0.8"/>
+
+  <path d="M126 146h148l16 172a18 18 0 0 1-18 20H128a18 18 0 0 1-18-20z" fill="url(#bag)"/>
+  <path d="M126 146h148l3 32H123z" fill="#e8dcc5" opacity="0.75"/>
+  <rect x="126" y="146" width="148" height="192" rx="18" fill="none" stroke="#d3c3a6" stroke-width="2" opacity="0.5"/>
+
+  <circle cx="200" cy="238" r="36" fill="none" stroke="#00976b" stroke-width="2.5" opacity="0.7"/>
+  <path d="M200 220c10 8 12 24 0 38-12-14-10-30 0-38z" fill="#00976b" opacity="0.75"/>
+  <path d="M200 258v-38" stroke="#00976b" stroke-width="2" opacity="0.6"/>
+</svg>

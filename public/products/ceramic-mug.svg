@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Ceramic mug">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f7f1e8"/>
+      <stop offset="1" stop-color="#ebe0d1"/>
+    </linearGradient>
+    <linearGradient id="mug" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.55" stop-color="#fbf8f3"/>
+      <stop offset="1" stop-color="#ece3d6"/>
+    </linearGradient>
+    <radialGradient id="shadow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#7a5a3f" stop-opacity="0.26"/>
+      <stop offset="1" stop-color="#7a5a3f" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="400" height="400" fill="url(#bg)"/>
+  <ellipse cx="200" cy="322" rx="118" ry="26" fill="url(#shadow)"/>
+
+  <path d="M272 172h18a42 42 0 0 1 0 84h-18" fill="none" stroke="#f4ede2" stroke-width="24" stroke-linecap="round"/>
+  <path d="M272 172h18a42 42 0 0 1 0 84h-18" fill="none" stroke="#ded1be" stroke-width="4" stroke-linecap="round" opacity="0.55"/>
+
+  <rect x="108" y="138" width="168" height="166" rx="26" fill="url(#mug)"/>
+  <rect x="108" y="138" width="168" height="166" rx="26" fill="none" stroke="#d9cbb8" stroke-width="2" opacity="0.6"/>
+
+  <ellipse cx="192" cy="142" rx="84" ry="20" fill="#f2ebdf"/>
+  <ellipse cx="192" cy="142" rx="70" ry="14" fill="#6d4c38"/>
+  <ellipse cx="192" cy="139" rx="58" ry="9" fill="#8a634a" opacity="0.8"/>
+
+  <path d="M136 190v76" stroke="#ffffff" stroke-width="10" stroke-linecap="round" opacity="0.7"/>
+  <path d="M152 196v52" stroke="#ffffff" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+</svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Studio headphones">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eef1f4"/>
+      <stop offset="1" stop-color="#dde3e9"/>
+    </linearGradient>
+    <linearGradient id="band" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3a464d"/>
+      <stop offset="1" stop-color="#222b30"/>
+    </linearGradient>
+    <radialGradient id="shadow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#2a343a" stop-opacity="0.24"/>
+      <stop offset="1" stop-color="#2a343a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="400" height="400" fill="url(#bg)"/>
+  <ellipse cx="200" cy="326" rx="112" ry="24" fill="url(#shadow)"/>
+
+  <path d="M112 236v-36c0-52 40-92 88-92s88 40 88 92v36" fill="none" stroke="url(#band)" stroke-width="26" stroke-linecap="round"/>
+  <path d="M128 218v-18c0-42 32-74 72-74s72 32 72 74v18" fill="none" stroke="#4c5a62" stroke-width="8" stroke-linecap="round" opacity="0.7"/>
+
+  <rect x="78" y="206" width="58" height="112" rx="26" fill="#2b353b"/>
+  <rect x="88" y="218" width="38" height="88" rx="18" fill="#00976b" opacity="0.85"/>
+  <rect x="264" y="206" width="58" height="112" rx="26" fill="#2b353b"/>
+  <rect x="274" y="218" width="38" height="88" rx="18" fill="#00976b" opacity="0.85"/>
+
+  <circle cx="107" cy="262" r="9" fill="#12181b"/>
+  <circle cx="293" cy="262" r="9" fill="#12181b"/>
+  <path d="M107 150c30-20 72-24 108-8" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" opacity="0.45"/>
+</svg>

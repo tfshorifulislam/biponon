@@ -9,11 +9,6 @@
 ========================================= */
 
 :root {
-  /* Font families */
-  --font-inter: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-hind-siliguri: "Hind Siliguri", "Noto Sans Bengali", sans-serif;
-  --font-geist-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-
   /* Brand identity */
   --brand-primary: #00976b;
   --brand-secondary: #00bb7d;
@@ -135,10 +130,10 @@
 
 @theme inline {
   /* Fonts */
-  --font-sans: var(--font-inter);
-  --font-heading: var(--font-inter);
-  --font-bangla: var(--font-hind-siliguri);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter, "Inter"), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-inter, "Inter"), ui-sans-serif, system-ui, sans-serif;
+  --font-bangla: var(--font-hind-siliguri, "Hind Siliguri"), "Noto Sans Bengali", sans-serif;
+  --font-mono: var(--font-geist-mono, ui-monospace), SFMono-Regular, Menlo, Consolas, monospace;
 
   /* Brand colors */
   --color-brand: var(--brand-primary);
@@ -256,7 +251,7 @@
 
 @layer utilities {
   .font-inter {
-    font-family: var(--font-inter);
+    font-family: var(--font-inter, "Inter"), ui-sans-serif, system-ui, sans-serif;
   }
 }
 
@@ -294,7 +289,7 @@
 @layer components {
   .section-heading {
     @apply text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl;
-    font-family: var(--font-inter);
+    font-family: var(--font-inter, "Inter"), ui-sans-serif, system-ui, sans-serif;
     line-height: 1.15;
     text-wrap: balance;
   }

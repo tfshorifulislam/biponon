@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="Potted fiddle leaf plant">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#edf2ea"/>
+      <stop offset="1" stop-color="#dbe7da"/>
+    </linearGradient>
+    <linearGradient id="pot" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#d9916e"/>
+      <stop offset="0.55" stop-color="#c97b5a"/>
+      <stop offset="1" stop-color="#b36646"/>
+    </linearGradient>
+    <radialGradient id="shadow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#3c5b3c" stop-opacity="0.24"/>
+      <stop offset="1" stop-color="#3c5b3c" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2f8f63"/>
+      <stop offset="1" stop-color="#00694a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="400" height="400" fill="url(#bg)"/>
+  <ellipse cx="200" cy="344" rx="104" ry="22" fill="url(#shadow)"/>
+
+  <path d="M200 240V118" stroke="#3e6b4f" stroke-width="7" stroke-linecap="round"/>
+
+  <path d="M200 132c-42-8-66-34-64-64 36 2 62 26 64 64z" fill="url(#leaf)"/>
+  <path d="M200 168c42-10 64-36 60-66-34 4-58 28-60 66z" fill="url(#leaf)" opacity="0.9"/>
+  <path d="M200 204c-38-6-60-28-58-54 32 2 56 22 58 54z" fill="url(#leaf)" opacity="0.82"/>
+  <path d="M200 236c38-8 58-30 54-56-30 4-52 24-54 56z" fill="url(#leaf)" opacity="0.92"/>
+
+  <path d="M156 254h88l-10 78a14 14 0 0 1-14 12h-40a14 14 0 0 1-14-12z" fill="url(#pot)"/>
+  <rect x="148" y="240" width="104" height="26" rx="10" fill="#d99a78"/>
+  <rect x="148" y="240" width="104" height="26" rx="10" fill="none" stroke="#b36646" stroke-width="2" opacity="0.4"/>
+  <path d="M170 268v66" stroke="#ffffff" stroke-width="7" stroke-linecap="round" opacity="0.22"/>
+</svg>
