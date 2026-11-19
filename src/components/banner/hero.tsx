@@ -35,19 +35,19 @@ const products = [
 
 export default function HeroSection() {
   return (
-    <section className="relative isolate w-full overflow-hidden pb-20 pt-10 sm:pb-24 sm:pt-14 lg:pt-16">
+    <section className="relative isolate w-full overflow-hidden pb-20 pt-24 sm:pb-24 sm:pt-26 lg:pt-34">
       <div
         aria-hidden
         className="hero-background pointer-events-none absolute inset-0 -z-10"
       />
 
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-4 text-center sm:px-6 lg:px-8">
-        <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground shadow-sm backdrop-blur sm:text-[11px] sm:tracking-[0.18em]">
+        <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/50 bg-white/65 px-4 py-2 text-center text-[9px] font-semibold uppercase tracking-[0.1em] text-muted-foreground shadow-sm backdrop-blur-xl sm:text-[11px] sm:tracking-[0.18em] dark:border-white/10 dark:bg-black/25">
           <span className="size-1.5 shrink-0 rounded-full bg-brand-secondary" />
           YOUR BUSINESS. YOUR BRAND. YOUR ONLINE STORE.
         </span>
 
-        <h1 className="section-heading mt-6 max-w-4xl text-4xl tracking-tight sm:mt-7 sm:text-5xl lg:text-6xl">
+        <h1 className="section-heading mt-6 max-w-4xl text-4xl leading-[1.1] tracking-tight sm:mt-7 sm:text-5xl lg:text-6xl">
           <span className="brand-gradient-text">
             Start Your Online Business.
           </span>
@@ -66,7 +66,7 @@ export default function HeroSection() {
             size="lg"
             nativeButton={false}
             render={<Link href="/signup" />}
-            className="h-11 w-full bg-primary px-6 text-white shadow-[0_12px_28px_-14px_rgba(0,151,107,0.7)] [background-image:var(--brand-gradient)] transition-all hover:text-white hover:shadow-[0_16px_34px_-14px_rgba(0,151,107,0.8)] sm:w-auto"
+            className="h-11 w-full bg-primary px-6 text-white shadow-[0_12px_28px_-14px_rgba(0,151,107,0.7)] [background-image:var(--brand-gradient)] transition-all hover:text-white hover:shadow-[0_16px_34px_-14px_rgba(0,151,107,0.8)] sm:h-12 sm:w-auto"
           >
             Start Selling for Free
             <ArrowRight className="size-4 transition-transform group-hover/button:translate-x-0.5" />
@@ -77,14 +77,14 @@ export default function HeroSection() {
             size="lg"
             nativeButton={false}
             render={<Link href="/how-it-works" />}
-            className="h-11 w-full bg-background/80 px-6 backdrop-blur transition-colors hover:bg-muted sm:w-auto"
+            className="h-11 w-full bg-background/80 px-6 backdrop-blur transition-colors hover:bg-muted sm:h-12 sm:w-auto"
           >
             <PlayCircle className="size-4" />
             See How It Works
           </Button>
         </div>
 
-        <div className="relative mt-12 w-full max-w-2xl sm:mt-16">
+        <div className="relative mt-12 w-full max-w-2xl sm:mt-14">
           <div
             aria-hidden
             className="pointer-events-none absolute -inset-x-8 -bottom-8 -top-4 -z-10 rounded-[2.5rem] blur-2xl"
@@ -102,7 +102,7 @@ export default function HeroSection() {
 
 function StorePreview() {
   return (
-    <div className="overflow-hidden rounded-2xl border border-border bg-card text-left shadow-[0_30px_70px_-32px_rgba(15,23,42,0.4)] ring-1 ring-foreground/5 dark:ring-white/10">
+    <div className="overflow-hidden rounded-[1.4rem] border border-border bg-card text-left shadow-[0_36px_80px_-36px_rgba(15,23,42,0.45)] ring-1 ring-foreground/5 dark:ring-white/10">
       <BrowserBar />
 
       <div className="bg-background">
