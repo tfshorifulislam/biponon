@@ -3,6 +3,7 @@ import { StatsSection } from "@/components/banner/statsSection";
 import { FeaturesSection } from "@/components/features/featuresSection";
 import { HowItWorksSection } from "@/components/how-it-works/howItWorksSection";
 import { StoreBuilderSection } from "@/components/store-builder/storeBuilderSection";
+import { TemplatesSection } from "@/components/templates/templatesSection";
 
 export default function HomePage() {
   return (
@@ -12,6 +13,7 @@ export default function HomePage() {
       <FeaturesSection />
       <HowItWorksSection />
       <StoreBuilderSection />
+      <TemplatesSection />
     </>
   );
 }

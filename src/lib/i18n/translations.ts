@@ -158,6 +158,45 @@ export const translations = {
       },
     },
 
+    // Templates Section
+    templates: {
+      badge: "STORE DESIGN COLLECTION",
+      headingLine1: "Beautiful Storefronts,",
+      headingGradient: "Built for Every Brand.",
+      description:
+        "Choose a storefront design that matches your brand and products. Explore different styles, preview them across devices, and find the right look for your online business.",
+      deviceDesktop: "Desktop",
+      deviceMobile: "Mobile",
+      availableBadge: "Available Template",
+      upcomingBadge: "Showcase Preview",
+      items: {
+        natural: {
+          name: "Natural",
+          tagline: "Organic, Apparel & Lifestyle",
+          desc: "Warm earth tones, organic textures, and relaxed typography tailored for sustainable and lifestyle brands.",
+          badge: "Available Now",
+        },
+        sakura: {
+          name: "Sakura",
+          tagline: "Cosmetics, Beauty & Fashion",
+          desc: "Delicate pastels, refined typography, and elegant spacing crafted for beauty, skincare, and boutique stores.",
+          badge: "Available Now",
+        },
+        minimal: {
+          name: "Minimal",
+          tagline: "Tech, Modern Gear & Audio",
+          desc: "Clean geometric grids, monochrome palette, and sharp contrast designed for electronics and modern essentials.",
+          badge: "Showcase Preview",
+        },
+        bold: {
+          name: "Bold",
+          tagline: "Streetwear, Fashion & Statement",
+          desc: "High-impact typography, dark mode contrasts, and punchy visual blocks built for confident streetwear labels.",
+          badge: "Showcase Preview",
+        },
+      },
+    },
+
     // Pricing Section & Page
     pricing: {
       badge: "TRANSPARENT PRICING",
@@ -488,6 +527,45 @@ export const translations = {
         step8: { name: "ডেলিভারি সেটআপ", desc: "শিপিং জোন ও চার্জ" },
         step9: { name: "পেমেন্ট সেটআপ", desc: "বিকাশ, কার্ড ও ক্যাশ অন ডেলিভারি" },
         step10: { name: "চূড়ান্ত পর্যালোচনা", desc: "লঞ্চের পূর্বপ্রস্তুতি" },
+      },
+    },
+
+    // Templates Section
+    templates: {
+      badge: "স্টোর ডিজাইন কালেকশন",
+      headingLine1: "চমৎকার সব স্টোরফ্রন্ট,",
+      headingGradient: "প্রতিটি ব্র্যান্ডের জন্য নির্মিত।",
+      description:
+        "আপনার ব্র্যান্ড এবং পণ্যের সাথে মানানসই স্টোরফ্রন্ট ডিজাইন বেছে নিন। বিভিন্ন স্টাইল এক্সপ্লোর করুন, ডিভাইসে প্রিভিউ দেখুন এবং ব্যবসার জন্য সঠিক লুক খুঁজে নিন।",
+      deviceDesktop: "ডেস্কটপ",
+      deviceMobile: "মোবাইল",
+      availableBadge: "ব্যবহারযোগ্য টেমপ্লেট",
+      upcomingBadge: "শোকেস প্রিভিউ",
+      items: {
+        natural: {
+          name: "ন্যাচারাল",
+          tagline: "অর্গানিক, পোশাক ও লাইফস্টাইল",
+          desc: "প্রাকৃতিক রঙের ছোঁয়া, উষ্ণ ব্যাকগ্রাউন্ড এবং মার্জিত টাইপোগ্রাফি যা পরিবেশবান্ধব ব্র্যান্ডের জন্য তৈরি।",
+          badge: "এখনই ব্যবহারযোগ্য",
+        },
+        sakura: {
+          name: "সাকুরা",
+          tagline: "কসমেটিকস, ফ্যাশন ও বিউটি",
+          desc: "কোমল রঙের বিন্যাস, পরিশীলিত ফন্ট এবং চমৎকার স্পেসিং যা প্রসাধন ও ফ্যাশন বুটিকের জন্য দারুণ।",
+          badge: "এখনই ব্যবহারযোগ্য",
+        },
+        minimal: {
+          name: "মিনিমাল",
+          tagline: "টেকনোলজি, গেজেট ও আধুনিক পণ্য",
+          desc: "পরিচ্ছন্ন লেআউট, নিউট্রাল কালার এবং স্পষ্ট টাইপোগ্রাফি যা টেক ব্র্যান্ডের জন্য উপযুক্ত।",
+          badge: "শোকেস প্রিভিউ",
+        },
+        bold: {
+          name: "বোল্ড",
+          tagline: "স্ট্রিটওয়্যার, ট্রেন্ডি ফ্যাশন ও স্টেটমেন্ট",
+          desc: "উজ্জ্বল রঙের বিন্যাস, আকর্ষণীয় টাইপোগ্রাফি এবং শক্তিশালী লেআউট যা কনফিডেন্ট ব্র্যান্ডের জন্য উপযুক্ত।",
+          badge: "শোকেস প্রিভিউ",
+        },
       },
     },
 
