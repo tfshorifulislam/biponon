@@ -1,8 +1,9 @@
 "use client";
 
+import { useCallback, useEffect, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Moon, Sun } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -11,6 +12,33 @@ import { BrandLogo } from "./brandLogo";
 import { LanguageSwitcher } from "./languageSwitcher";
 import { navLinks } from "./navLinks";
 
+const THEME_CHANGE_EVENT = "biponon_theme_change";
+
+function subscribeTheme(callback: () => void) {
+  if (typeof window === "undefined") return () => {};
+  window.addEventListener("storage", callback);
+  window.addEventListener(THEME_CHANGE_EVENT, callback);
+  return () => {
+    window.removeEventListener("storage", callback);
+    window.removeEventListener(THEME_CHANGE_EVENT, callback);
+  };
+}
+
+function getThemeSnapshot(): "light" | "dark" {
+  if (typeof window === "undefined") return "light";
+  try {
+    if (document.documentElement.classList.contains("dark")) return "dark";
+    const stored = localStorage.getItem("theme");
+    return stored === "dark" ? "dark" : "light";
+  } catch {
+    return "light";
+  }
+}
+
+function getThemeServerSnapshot(): "light" | "dark" {
+  return "light";
+}
+
 function isActiveRoute(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname.startsWith(href);
 }
@@ -18,6 +46,35 @@ function isActiveRoute(pathname: string, href: string) {
 export function DesktopNavbar() {
   const pathname = usePathname();
   const { t } = useLanguage();
+  const theme = useSyncExternalStore(
+    subscribeTheme,
+    getThemeSnapshot,
+    getThemeServerSnapshot
+  );
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("theme");
+      if (stored === "dark") {
+        document.documentElement.classList.add("dark");
+        window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
+      }
+    } catch {}
+  }, []);
+
+  const toggleTheme = useCallback(() => {
+    const isDark = document.documentElement.classList.contains("dark");
+    const nextTheme = isDark ? "light" : "dark";
+    if (nextTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    try {
+      localStorage.setItem("theme", nextTheme);
+      window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
+    } catch {}
+  }, []);
 
   return (
     <nav
@@ -51,6 +108,26 @@ export function DesktopNavbar() {
 
       <div className="flex items-center gap-2">
         <LanguageSwitcher />
+
+        <span
+          className="text-muted-foreground/40 text-xs font-light select-none"
+          aria-hidden="true"
+        >
+          |
+        </span>
+
+        <button
+          type="button"
+          onClick={toggleTheme}
+          aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          className="inline-flex size-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 dark:hover:bg-white/10"
+        >
+          {theme === "dark" ? (
+            <Moon className="size-4" />
+          ) : (
+            <Sun className="size-4" />
+          )}
+        </button>
 
         <div
           role="group"

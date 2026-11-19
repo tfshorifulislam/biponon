@@ -44,64 +44,70 @@ export default function HeroSection() {
   const { t } = useLanguage();
 
   return (
-    <section className="relative isolate w-full overflow-hidden pb-20 pt-24 sm:pb-24 sm:pt-26 lg:pt-34">
+    <section className="relative isolate w-full overflow-hidden pb-20 pt-24 sm:pb-24 sm:pt-26 lg:pb-28 lg:pt-36">
       <div
         aria-hidden
         className="hero-background pointer-events-none absolute inset-0 -z-10"
       />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-4 text-center sm:px-6 lg:px-8">
-        <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/50 bg-white/65 px-4 py-2 text-center text-[9px] font-semibold uppercase tracking-[0.1em] text-muted-foreground shadow-sm backdrop-blur-xl sm:text-[11px] sm:tracking-[0.18em] dark:border-white/10 dark:bg-black/25">
-          <span className="size-1.5 shrink-0 rounded-full bg-brand-secondary" />
-          {t("hero.badge")}
-        </span>
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-12 xl:gap-16">
+          {/* Left Column: Messaging & CTAs */}
+          <div className="flex flex-col items-start text-left">
+            <span className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/50 bg-white/65 px-4 py-2 text-[9px] font-semibold uppercase tracking-[0.1em] text-muted-foreground shadow-sm backdrop-blur-xl sm:text-[11px] sm:tracking-[0.18em] dark:border-white/10 dark:bg-black/25">
+              <span className="size-1.5 shrink-0 rounded-full bg-brand-secondary" />
+              {t("hero.badge")}
+            </span>
 
-        <h1 className="section-heading mt-6 max-w-4xl text-4xl leading-[1.15] tracking-tight sm:mt-7 sm:text-5xl lg:text-6xl">
-          <span className="brand-gradient-text">
-            {t("hero.headingGradient")}
-          </span>
-          <span className="section-heading-normal mt-1.5 sm:mt-2">
-            {t("hero.headingNormal")}
-          </span>
-        </h1>
+            <h1 className="section-heading mt-6 max-w-xl text-4xl leading-[1.15] tracking-tight sm:mt-7 sm:text-5xl lg:text-5xl xl:text-6xl">
+              <span className="brand-gradient-text">
+                {t("hero.headingGradient")}
+              </span>
+              <span className="section-heading-normal mt-1.5 sm:mt-2">
+                {t("hero.headingNormal")}
+              </span>
+            </h1>
 
-        <p className="section-description mt-5 max-w-xl text-balance sm:mt-6">
-          {t("hero.description")}
-        </p>
+            <p className="section-description mt-5 max-w-lg text-balance sm:mt-6">
+              {t("hero.description")}
+            </p>
 
-        <div className="mt-8 flex w-full flex-col items-center justify-center gap-3 sm:mt-10 sm:w-auto sm:flex-row sm:gap-4">
-          <Button
-            size="lg"
-            nativeButton={false}
-            render={<Link href="/create-website" />}
-            className="h-11 w-full bg-primary px-6 text-white shadow-[0_12px_28px_-14px_rgba(0,151,107,0.7)] [background-image:var(--brand-gradient)] transition-all hover:text-white hover:shadow-[0_16px_34px_-14px_rgba(0,151,107,0.8)] sm:h-12 sm:w-auto"
-          >
-            {t("hero.ctaPrimary")}
-            <ArrowRight className="size-4 transition-transform group-hover/button:translate-x-0.5" />
-          </Button>
+            <div className="mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row sm:gap-4">
+              <Button
+                size="lg"
+                nativeButton={false}
+                render={<Link href="/create-website" />}
+                className="h-11 w-full bg-primary px-6 text-white shadow-[0_12px_28px_-14px_rgba(0,151,107,0.7)] [background-image:var(--brand-gradient)] transition-all hover:text-white hover:shadow-[0_16px_34px_-14px_rgba(0,151,107,0.8)] sm:h-12 sm:w-auto"
+              >
+                {t("hero.ctaPrimary")}
+                <ArrowRight className="size-4 transition-transform group-hover/button:translate-x-0.5" />
+              </Button>
 
-          <Button
-            variant="outline"
-            size="lg"
-            nativeButton={false}
-            render={<Link href="/how-it-works" />}
-            className="h-11 w-full bg-background/80 px-6 backdrop-blur transition-colors hover:bg-muted sm:h-12 sm:w-auto"
-          >
-            <PlayCircle className="size-4" />
-            {t("hero.ctaSecondary")}
-          </Button>
-        </div>
+              <Button
+                variant="outline"
+                size="lg"
+                nativeButton={false}
+                render={<Link href="/how-it-works" />}
+                className="h-11 w-full bg-background/80 px-6 backdrop-blur transition-colors hover:bg-muted sm:h-12 sm:w-auto"
+              >
+                <PlayCircle className="size-4" />
+                {t("hero.ctaSecondary")}
+              </Button>
+            </div>
+          </div>
 
-        <div className="relative mt-12 w-full max-w-2xl sm:mt-14">
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -inset-x-8 -bottom-8 -top-4 -z-10 rounded-[2.5rem] blur-2xl"
-            style={{
-              background:
-                "radial-gradient(60% 60% at 50% 50%, color-mix(in srgb, var(--brand-secondary) 20%, transparent), transparent 100%)",
-            }}
-          />
-          <StorePreview />
+          {/* Right Column: Store Demo / Preview */}
+          <div className="relative w-full max-w-2xl mx-auto lg:max-w-none">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -inset-x-8 -bottom-8 -top-4 -z-10 rounded-[2.5rem] blur-2xl"
+              style={{
+                background:
+                  "radial-gradient(60% 60% at 50% 50%, color-mix(in srgb, var(--brand-secondary) 20%, transparent), transparent 100%)",
+              }}
+            />
+            <StorePreview />
+          </div>
         </div>
       </div>
     </section>
