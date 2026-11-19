@@ -90,7 +90,7 @@ export function MobileNavbar() {
     <div className="flex w-full items-center justify-between lg:hidden">
       <BrandLogo />
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5 sm:gap-2">
         <LanguageSwitcher />
 
         <span
@@ -177,7 +177,7 @@ export function MobileNavbar() {
                 <span className="text-sm font-medium text-muted-foreground">
                   {t("nav.languageLabel")}
                 </span>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 sm:gap-2">
                   <LanguageSwitcher />
                   <span
                     className="text-muted-foreground/40 text-xs font-light select-none"

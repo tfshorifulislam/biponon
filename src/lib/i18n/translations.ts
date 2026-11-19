@@ -26,13 +26,14 @@ export const translations = {
 
     // Hero Section
     hero: {
-      badge: "YOUR BUSINESS. YOUR BRAND. YOUR ONLINE STORE.",
-      headingGradient: "Start Your Online Business.",
-      headingNormal: "Build. Sell. Grow with Biponon.",
+      badge: "THE SMARTER WAY TO SELL ONLINE",
+      headingLine1: "Your Business Deserves",
+      headingPrefix: "a ",
+      headingGradient: "Better Online Store.",
       description:
-        "Everything you need to create, manage, and grow your online store — all in one platform.",
-      ctaPrimary: "Start Selling for Free",
-      ctaSecondary: "See How It Works",
+        "Everything you need to launch, manage, and grow your online business — without the complexity. Create your store, showcase your products, manage orders, and reach more customers from one powerful platform.",
+      ctaPrimary: "Create Your Free Store",
+      ctaSecondary: "Explore the Platform",
       preview: {
         banner: "Free delivery on orders over $50",
         newArrivals: "New arrivals",
@@ -49,6 +50,14 @@ export const translations = {
           fiddleLeafPlant: "Fiddle Leaf Plant",
         },
       },
+    },
+
+    // Stats Section
+    stats: {
+      vendors: "Vendors",
+      ordersPlaced: "Orders Placed",
+      templates: "Templates",
+      uptime: "Uptime",
     },
 
     // Features Section & Page
@@ -320,13 +329,14 @@ export const translations = {
 
     // Hero Section
     hero: {
-      badge: "আপনার ব্যবসা। আপনার ব্র্যান্ড। আপনার অনলাইন স্টোর।",
-      headingGradient: "শুরু করুন আপনার অনলাইন ব্যবসা।",
-      headingNormal: "গড়ুন। বিক্রি করুন। বড় হোন Biponon-এর সাথে।",
+      badge: "অনলাইনে বিক্রির আধুনিক সমাধান",
+      headingLine1: "আপনার ব্যবসার প্রয়োজন",
+      headingPrefix: "",
+      headingGradient: "একটি সেরা অনলাইন স্টোর।",
       description:
-        "আপনার অনলাইন স্টোর তৈরি, পরিচালনা ও প্রসারের সবকিছু — এক প্ল্যাটফর্মে।",
-      ctaPrimary: "বিনামূল্যে বিক্রি শুরু করুন",
-      ctaSecondary: "কীভাবে কাজ করে দেখুন",
+        "কোনো জটিলতা ছাড়াই আপনার অনলাইন ব্যবসা শুরু, পরিচালনা এবং বড় করার সবকিছু। এক শক্তিশালী প্ল্যাটফর্ম থেকেই স্টোর তৈরি করুন, পণ্য প্রদর্শন করুন, অর্ডার সামলান এবং আরও বেশি গ্রাহকের কাছে পৌঁছান।",
+      ctaPrimary: "আপনার ফ্রি স্টোর তৈরি করুন",
+      ctaSecondary: "প্ল্যাটফর্মটি ঘুরে দেখুন",
       preview: {
         banner: "$৫০-এর বেশি অর্ডারে ফ্রি ডেলিভারি",
         newArrivals: "নতুন কালেকশন",
@@ -343,6 +353,14 @@ export const translations = {
           fiddleLeafPlant: "ফিডল লিফ প্ল্যান্ট",
         },
       },
+    },
+
+    // Stats Section
+    stats: {
+      vendors: "ভেন্ডর",
+      ordersPlaced: "সম্পন্ন অর্ডার",
+      templates: "টেমপ্লেট",
+      uptime: "আপটাইম",
     },
 
     // Features Section & Page
