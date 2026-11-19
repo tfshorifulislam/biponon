@@ -35,17 +35,13 @@ const products = [
 
 export default function HeroSection() {
   return (
-    <section className="relative isolate overflow-hidden px-4 pb-20 pt-10 sm:px-6 sm:pb-24 sm:pt-14 lg:px-8 lg:pt-16">
+    <section className="relative isolate w-full overflow-hidden pb-20 pt-10 sm:pb-24 sm:pt-14 lg:pt-16">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[460px]"
-        style={{
-          background:
-            "radial-gradient(70% 50% at 50% 0%, color-mix(in srgb, var(--brand-secondary) 10%, transparent), transparent 72%)",
-        }}
+        className="hero-background pointer-events-none absolute inset-0 -z-10"
       />
 
-      <div className="mx-auto flex w-full max-w-7xl flex-col items-center text-center">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center px-4 text-center sm:px-6 lg:px-8">
         <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/70 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-muted-foreground shadow-sm backdrop-blur sm:text-[11px] sm:tracking-[0.18em]">
           <span className="size-1.5 shrink-0 rounded-full bg-brand-secondary" />
           YOUR BUSINESS. YOUR BRAND. YOUR ONLINE STORE.

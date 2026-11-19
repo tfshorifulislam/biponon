@@ -283,6 +283,57 @@
 }
 
 /* =========================================
+   HERO BACKGROUND
+========================================= */
+
+@layer components {
+  .hero-background {
+    background-color: var(--background);
+    background-image:
+      radial-gradient(rgba(0, 151, 107, 0.18) 1px, transparent 1px),
+      radial-gradient(
+        circle at 50% 50%,
+        rgba(0, 187, 125, 0.14),
+        transparent 75%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(0, 151, 107, 0.24) 0%,
+        rgba(0, 187, 125, 0.15) 50%,
+        rgba(0, 187, 125, 0.08) 100%
+      );
+    background-size:
+      22px 22px,
+      100% 100%,
+      100% 100%;
+    background-repeat:
+      repeat,
+      no-repeat,
+      no-repeat;
+    background-position:
+      0 0,
+      center,
+      center;
+  }
+
+  .dark .hero-background {
+    background-image:
+      radial-gradient(rgba(0, 187, 125, 0.14) 1px, transparent 1px),
+      radial-gradient(
+        circle at 50% 50%,
+        rgba(0, 187, 125, 0.18),
+        transparent 75%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(0, 151, 107, 0.32) 0%,
+        rgba(0, 187, 125, 0.22) 50%,
+        rgba(0, 187, 125, 0.12) 100%
+      );
+  }
+}
+
+/* =========================================
    7. SECTION HEADINGS
 ========================================= */
 
