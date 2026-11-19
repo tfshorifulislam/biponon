@@ -511,6 +511,15 @@ html[data-lang="bn"] textarea {
   }
 }
 
+@keyframes howItWorksProgress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
 /* =========================================
    10. REDUCED MOTION
 ========================================= */

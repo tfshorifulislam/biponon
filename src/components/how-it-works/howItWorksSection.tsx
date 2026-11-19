@@ -128,42 +128,64 @@ export function HowItWorksSection() {
   const reducedMotion = useReducedMotion();
 
   const [activeStep, setActiveStep] = useState(0);
-  const [progress, setProgress] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [resetKey, setResetKey] = useState(0);
 
   const STEP_DURATION = 3500; // 3.5 seconds per step
-  const TICK_INTERVAL = 50; // Update progress every 50ms
 
-  // Advance to next step
-  const goToNextStep = useCallback(() => {
-    setActiveStep((prev) => (prev + 1) % STEPS_DATA.length);
-    setProgress(0);
-  }, []);
+  // Precise timing refs for hover pause & resume
+  const remainingTimeRef = useRef(STEP_DURATION);
+  const startTimeRef = useRef(0);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Handle manual step selection
   const handleSelectStep = useCallback((index: number) => {
     setActiveStep(index);
-    setProgress(0);
+    remainingTimeRef.current = STEP_DURATION;
+    startTimeRef.current = Date.now();
+    setResetKey((k) => k + 1);
   }, []);
 
-  // Automatic progression loop
+  // Reliable step progression loop
   useEffect(() => {
-    // If not in view, or user has reduced motion, or user is hovering, pause timer
-    if (!isInView || reducedMotion || isHovered) return;
+    // If not in view or user prefers reduced motion, disable auto timer
+    if (!isInView || reducedMotion) {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+      return;
+    }
 
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        const next = prev + (TICK_INTERVAL / STEP_DURATION) * 100;
-        if (next >= 100) {
-          goToNextStep();
-          return 0;
-        }
-        return next;
-      });
-    }, TICK_INTERVAL);
+    // When hovered: pause timer and capture remaining duration
+    if (isHovered) {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+      const elapsed = Date.now() - startTimeRef.current;
+      remainingTimeRef.current = Math.max(500, remainingTimeRef.current - elapsed);
+      return;
+    }
 
-    return () => clearInterval(timer);
-  }, [isInView, reducedMotion, isHovered, goToNextStep]);
+    // Active progression: run timer for the remaining duration
+    startTimeRef.current = Date.now();
+    const duration = remainingTimeRef.current;
+
+    timerRef.current = setTimeout(() => {
+      setActiveStep((prev) => (prev + 1) % STEPS_DATA.length);
+      remainingTimeRef.current = STEP_DURATION;
+      startTimeRef.current = Date.now();
+      setResetKey((k) => k + 1);
+    }, duration);
+
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, [activeStep, resetKey, isInView, reducedMotion, isHovered]);
 
   return (
     <section
@@ -228,10 +250,14 @@ export function HowItWorksSection() {
                 >
                   {/* Subtle active progress bar */}
                   {isActive && !reducedMotion && (
-                    <div className="absolute inset-x-0 bottom-0 h-0.5 bg-muted">
+                    <div className="absolute inset-x-0 bottom-0 h-0.5 w-full bg-muted overflow-hidden">
                       <div
-                        className="h-full [background-image:var(--brand-gradient)] transition-all duration-75"
-                        style={{ width: `${progress}%` }}
+                        key={`progress-${activeStep}-${resetKey}`}
+                        className="h-full [background-image:var(--brand-gradient)]"
+                        style={{
+                          animation: `howItWorksProgress ${STEP_DURATION}ms linear forwards`,
+                          animationPlayState: isHovered ? "paused" : "running",
+                        }}
                       />
                     </div>
                   )}
@@ -305,23 +331,28 @@ export function HowItWorksSection() {
                 <div className="flex items-center justify-center gap-1.5 rounded-md border border-border/70 bg-background/80 px-3 py-1 shadow-2xs backdrop-blur-xs">
                   <Lock className="size-2.5 shrink-0 text-primary" />
                   <span className="truncate text-[10px] font-medium text-muted-foreground">
-                    nokshi.biponon.com
+                    {activeStep === 0 && "nokshi.biponon.com/setup"}
+                    {activeStep === 1 && "nokshi.biponon.com/admin/products"}
+                    {activeStep === 2 && "nokshi.biponon.com"}
+                    {activeStep === 3 && "nokshi.biponon.com/admin/orders"}
                   </span>
                 </div>
 
                 {/* Stage tag */}
-                <div className="flex items-center gap-1 text-[9px] font-semibold text-primary">
+                <div className="flex items-center gap-1.5 text-[9px] font-semibold text-primary">
                   <span className="size-1.5 animate-pulse rounded-full bg-primary" />
                   <span>Step 0{activeStep + 1}</span>
                 </div>
               </div>
 
               {/* Dynamic Content Body (Changes based on activeStep) */}
-              <div className="relative h-[430px] w-full overflow-hidden bg-background p-4 sm:p-5">
-                {activeStep === 0 && <Step1AccountSetup />}
-                {activeStep === 1 && <Step2AddProducts />}
-                {activeStep === 2 && <Step3StorefrontDesign />}
-                {activeStep === 3 && <Step4LaunchAndOrders />}
+              <div className="relative h-[430px] sm:h-[440px] w-full overflow-hidden bg-background p-4 sm:p-5">
+                <div key={activeStep} className="h-full w-full animate-in fade-in zoom-in-95 duration-300">
+                  {activeStep === 0 && <Step1AccountSetup />}
+                  {activeStep === 1 && <Step2AddProducts />}
+                  {activeStep === 2 && <Step3StorefrontDesign />}
+                  {activeStep === 3 && <Step4LaunchAndOrders />}
+                </div>
               </div>
             </div>
           </div>
@@ -372,7 +403,7 @@ function Step1AccountSetup() {
   ];
 
   return (
-    <div className="flex h-full flex-col justify-between animate-in fade-in zoom-in-95 duration-500">
+    <div className="flex h-full flex-col justify-between">
       {/* Workspace Header */}
       <div>
         <div className="flex items-center justify-between rounded-xl border border-border/70 bg-muted/40 p-3.5 dark:bg-card/70">
@@ -482,7 +513,7 @@ function Step2AddProducts() {
   ];
 
   return (
-    <div className="flex h-full flex-col justify-between animate-in fade-in zoom-in-95 duration-500">
+    <div className="flex h-full flex-col justify-between">
       <div>
         {/* Catalog Control Bar */}
         <div className="flex items-center justify-between border-b border-border/70 pb-3">
@@ -586,7 +617,7 @@ function Step3StorefrontDesign() {
   ];
 
   return (
-    <div className="flex h-full flex-col justify-between animate-in fade-in zoom-in-95 duration-500">
+    <div className="flex h-full flex-col justify-between">
       <div>
         {/* Storefront Mini Nav */}
         <div className="flex items-center justify-between border-b border-border/70 pb-2.5">
@@ -705,7 +736,7 @@ function Step4LaunchAndOrders() {
   ];
 
   return (
-    <div className="flex h-full flex-col justify-between animate-in fade-in zoom-in-95 duration-500">
+    <div className="flex h-full flex-col justify-between">
       <div>
         {/* Orders Header & Live Stats */}
         <div className="border-b border-border/70 pb-3">
