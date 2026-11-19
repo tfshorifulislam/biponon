@@ -119,20 +119,10 @@ export function StatsSection() {
     <section
       ref={sectionRef}
       aria-label="Biponon platform statistics"
-      className="relative z-10 w-full px-4 pb-16 sm:px-6 sm:pb-20 lg:px-8 -mt-6 sm:-mt-8 lg:-mt-10"
+      className="relative z-10 w-full px-4 pb-10 sm:px-6 sm:pb-14 lg:px-8 -mt-4 sm:-mt-6 lg:-mt-8"
     >
       <div className="mx-auto w-full max-w-7xl">
-        <div className="relative overflow-hidden rounded-2xl border border-border/80 bg-card/80 p-3 shadow-[0_20px_50px_-24px_rgba(15,23,42,0.12)] ring-1 ring-black/5 backdrop-blur-xl sm:rounded-3xl sm:p-8 lg:p-10 dark:border-white/10 dark:bg-card/60 dark:shadow-[0_24px_60px_-24px_rgba(0,0,0,0.7)] dark:ring-white/10">
-          {/* Subtle decorative background shimmer */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -inset-x-20 -top-20 -z-10 h-20 rounded-full opacity-40 blur-3xl dark:opacity-20"
-            style={{
-              background:
-                "radial-gradient(ellipse at center, color-mix(in srgb, var(--brand-secondary) 25%, transparent), transparent 70%)",
-            }}
-          />
-
+        <div className="rounded-2xl border border-border/50 bg-card/50 p-2 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-card/40 sm:p-3 lg:px-4 lg:py-3.5">
           <div className="grid grid-cols-2 lg:grid-cols-4">
             {STATS_DATA.map((stat, idx) => {
               const currentVal = counts[idx];
@@ -146,28 +136,28 @@ export function StatsSection() {
                 <div
                   key={stat.id}
                   className={cn(
-                    "flex flex-col items-center justify-center p-3 text-center sm:p-6",
-                    // Mobile 2x2 grid dividers:
+                    "flex flex-col items-center justify-center px-3 py-2.5 text-center sm:px-4 sm:py-3.5",
+                    // Mobile 2x2 grid subtle dividers:
                     idx % 2 === 0
-                      ? "border-r border-border/60"
+                      ? "border-r border-border/40 dark:border-white/10"
                       : "",
                     idx < 2
-                      ? "border-b border-border/60 lg:border-b-0"
+                      ? "border-b border-border/40 dark:border-white/10 lg:border-b-0"
                       : "",
                     // Desktop dividers:
                     idx < STATS_DATA.length - 1
-                      ? "lg:border-r lg:border-border/60"
+                      ? "lg:border-r lg:border-border/40 dark:lg:border-white/10"
                       : "lg:border-r-0"
                   )}
                 >
                   <div className="flex items-baseline justify-center">
-                    <span className="font-heading brand-gradient-text text-3xl font-black tracking-tight sm:text-5xl lg:text-5xl xl:text-6xl">
+                    <span className="font-heading brand-gradient-text text-2xl font-bold tracking-tight sm:text-3xl lg:text-[2rem] xl:text-4xl">
                       {displayVal}
                       <span className="inline">{stat.suffix}</span>
                     </span>
                   </div>
 
-                  <p className="mt-1.5 text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground sm:mt-2 sm:text-sm sm:tracking-wider">
+                  <p className="mt-0.5 text-[11px] font-medium uppercase tracking-wider text-muted-foreground sm:mt-1 sm:text-xs">
                     {label || stat.defaultLabel}
                   </p>
                 </div>
