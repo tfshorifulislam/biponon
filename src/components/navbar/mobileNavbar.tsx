@@ -70,7 +70,7 @@ export function MobileNavbar() {
                       className={cn(
                         "flex items-center justify-between rounded-lg px-3 py-2.5 text-base font-medium transition-colors hover:bg-muted hover:text-brand",
                         active
-                          ? "bg-brand-soft text-brand"
+                          ? "bg-[#00976B] text-white dark:text-black"
                           : "text-foreground",
                       )}
                     >
@@ -79,7 +79,7 @@ export function MobileNavbar() {
                         className={cn(
                           "size-4",
                           active
-                            ? "text-brand"
+                            ? "text-white dark:text-black"
                             : "text-muted-foreground",
                         )}
                       />

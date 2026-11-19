@@ -35,7 +35,7 @@ export function DesktopNavbar() {
                 className={cn(
                   "rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-foreground",
                   active
-                    ? "bg-brand-soft text-brand"
+                    ? "bg-[#00976B] text-white dark:text-black"
                     : "text-muted-foreground",
                 )}
               >
