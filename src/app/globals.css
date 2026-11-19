@@ -472,3 +472,34 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+@layer utilities {
+  .surface {
+    background-color: var(--card);
+    color: var(--card-foreground);
+    border: 1px solid var(--border);
+  }
+
+  .text-primary {
+    color: var(--primary);
+  }
+
+  .bg-background {
+    background-color: var(--background);
+  }
+
+  .text-foreground {
+    color: var(--foreground);
+  }
+
+  .btn-brand {
+    background-color: #00976b;
+    color: #ffffff;
+    padding: 12px 24px;
+    border-radius: 8px;
+  }
+
+  .btn-brand:hover {
+    background-color: #007a57;
+  }
+}
