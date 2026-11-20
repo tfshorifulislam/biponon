@@ -46,11 +46,11 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative isolate w-full overflow-hidden px-4 pt-24 pb-0 sm:px-6 sm:pt-28 lg:px-8 lg:pt-36"
+      className="relative isolate w-full px-4 pt-24 pb-0 sm:px-6 sm:pt-28 lg:px-8 lg:pt-36"
     >
       <div
         aria-hidden
-        className="hero-background pointer-events-none absolute inset-0 -z-10"
+        className="hero-background pointer-events-none absolute inset-0 -z-10 overflow-hidden"
       />
 
       <div className="relative z-10 mx-auto w-full max-w-7xl">

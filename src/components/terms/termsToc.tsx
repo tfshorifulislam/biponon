@@ -108,7 +108,10 @@ export function TermsToc({
         </button>
 
         {isMobileMenuOpen && (
-          <div className="mt-2 max-h-72 overflow-y-auto rounded-xl border border-border/80 bg-card p-2 shadow-lg dark:border-white/10 custom-scrollbar">
+          <div
+            data-lenis-prevent
+            className="mt-2 max-h-72 overflow-y-auto rounded-xl border border-border/80 bg-card p-2 shadow-lg dark:border-white/10 custom-scrollbar"
+          >
             <div className="flex flex-col gap-0.5">
               {sections.map((sec) => {
                 const isActive = activeSectionId === sec.id;
@@ -140,7 +143,10 @@ export function TermsToc({
 
       {/* Desktop Sticky Sidebar */}
       <aside className="hidden lg:block w-72 shrink-0">
-        <div className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto pr-3 pl-1 border-r border-border/60 custom-scrollbar dark:border-white/10">
+        <div
+          data-lenis-prevent
+          className="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto pr-3 pl-1 border-r border-border/60 custom-scrollbar dark:border-white/10"
+        >
           <div className="flex items-center gap-2 pb-3 border-b border-border/50 text-xs font-bold uppercase tracking-wider text-muted-foreground dark:border-white/10">
             <AlignLeft className="size-3.5 text-primary" />
             <span className={isBn ? "font-bangla" : ""}>{tocTitle}</span>

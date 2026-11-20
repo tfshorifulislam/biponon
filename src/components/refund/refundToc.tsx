@@ -111,7 +111,10 @@ export function RefundToc({
 
         {/* Mobile Dropdown Panel */}
         {isMobileMenuOpen && (
-          <div className="mt-2 max-h-72 overflow-y-auto rounded-xl border border-border/80 bg-card p-2 shadow-xl backdrop-blur-lg dark:border-white/15">
+          <div
+            data-lenis-prevent
+            className="mt-2 max-h-72 overflow-y-auto rounded-xl border border-border/80 bg-card p-2 shadow-xl backdrop-blur-lg dark:border-white/15"
+          >
             <nav className="space-y-1">
               {sections.map((section) => {
                 const isActive = activeSectionId === section.id;
@@ -158,6 +161,7 @@ export function RefundToc({
           </div>
 
           <nav
+            data-lenis-prevent
             aria-label="Table of contents"
             className="mt-4 max-h-[calc(100vh-14rem)] overflow-y-auto pr-1 space-y-1 scrollbar-thin scrollbar-thumb-muted"
           >

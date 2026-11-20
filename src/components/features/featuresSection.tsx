@@ -279,7 +279,7 @@ function FulfillmentPreview({ isAnimated }: { isAnimated: boolean }) {
   const currentStage = stages[step];
 
   return (
-    <div className="h-52 w-full overflow-hidden rounded-xl border border-border/60 bg-muted/30 p-3 sm:p-3.5 backdrop-blur-xs dark:border-white/10 dark:bg-muted/10">
+    <div className="h-52 w-full overflow-hidden rounded-xl border border-border/60 bg-muted/30 p-3 sm:p-3.5 backdrop-blur-xs dark:border-white/10 dark:bg-muted/10 pointer-events-none select-none">
       <div className="flex items-center justify-between border-b border-border/50 pb-2.5">
         <div className="flex items-center gap-1.5">
           <Package className="size-3.5 text-primary" />
@@ -396,7 +396,7 @@ function MarketingPreview({ isAnimated }: { isAnimated: boolean }) {
   }, [isAnimated, channels.length]);
 
   return (
-    <div className="h-52 w-full overflow-hidden rounded-xl border border-border/60 bg-muted/30 p-3 sm:p-3.5 backdrop-blur-xs dark:border-white/10 dark:bg-muted/10">
+    <div className="h-52 w-full overflow-hidden rounded-xl border border-border/60 bg-muted/30 p-3 sm:p-3.5 backdrop-blur-xs dark:border-white/10 dark:bg-muted/10 pointer-events-none select-none">
       <div className="flex items-center justify-between border-b border-border/50 pb-2.5">
         <span className="text-[11px] font-semibold text-foreground">
           Channels & Feeds
@@ -495,7 +495,7 @@ function InsightsPreview({ isAnimated }: { isAnimated: boolean }) {
   const days = ["S", "S", "M", "T", "W", "T", "F"];
 
   return (
-    <div className="h-52 w-full overflow-hidden rounded-xl border border-border/60 bg-muted/30 p-3 sm:p-3.5 backdrop-blur-xs dark:border-white/10 dark:bg-muted/10">
+    <div className="h-52 w-full overflow-hidden rounded-xl border border-border/60 bg-muted/30 p-3 sm:p-3.5 backdrop-blur-xs dark:border-white/10 dark:bg-muted/10 pointer-events-none select-none">
       {/* Top Stat */}
       <div className="flex items-start justify-between border-b border-border/50 pb-2.5">
         <div>
@@ -569,7 +569,7 @@ function ExperiencePreview({ isAnimated }: { isAnimated: boolean }) {
   }, [isAnimated]);
 
   return (
-    <div className="relative h-52 w-full overflow-hidden rounded-xl border border-border/60 bg-muted/30 p-3 sm:p-3.5 backdrop-blur-xs dark:border-white/10 dark:bg-muted/10">
+    <div className="relative h-52 w-full overflow-hidden rounded-xl border border-border/60 bg-muted/30 p-3 sm:p-3.5 backdrop-blur-xs dark:border-white/10 dark:bg-muted/10 pointer-events-none select-none">
       <div className="flex items-center justify-between border-b border-border/50 pb-2">
         <span className="text-[11px] font-semibold text-foreground">
           Multi-Device Storefront
@@ -718,7 +718,7 @@ function OperationsPreview({ isAnimated }: { isAnimated: boolean }) {
   }, [isAnimated, initialOrders.length]);
 
   return (
-    <div className="h-52 w-full overflow-hidden rounded-xl border border-border/60 bg-muted/30 p-3 sm:p-3.5 backdrop-blur-xs dark:border-white/10 dark:bg-muted/10">
+    <div className="h-52 w-full overflow-hidden rounded-xl border border-border/60 bg-muted/30 p-3 sm:p-3.5 backdrop-blur-xs dark:border-white/10 dark:bg-muted/10 pointer-events-none select-none">
       {/* Search Header */}
       <div className="flex items-center justify-between border-b border-border/50 pb-2">
         <div className="flex items-center gap-1.5 text-muted-foreground">
@@ -805,7 +805,7 @@ function CustomizationPreview({ isAnimated }: { isAnimated: boolean }) {
   const activeColor = colors[activeColorIdx];
 
   return (
-    <div className="h-52 w-full overflow-hidden rounded-xl border border-border/60 bg-muted/30 p-3 sm:p-3.5 backdrop-blur-xs dark:border-white/10 dark:bg-muted/10">
+    <div className="h-52 w-full overflow-hidden rounded-xl border border-border/60 bg-muted/30 p-3 sm:p-3.5 backdrop-blur-xs dark:border-white/10 dark:bg-muted/10 pointer-events-none select-none">
       <div className="flex items-center justify-between border-b border-border/50 pb-2">
         <span className="text-[11px] font-semibold text-foreground">
           Store Appearance

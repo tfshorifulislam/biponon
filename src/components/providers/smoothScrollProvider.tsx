@@ -115,11 +115,10 @@ export function SmoothScrollProvider({
       touchMultiplier: 1.5,
       autoResize: true,
       prevent: (node) => {
-        // Allow inner scrollable containers (e.g. mobile navigation sheets, modals, dropdowns)
+        // Only prevent page scroll on elements explicitly marked with data-lenis-prevent (e.g. open modals, mobile sheet drawer)
         return (
           node.hasAttribute("data-lenis-prevent") ||
-          node.classList.contains("overflow-y-auto") ||
-          node.classList.contains("overflow-auto")
+          Boolean(node.closest?.("[data-lenis-prevent]"))
         );
       },
     });

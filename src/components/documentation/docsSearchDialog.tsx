@@ -92,6 +92,7 @@ function DocsSearchDialogModal({
       onClick={onClose}
     >
       <div
+        data-lenis-prevent
         className="relative flex w-full max-w-2xl flex-col rounded-2xl border border-border/80 bg-card text-card-foreground shadow-2xl overflow-hidden transition-all duration-200 dark:border-white/10 dark:bg-card/95"
         onClick={(e) => e.stopPropagation()}
         onKeyDown={handleKeyDown}

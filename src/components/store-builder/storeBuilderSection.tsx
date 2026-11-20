@@ -387,7 +387,7 @@ export function StoreBuilderSection() {
             </div>
 
             {/* Main 3-Panel Editor Workspace */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[580px] lg:h-[580px]">
+            <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[580px]">
               {/* ---------------------------------------------------- */}
               {/* LEFT PANEL: Setup Navigation (10 Steps)              */}
               {/* ---------------------------------------------------- */}
@@ -412,7 +412,7 @@ export function StoreBuilderSection() {
                 </div>
 
                 {/* 10 Steps List */}
-                <div className="flex-1 overflow-y-auto p-2 space-y-1 custom-scrollbar">
+                <div className="flex-1 p-2 space-y-1">
                   {BUILDER_STEPS.map((step, idx) => {
                     const isActive = activeStep === idx;
                     const isCompleted = idx < activeStep;
@@ -533,7 +533,7 @@ export function StoreBuilderSection() {
                 {/* Inner Storefront Canvas */}
                 <div
                   key={activeStep}
-                  className="flex flex-1 flex-col justify-between h-full w-full min-h-0 overflow-hidden rounded-xl border border-border/70 bg-card p-3 sm:p-3.5 shadow-2xs animate-in fade-in zoom-in-95 duration-300"
+                  className="flex flex-1 flex-col justify-between h-full w-full min-h-0 overflow-hidden rounded-xl border border-border/70 bg-card p-3 sm:p-3.5 shadow-2xs animate-in fade-in zoom-in-95 duration-300 pointer-events-none select-none"
                 >
                   <LiveStorefrontPreview activeStep={activeStep} />
                 </div>
@@ -544,7 +544,7 @@ export function StoreBuilderSection() {
               {/* ---------------------------------------------------- */}
               <div
                 className={cn(
-                  "lg:col-span-3 flex flex-col bg-muted/20 dark:bg-card/40 p-3 sm:p-4 overflow-y-auto custom-scrollbar",
+                  "lg:col-span-3 flex flex-col bg-muted/20 dark:bg-card/40 p-3 sm:p-4",
                   mobileTab === "preview" && "hidden lg:flex"
                 )}
               >
@@ -739,7 +739,7 @@ function StorefrontStep2Catalog() {
     <div className="flex flex-1 flex-col justify-between h-full w-full min-h-0 gap-2.5">
       {/* Category Filter Bar */}
       <div className="flex items-center justify-between border-b border-border/60 pb-1.5">
-        <div className="flex items-center gap-1.5 overflow-x-auto text-[10px]">
+        <div className="flex items-center gap-1.5 text-[10px]">
           <span className="rounded-md bg-primary px-2 py-0.5 font-bold text-white shadow-2xs">
             All (12)
           </span>

@@ -317,7 +317,7 @@ export function HowItWorksSection() {
             />
 
             {/* Browser Frame */}
-            <div className="flex flex-col flex-1 h-full w-full overflow-hidden rounded-2xl border border-border/80 bg-card shadow-[0_20px_50px_-20px_rgba(15,23,42,0.2),0_1px_3px_rgba(0,0,0,0.05)] ring-1 ring-black/5 dark:border-white/10 dark:bg-card/95 dark:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.7)] dark:ring-white/10">
+            <div className="flex flex-col flex-1 h-full w-full overflow-hidden rounded-2xl border border-border/80 bg-card shadow-[0_20px_50px_-20px_rgba(15,23,42,0.2),0_1px_3px_rgba(0,0,0,0.05)] ring-1 ring-black/5 dark:border-white/10 dark:bg-card/95 dark:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.7)] dark:ring-white/10 pointer-events-none select-none">
               {/* Browser Top Navigation Bar */}
               <div className="relative flex shrink-0 items-center justify-between border-b border-border/70 bg-muted/60 px-4 py-2.5 dark:bg-white/5">
                 {/* 3 browser dots */}
