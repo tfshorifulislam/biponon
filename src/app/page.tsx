@@ -6,6 +6,7 @@ import { StoreBuilderSection } from "@/components/store-builder/storeBuilderSect
 import { TemplatesSection } from "@/components/templates/templatesSection";
 import { PricingSection } from "@/components/pricing/pricingSection";
 import { TestimonialsSection } from "@/components/testimonials/testimonialsSection";
+import { FaqSection } from "@/components/faq/faqSection";
 
 export default function HomePage() {
   return (
@@ -18,6 +19,7 @@ export default function HomePage() {
       <TemplatesSection />
       <PricingSection />
       <TestimonialsSection />
+      <FaqSection />
     </>
   );
 }

@@ -291,6 +291,67 @@ export const translations = {
       sampleNote: "উদাহরণস্বরূপ নমুনা প্রতিক্রিয়া • Illustrative sample reviews",
     },
 
+    // FAQ Section
+    faq: {
+      badge: "FREQUENTLY ASKED QUESTIONS",
+      headingLine1: "Frequently Asked",
+      headingGradient: "Questions",
+      description:
+        "Everything you need to know about Biponon, store setup, features, and managing your business.",
+      items: {
+        q1: {
+          question: "What is Biponon?",
+          answer:
+            "Biponon is an e-commerce platform that helps you create, customize, and manage your own online store without needing technical knowledge.",
+        },
+        q2: {
+          question: "Do I need coding skills to create my online store?",
+          answer:
+            "No. You can build and customize your online store using Biponon's easy-to-use tools without writing any code.",
+        },
+        q3: {
+          question: "Can I use my own custom domain?",
+          answer:
+            "Yes. Biponon supports custom domains, allowing you to build your store under your own brand identity.",
+        },
+        q4: {
+          question: "Can I manage products and orders from one place?",
+          answer:
+            "Yes. You can manage products, track orders, and handle your store operations from a single dashboard.",
+        },
+        q5: {
+          question: "Does Biponon support Cash on Delivery and online payments?",
+          answer:
+            "Yes. Biponon supports Cash on Delivery (COD) and available payment gateway integrations to help you accept payments from customers.",
+        },
+        q6: {
+          question: "Can I integrate courier services with my store?",
+          answer:
+            "Yes. Biponon provides courier integration features to simplify delivery management and order fulfillment.",
+        },
+        q7: {
+          question: "Is there a free trial available?",
+          answer:
+            "Yes. You can start with a 3-day free trial and explore the platform before choosing a subscription plan.",
+        },
+        q8: {
+          question: "Can I customize my online store's design?",
+          answer:
+            "Yes. You can choose from available templates and customize your storefront to match your brand identity.",
+        },
+        q9: {
+          question: "Can I track my store's performance?",
+          answer:
+            "Yes. Biponon provides an analytics dashboard to help you monitor your store's performance and understand your business activity.",
+        },
+        q10: {
+          question: "What happens after my free trial ends?",
+          answer:
+            "After your 3-day free trial, you can choose a subscription plan that suits your business needs to continue using the platform.",
+        },
+      },
+    },
+
     // Documentation Section & Page
     documentation: {
       badge: "DOCUMENTATION & GUIDES",
@@ -698,6 +759,67 @@ export const translations = {
       subtitle:
         "বাংলাদেশের উদ্যোক্তারা কীভাবে Biponon ব্যবহার করে তাদের অনলাইন ব্যবসা এগিয়ে নিচ্ছেন, শুনুন তাদের অভিজ্ঞতা।",
       sampleNote: "উদাহরণস্বরূপ নমুনা প্রতিক্রিয়া • Illustrative sample reviews",
+    },
+
+    // FAQ Section
+    faq: {
+      badge: "সাধারণ জিজ্ঞাসা",
+      headingLine1: "সচরাচর জিজ্ঞাসিত",
+      headingGradient: "প্রশ্ন ও উত্তর",
+      description:
+        "Biponon-এ স্টোর তৈরি, পরিচালনা, মূল্যতালিকা ও ফিচার সম্পর্কিত যাবতীয় প্রশ্নের উত্তর জেনে নিন।",
+      items: {
+        q1: {
+          question: "Biponon কী?",
+          answer:
+            "Biponon হলো একটি ই-কমার্স প্ল্যাটফর্ম, যার মাধ্যমে কোনো টেকনিক্যাল জ্ঞান ছাড়াই আপনি নিজের অনলাইন স্টোর তৈরি, কাস্টমাইজ এবং পরিচালনা করতে পারবেন।",
+        },
+        q2: {
+          question: "অনলাইন স্টোর তৈরি করতে কি কোডিং জানার প্রয়োজন আছে?",
+          answer:
+            "না। কোনো কোডিং জ্ঞান ছাড়াই Biponon-এর সহজ ও সুবিধাজনক টুলের সাহায্যে আপনি নিজের অনলাইন স্টোর তৈরি ও কাস্টমাইজ করতে পারবেন।",
+        },
+        q3: {
+          question: "আমি কি নিজস্ব কাস্টম ডোমেইন ব্যবহার করতে পারব?",
+          answer:
+            "হ্যাঁ। Biponon কাস্টম ডোমেইন সাপোর্ট করে, যার ফলে আপনি নিজের ব্র্যান্ড পরিচয়ে স্টোর পরিচালনা করতে পারবেন।",
+        },
+        q4: {
+          question: "আমি কি এক জায়গা থেকেই পণ্য ও অর্ডার পরিচালনা করতে পারব?",
+          answer:
+            "হ্যাঁ। একটিমাত্র ড্যাশবোর্ড থেকেই আপনি পণ্য ব্যবস্থাপনা, অর্ডার ট্র্যাকিং এবং স্টোরের সামগ্রিক কার্যক্রম পরিচালনা করতে পারবেন।",
+        },
+        q5: {
+          question: "Biponon কি ক্যাশ অন ডেলিভারি এবং অনলাইন পেমেন্ট সাপোর্ট করে?",
+          answer:
+            "হ্যাঁ। Biponon ক্যাশ অন ডেলিভারি (COD) এবং প্রয়োজনীয় পেমেন্ট গেটওয়ে ইন্টিগ্রেশন সাপোর্ট করে, যাতে গ্রাহকদের কাছ থেকে সহজেই পেমেন্ট গ্রহণ করা যায়।",
+        },
+        q6: {
+          question: "আমি কি স্টোরের সাথে কুরিয়ার সার্ভিস ইন্টিগ্রেট করতে পারব?",
+          answer:
+            "হ্যাঁ। ডেলিভারি ব্যবস্থাপনা ও অর্ডার ফুলফিলমেন্ট সহজ করতে Biponon কুরিয়ার ইন্টিগ্রেশন সুবিধা প্রদান করে।",
+        },
+        q7: {
+          question: "কোনো ফ্রি ট্রায়াল সুবিধা আছে কি?",
+          answer:
+            "হ্যাঁ। কোনো সাবস্ক্রিপশন প্ল্যান বেছে নেওয়ার আগে আপনি ৩-দিনের ফ্রি ট্রায়াল দিয়ে প্ল্যাটফর্মটির সমস্ত সুবিধা যাচাই করে নিতে পারেন।",
+        },
+        q8: {
+          question: "আমি কি আমার অনলাইন স্টোরের ডিজাইন কাস্টমাইজ করতে পারব?",
+          answer:
+            "হ্যাঁ। আপনি আকর্ষণীয় টেমপ্লেট থেকে পছন্দ করে নিজের ব্র্যান্ডের সাথে মিলিয়ে স্টোরফ্রন্ট কাস্টমাইজ করতে পারবেন।",
+        },
+        q9: {
+          question: "আমি কি আমার স্টোরের পারফরম্যান্স ট্র্যাক করতে পারব?",
+          answer:
+            "হ্যাঁ। স্টোরের পারফরম্যান্স পর্যবেক্ষণ এবং ব্যবসার অগ্রগতি বুঝতে Biponon-এ রয়েছে বিস্তারিত অ্যানালিটিক্স ড্যাশবোর্ড।",
+        },
+        q10: {
+          question: "ফ্রি ট্রায়াল শেষ হওয়ার পর কী হবে?",
+          answer:
+            "৩-দিনের ফ্রি ট্রায়াল শেষে প্ল্যাটফর্মের সেবা চালিয়ে যেতে আপনি আপনার ব্যবসার চাহিদা অনুযায়ী উপযুক্ত সাবস্ক্রিপশন প্ল্যান বেছে নিতে পারবেন।",
+        },
+      },
     },
 
     // Documentation Section & Page
