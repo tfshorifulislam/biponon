@@ -7,6 +7,7 @@ import { TemplatesSection } from "@/components/templates/templatesSection";
 import { PricingSection } from "@/components/pricing/pricingSection";
 import { TestimonialsSection } from "@/components/testimonials/testimonialsSection";
 import { FaqSection } from "@/components/faq/faqSection";
+import { CtaSection } from "@/components/cta/ctaSection";
 
 export default function HomePage() {
   return (
@@ -20,6 +21,7 @@ export default function HomePage() {
       <PricingSection />
       <TestimonialsSection />
       <FaqSection />
+      <CtaSection />
     </>
   );
 }

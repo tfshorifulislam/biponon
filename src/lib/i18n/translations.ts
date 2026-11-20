@@ -352,6 +352,17 @@ export const translations = {
       },
     },
 
+    // CTA Section
+    cta: {
+      eyebrow: "READY TO GROW YOUR BUSINESS?",
+      heading: "Your Online Store Starts Here.",
+      description:
+        "Stop managing everything manually. Build your own online store, manage your business in one place, and start growing with Biponon.",
+      primaryButton: "Start Your Free Trial",
+      secondaryButton: "Explore Pricing",
+      supportingText: "3-day free trial. No coding required.",
+    },
+
     // Documentation Section & Page
     documentation: {
       badge: "DOCUMENTATION & GUIDES",
@@ -820,6 +831,17 @@ export const translations = {
             "৩-দিনের ফ্রি ট্রায়াল শেষে প্ল্যাটফর্মের সেবা চালিয়ে যেতে আপনি আপনার ব্যবসার চাহিদা অনুযায়ী উপযুক্ত সাবস্ক্রিপশন প্ল্যান বেছে নিতে পারবেন।",
         },
       },
+    },
+
+    // CTA Section
+    cta: {
+      eyebrow: "আপনার ব্যবসা বড় করার সময় এখনই",
+      heading: "আপনার অনলাইন স্টোর শুরু হোক আজই।",
+      description:
+        "ম্যানুয়ালি সবকিছু পরিচালনার ঝামেলা বাদ দিন। নিজের অনলাইন স্টোর তৈরি করুন, এক জায়গা থেকে ব্যবসা পরিচালনা করুন এবং Biponon-এর সঙ্গে এগিয়ে যান।",
+      primaryButton: "ফ্রি ট্রায়াল শুরু করুন",
+      secondaryButton: "প্রাইসিং দেখুন",
+      supportingText: "৩ দিনের ফ্রি ট্রায়াল। কোনো কোডিং প্রয়োজন নেই।",
     },
 
     // Documentation Section & Page
