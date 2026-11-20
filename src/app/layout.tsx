@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Hind_Siliguri, Inter } from "next/font/google";
 
 import { MainNavbar } from "@/components/navbar/mainNavbar";
+import { Footer } from "@/components/footer/footer";
 import { LanguageProvider } from "@/lib/i18n/languageContext";
 import { SmoothScrollProvider } from "@/components/providers/smoothScrollProvider";
 
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <SmoothScrollProvider>
             <MainNavbar />
             <main className="w-full flex-1">{children}</main>
+            <Footer />
           </SmoothScrollProvider>
         </LanguageProvider>
       </body>

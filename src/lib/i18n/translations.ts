@@ -452,6 +452,10 @@ export const translations = {
 
     // Footer
     footer: {
+      copyright: "© 2026 Biponon. All rights reserved.",
+      privacy: "Privacy Policy",
+      terms: "Terms of Service",
+      refund: "Refund Policy",
       tagline:
         "Empowering businesses across Bangladesh to sell online with speed, security, and simplicity.",
       productTitle: "Product",
@@ -467,8 +471,8 @@ export const translations = {
         careers: "Careers",
         privacy: "Privacy Policy",
         terms: "Terms of Service",
+        refund: "Refund Policy",
       },
-      copyright: "© 2026 Biponon Inc. All rights reserved.",
       madeWith: "Crafted for Bangladesh's growing entrepreneurs.",
     },
 
@@ -934,6 +938,10 @@ export const translations = {
 
     // Footer
     footer: {
+      copyright: "© ২০২৬ Biponon. সর্বস্বত্ব সংরক্ষিত।",
+      privacy: "গোপনীয়তা নীতি",
+      terms: "ব্যবহারের শর্তাবলি",
+      refund: "রিফান্ড নীতি",
       tagline:
         "বাংলাদেশের প্রতিটি ব্যবসাকে সহজে, নিরাপদে ও দ্রুতগতিতে অনলাইনে বিক্রির সক্ষমতা দিচ্ছে Biponon।",
       productTitle: "প্রোডাক্ট",
@@ -948,9 +956,9 @@ export const translations = {
         contact: "যোগাযোগ",
         careers: "ক্যারিয়ার",
         privacy: "গোপনীয়তা নীতি",
-        terms: "ব্যবহারের শর্তাবলী",
+        terms: "ব্যবহারের শর্তাবলি",
+        refund: "রিফান্ড নীতি",
       },
-      copyright: "© ২০২৬ Biponon Inc. সর্বস্বত্ব সংরক্ষিত।",
       madeWith: "বাংলাদেশের উদ্যোক্তাদের স্বপ্নপূরণে নিবেদিত।",
     },
 
