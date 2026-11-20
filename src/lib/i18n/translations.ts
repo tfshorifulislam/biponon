@@ -281,6 +281,16 @@ export const translations = {
       },
     },
 
+    // Testimonials Section
+    testimonials: {
+      badge: "TESTIMONIALS",
+      headingLine1: "Trusted by Businesses",
+      headingGradient: "Growing with Biponon",
+      subtitle:
+        "বাংলাদেশের উদ্যোক্তারা কীভাবে Biponon ব্যবহার করে তাদের অনলাইন ব্যবসা এগিয়ে নিচ্ছেন, শুনুন তাদের অভিজ্ঞতা।",
+      sampleNote: "উদাহরণস্বরূপ নমুনা প্রতিক্রিয়া • Illustrative sample reviews",
+    },
+
     // Documentation Section & Page
     documentation: {
       badge: "DOCUMENTATION & GUIDES",
@@ -678,6 +688,16 @@ export const translations = {
           ],
         },
       },
+    },
+
+    // Testimonials Section
+    testimonials: {
+      badge: "উদ্যোক্তাদের অভিজ্ঞতা",
+      headingLine1: "Trusted by Businesses",
+      headingGradient: "Growing with Biponon",
+      subtitle:
+        "বাংলাদেশের উদ্যোক্তারা কীভাবে Biponon ব্যবহার করে তাদের অনলাইন ব্যবসা এগিয়ে নিচ্ছেন, শুনুন তাদের অভিজ্ঞতা।",
+      sampleNote: "উদাহরণস্বরূপ নমুনা প্রতিক্রিয়া • Illustrative sample reviews",
     },
 
     // Documentation Section & Page

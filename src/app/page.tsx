@@ -5,6 +5,7 @@ import { HowItWorksSection } from "@/components/how-it-works/howItWorksSection";
 import { StoreBuilderSection } from "@/components/store-builder/storeBuilderSection";
 import { TemplatesSection } from "@/components/templates/templatesSection";
 import { PricingSection } from "@/components/pricing/pricingSection";
+import { TestimonialsSection } from "@/components/testimonials/testimonialsSection";
 
 export default function HomePage() {
   return (
@@ -16,6 +17,7 @@ export default function HomePage() {
       <StoreBuilderSection />
       <TemplatesSection />
       <PricingSection />
+      <TestimonialsSection />
     </>
   );
 }
