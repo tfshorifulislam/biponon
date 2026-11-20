@@ -34,11 +34,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${inter.variable} ${hindSiliguri.variable} ${inter.className} h-full antialiased`}
       suppressHydrationWarning
     >
-       {/* <div
-        aria-hidden
-        className="hero-background pointer-events-none absolute inset-0 -z-10"
-      /> */}
-
       <body className="flex min-h-full flex-col ">
         <LanguageProvider>
           <SmoothScrollProvider>

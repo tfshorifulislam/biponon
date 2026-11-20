@@ -290,8 +290,8 @@ export const translations = {
       headingLine1: "Trusted by Businesses",
       headingGradient: "Growing with Biponon",
       subtitle:
-        "বাংলাদেশের উদ্যোক্তারা কীভাবে Biponon ব্যবহার করে তাদের অনলাইন ব্যবসা এগিয়ে নিচ্ছেন, শুনুন তাদের অভিজ্ঞতা।",
-      sampleNote: "উদাহরণস্বরূপ নমুনা প্রতিক্রিয়া • Illustrative sample reviews",
+        "Hear how entrepreneurs across Bangladesh are scaling their online businesses with Biponon.",
+      sampleNote: "Illustrative sample reviews",
     },
 
     // FAQ Section
@@ -775,11 +775,11 @@ export const translations = {
     // Testimonials Section
     testimonials: {
       badge: "উদ্যোক্তাদের অভিজ্ঞতা",
-      headingLine1: "Trusted by Businesses",
-      headingGradient: "Growing with Biponon",
+      headingLine1: "উদ্যোক্তাদের আস্থা ও সাফল্যে",
+      headingGradient: "বিপণনের সাথে এগিয়ে চলা",
       subtitle:
         "বাংলাদেশের উদ্যোক্তারা কীভাবে Biponon ব্যবহার করে তাদের অনলাইন ব্যবসা এগিয়ে নিচ্ছেন, শুনুন তাদের অভিজ্ঞতা।",
-      sampleNote: "উদাহরণস্বরূপ নমুনা প্রতিক্রিয়া • Illustrative sample reviews",
+      sampleNote: "উদাহরণস্বরূপ নমুনা প্রতিক্রিয়া",
     },
 
     // FAQ Section

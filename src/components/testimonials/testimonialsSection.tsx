@@ -170,7 +170,8 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
 }
 
 export function TestimonialsSection() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const isBn = language === "bn";
 
   return (
     <section
@@ -195,9 +196,13 @@ export function TestimonialsSection() {
             </span>
           </h2>
 
-          <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg sm:leading-relaxed font-bangla">
+          <p
+            className={`mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg sm:leading-relaxed ${
+              isBn ? "font-bangla" : ""
+            }`}
+          >
             {t("testimonials.subtitle") ||
-              "বাংলাদেশের উদ্যোক্তারা কীভাবে Biponon ব্যবহার করে তাদের অনলাইন ব্যবসা এগিয়ে নিচ্ছেন, শুনুন তাদের অভিজ্ঞতা।"}
+              "Hear how entrepreneurs across Bangladesh are scaling their online businesses with Biponon."}
           </p>
         </div>
 
@@ -278,9 +283,12 @@ export function TestimonialsSection() {
 
         {/* Illustrative Sample Reviews Note */}
         <div className="mt-6 text-center">
-          <p className="text-xs text-muted-foreground/70 font-bangla">
-            {t("testimonials.sampleNote") ||
-              "উদাহরণস্বরূপ নমুনা প্রতিক্রিয়া • Illustrative sample reviews"}
+          <p
+            className={`text-xs text-muted-foreground/70 ${
+              isBn ? "font-bangla" : ""
+            }`}
+          >
+            {t("testimonials.sampleNote") || "Illustrative sample reviews"}
           </p>
         </div>
       </div>
