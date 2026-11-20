@@ -119,7 +119,7 @@ export function StatsSection() {
     <section
       ref={sectionRef}
       aria-label="Biponon platform statistics"
-      className="relative z-10 w-full px-4 sm:px-6 lg:px-8 -mt-4 sm:-mt-6 lg:-mt-8"
+      className="relative z-10 w-full px-4 pt-20 pb-0 sm:px-6 lg:px-8"
     >
       <div className="mx-auto w-full max-w-7xl">
         <div className="rounded-2xl border border-border/50 bg-card/50 p-2 shadow-xs backdrop-blur-md dark:border-white/10 dark:bg-card/40 sm:p-3 lg:px-4 lg:py-3.5">

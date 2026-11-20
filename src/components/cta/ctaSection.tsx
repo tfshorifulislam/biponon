@@ -21,7 +21,7 @@ export function CtaSection() {
     <section
       id="cta"
       aria-label="Call to action — Start your online store"
-      className="relative isolate w-full px-4 pt-0 pb-16 sm:px-6 sm:pb-20 lg:px-8 lg:pb-24"
+      className="relative isolate w-full px-4 pt-20 pb-20 sm:px-6 lg:px-8"
     >
       <div className="mx-auto w-full max-w-7xl">
         {/* Prominent Brand-Green Gradient Banner */}

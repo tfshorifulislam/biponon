@@ -277,7 +277,7 @@ export function StoreBuilderSection() {
       id="store-builder"
       ref={sectionRef}
       aria-label="10-step Biponon store builder"
-      className="relative isolate w-full px-4 pt-16 pb-16 sm:px-6 sm:pb-20 lg:px-8 lg:pb-24"
+      className="relative isolate w-full px-4 pt-20 pb-0 sm:px-6 lg:px-8"
     >
       <div className="mx-auto w-full max-w-7xl">
         {/* Section Heading */}

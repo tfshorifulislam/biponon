@@ -192,7 +192,7 @@ export function HowItWorksSection() {
       id="how-it-works"
       ref={sectionRef}
       aria-label="How Biponon works"
-      className="relative isolate w-full px-4 pt-16 pb-0 sm:px-6 lg:px-8"
+      className="relative isolate w-full px-4 pt-20 pb-0 sm:px-6 lg:px-8"
     >
       <div className="mx-auto w-full max-w-7xl">
         {/* Section Header */}

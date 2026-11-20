@@ -176,7 +176,7 @@ export function PricingSection() {
     <section
       id="pricing"
       aria-label="Pricing plans and subscription options"
-      className="relative isolate w-full px-4 pt-0 pb-16 sm:px-6 sm:pb-20 lg:px-8 lg:pb-24"
+      className="relative isolate w-full px-4 pt-20 pb-0 sm:px-6 lg:px-8"
     >
       <div className="mx-auto w-full max-w-7xl">
         {/* Section Heading - Exact Features Section Design System */}
