@@ -1,12 +1,6 @@
 "use client";
 
-import React, {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  useSyncExternalStore,
-} from "react";
+import React, { useCallback, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/languageContext";
@@ -29,176 +23,6 @@ import {
   ShoppingCart,
   Smartphone,
 } from "lucide-react";
-
-/**
- * Hook to detect viewport intersection for pausing/resuming animations.
- */
-function useInView(ref: React.RefObject<HTMLElement | null>, threshold = 0.15) {
-  const [isInView, setIsInView] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting);
-      },
-      { threshold }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [ref, threshold]);
-
-  return isInView;
-}
-
-/**
- * Hook to respect user's reduced motion preferences.
- */
-function subscribeReducedMotion(callback: () => void) {
-  if (typeof window === "undefined") return () => {};
-  const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-  mq.addEventListener("change", callback);
-  return () => mq.removeEventListener("change", callback);
-}
-
-function getReducedMotionSnapshot(): boolean {
-  if (typeof window === "undefined") return false;
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-
-function getReducedMotionServerSnapshot(): boolean {
-  return false;
-}
-
-function useReducedMotion(): boolean {
-  return useSyncExternalStore(
-    subscribeReducedMotion,
-    getReducedMotionSnapshot,
-    getReducedMotionServerSnapshot
-  );
-}
-
-// ===========================================================================
-// AUTO-SCROLL ENGINE COMPONENT
-// Smoothly scrolls content from top to bottom, pauses at bottom,
-// returns to top, pauses, and repeats continuously.
-// Operates independently for every preview instance.
-// ===========================================================================
-function AutoScrollFrame({
-  children,
-  isPaused = false,
-  className,
-  speed = 22, // pixels per second
-}: {
-  children: React.ReactNode;
-  isPaused?: boolean;
-  className?: string;
-  speed?: number;
-}) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const contentRef = useRef<HTMLDivElement | null>(null);
-  const offsetRef = useRef(0);
-  const stateRef = useRef<"pauseTop" | "scrollingDown" | "pauseBottom" | "scrollingUp">("pauseTop");
-  const pauseTimerRef = useRef(0);
-  const lastTimeRef = useRef<number | null>(null);
-  const animFrameRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    let active = true;
-
-    const animate = (time: number) => {
-      if (!active) return;
-
-      if (lastTimeRef.current === null) {
-        lastTimeRef.current = time;
-      }
-      const delta = Math.min((time - lastTimeRef.current) / 1000, 0.1);
-      lastTimeRef.current = time;
-
-      const container = containerRef.current;
-      const content = contentRef.current;
-
-      if (container && content && !isPaused) {
-        const maxScroll = Math.max(0, content.offsetHeight - container.offsetHeight);
-
-        if (maxScroll > 15) {
-          switch (stateRef.current) {
-            case "pauseTop":
-              pauseTimerRef.current += delta;
-              if (pauseTimerRef.current >= 1.6) {
-                stateRef.current = "scrollingDown";
-                pauseTimerRef.current = 0;
-              }
-              break;
-
-            case "scrollingDown":
-              offsetRef.current += speed * delta;
-              if (offsetRef.current >= maxScroll) {
-                offsetRef.current = maxScroll;
-                stateRef.current = "pauseBottom";
-                pauseTimerRef.current = 0;
-              }
-              break;
-
-            case "pauseBottom":
-              pauseTimerRef.current += delta;
-              if (pauseTimerRef.current >= 1.6) {
-                stateRef.current = "scrollingUp";
-                pauseTimerRef.current = 0;
-              }
-              break;
-
-            case "scrollingUp":
-              // Smooth return to top
-              offsetRef.current -= speed * 1.6 * delta;
-              if (offsetRef.current <= 0) {
-                offsetRef.current = 0;
-                stateRef.current = "pauseTop";
-                pauseTimerRef.current = 0;
-              }
-              break;
-          }
-
-          content.style.transform = `translate3d(0, -${offsetRef.current}px, 0)`;
-        } else {
-          content.style.transform = `translate3d(0, 0, 0)`;
-        }
-      }
-
-      animFrameRef.current = requestAnimationFrame(animate);
-    };
-
-    animFrameRef.current = requestAnimationFrame(animate);
-
-    return () => {
-      active = false;
-      if (animFrameRef.current) {
-        cancelAnimationFrame(animFrameRef.current);
-      }
-    };
-  }, [isPaused, speed]);
-
-  return (
-    <div
-      ref={containerRef}
-      className={cn(
-        "relative h-full w-full overflow-hidden select-none pointer-events-none touch-pan-y",
-        className
-      )}
-    >
-      <div
-        ref={contentRef}
-        className="w-full will-change-transform pointer-events-none touch-pan-y"
-        style={{ transform: "translate3d(0, 0, 0)" }}
-      >
-        {children}
-      </div>
-    </div>
-  );
-}
 
 // ===========================================================================
 // TEMPLATE CONFIGURATION INTERFACE
@@ -225,9 +49,6 @@ interface TemplateConfig {
 // ===========================================================================
 export function TemplatesSection() {
   const { t } = useLanguage();
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const isInView = useInView(sectionRef, 0.1);
-  const reducedMotion = useReducedMotion();
 
   const templates: TemplateConfig[] = [
     {
@@ -303,7 +124,6 @@ export function TemplatesSection() {
   return (
     <section
       id="templates"
-      ref={sectionRef}
       aria-label="Store design collection and templates"
       className="relative isolate w-full px-4 pt-0 pb-16 sm:px-6 sm:pb-20 lg:px-8 lg:pb-24"
     >
@@ -330,12 +150,7 @@ export function TemplatesSection() {
         {/* Template Collection 2x2 Grid */}
         <div className="mt-12 sm:mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
           {templates.map((tpl) => (
-            <TemplateCard
-              key={tpl.id}
-              template={tpl}
-              isSectionInView={isInView}
-              reducedMotion={reducedMotion}
-            />
+            <TemplateCard key={tpl.id} template={tpl} />
           ))}
         </div>
       </div>
@@ -345,45 +160,15 @@ export function TemplatesSection() {
 
 // ===========================================================================
 // INDIVIDUAL TEMPLATE CARD COMPONENT
-// Maintains independent, simultaneous scrolling on both Desktop and Mobile.
+// Clean, stationary showcase cards with manual Desktop/Mobile switching.
 // ===========================================================================
 function TemplateCard({
   template,
-  isSectionInView,
-  reducedMotion,
 }: {
   template: TemplateConfig;
-  isSectionInView: boolean;
-  reducedMotion: boolean;
 }) {
   const { t } = useLanguage();
   const [device, setDevice] = useState<"desktop" | "mobile">("desktop");
-  const [isHovered, setIsHovered] = useState(false);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
-
-  const CYCLE_DURATION = 5000; // 5s per device state
-
-  // Smooth automatic alternating between Desktop and Mobile
-  useEffect(() => {
-    if (!isSectionInView || reducedMotion || isHovered) {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-        timerRef.current = null;
-      }
-      return;
-    }
-
-    timerRef.current = setInterval(() => {
-      setDevice((prev) => (prev === "desktop" ? "mobile" : "desktop"));
-    }, CYCLE_DURATION);
-
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-        timerRef.current = null;
-      }
-    };
-  }, [isSectionInView, reducedMotion, isHovered]);
 
   const handleSelectDevice = useCallback((mode: "desktop" | "mobile") => {
     setDevice(mode);
@@ -393,15 +178,8 @@ function TemplateCard({
   const tagline = t(template.taglineKey) || template.fallbackTagline;
   const description = t(template.descKey) || template.fallbackDesc;
 
-  // Scrolling pause state: pauses only when outside viewport or reduced motion is requested
-  const isScrollPaused = !isSectionInView || reducedMotion;
-
   return (
-    <Card
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="group relative overflow-hidden rounded-2xl sm:rounded-3xl border border-border/80 bg-card text-card-foreground shadow-xs transition-all duration-300 hover:shadow-lg hover:border-primary/30 dark:border-white/10 dark:bg-card/85 flex flex-col justify-between touch-pan-y"
-    >
+    <Card className="group relative overflow-hidden rounded-2xl sm:rounded-3xl border border-border/80 bg-card text-card-foreground shadow-xs transition-all duration-300 hover:shadow-lg hover:border-primary/30 dark:border-white/10 dark:bg-card/85 flex flex-col justify-between">
       {/* Top Card Header */}
       <CardHeader className="p-5 sm:p-6 pb-4 border-b border-border/60">
         <div className="flex flex-wrap items-center justify-between gap-2.5">
@@ -473,8 +251,8 @@ function TemplateCard({
       </CardHeader>
 
       {/* Main Preview Stage Container */}
-      <CardContent className="p-4 sm:p-5 flex-1 flex flex-col justify-center touch-pan-y">
-        <div className="relative w-full h-[340px] sm:h-[350px] rounded-xl sm:rounded-2xl border border-border/70 bg-muted/30 dark:bg-white/5 p-2 sm:p-3 overflow-hidden flex items-center justify-center pointer-events-none touch-pan-y">
+      <CardContent className="p-4 sm:p-5 flex-1 flex flex-col justify-center">
+        <div className="relative w-full h-[340px] sm:h-[350px] rounded-xl sm:rounded-2xl border border-border/70 bg-muted/30 dark:bg-white/5 p-2 sm:p-3 overflow-hidden flex items-center justify-center pointer-events-none">
           {/* Subtle Ambient Background Gradient */}
           <div
             aria-hidden
@@ -484,13 +262,10 @@ function TemplateCard({
             }}
           />
 
-          {/* Both Desktop & Mobile Mockups are kept actively mounted in the DOM
-              so BOTH scroll continuously even when one device mode is hidden */}
-
           {/* Desktop Preview Frame */}
           <div
             className={cn(
-              "relative w-full h-full flex flex-col rounded-xl border border-border/80 bg-background shadow-xs overflow-hidden transition-all duration-300 pointer-events-none touch-pan-y",
+              "relative w-full h-full flex flex-col rounded-xl border border-border/80 bg-background shadow-xs overflow-hidden transition-all duration-300 pointer-events-none",
               device === "desktop"
                 ? "opacity-100 scale-100 z-10"
                 : "opacity-0 scale-95 absolute inset-2 z-0"
@@ -508,23 +283,21 @@ function TemplateCard({
                 <span>{template.subdomain}</span>
               </div>
               <span className="text-[9px] font-semibold text-muted-foreground flex items-center gap-1">
-                <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                Auto-Scrolling
+                <span className="size-1.5 rounded-full bg-emerald-500" />
+                Storefront
               </span>
             </div>
 
-            {/* Desktop Viewport with Auto-Scroll Engine */}
-            <div className="flex-1 min-h-0 overflow-hidden pointer-events-none touch-pan-y">
-              <AutoScrollFrame isPaused={isScrollPaused} speed={24}>
-                {template.renderDesktop()}
-              </AutoScrollFrame>
+            {/* Desktop Viewport (Stationary Preview) */}
+            <div className="flex-1 min-h-0 overflow-hidden pointer-events-none">
+              {template.renderDesktop()}
             </div>
           </div>
 
           {/* Mobile Preview Frame (Realistic Smartphone Mockup) */}
           <div
             className={cn(
-              "relative w-[210px] sm:w-[225px] h-full flex flex-col rounded-[24px] border-[3px] border-border/90 bg-background shadow-md overflow-hidden transition-all duration-300 pointer-events-none touch-pan-y",
+              "relative w-[210px] sm:w-[225px] h-full flex flex-col rounded-[24px] border-[3px] border-border/90 bg-background shadow-md overflow-hidden transition-all duration-300 pointer-events-none",
               device === "mobile"
                 ? "opacity-100 scale-100 z-10"
                 : "opacity-0 scale-95 absolute z-0"
@@ -537,11 +310,9 @@ function TemplateCard({
               <span className="text-[7px]">5G 100%</span>
             </div>
 
-            {/* Mobile Viewport with Auto-Scroll Engine */}
-            <div className="flex-1 min-h-0 overflow-hidden pointer-events-none touch-pan-y">
-              <AutoScrollFrame isPaused={isScrollPaused} speed={20}>
-                {template.renderMobile()}
-              </AutoScrollFrame>
+            {/* Mobile Viewport (Stationary Preview) */}
+            <div className="flex-1 min-h-0 overflow-hidden pointer-events-none">
+              {template.renderMobile()}
             </div>
 
             {/* Home indicator bar */}
