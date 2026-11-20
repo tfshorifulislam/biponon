@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowRight, Menu, Moon, Sun } from "lucide-react";
@@ -8,6 +8,7 @@ import { ArrowRight, Menu, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/lib/i18n/languageContext";
+import { useSmoothScroll } from "@/components/providers/smoothScrollProvider";
 import {
   Sheet,
   SheetContent,
@@ -19,7 +20,11 @@ import {
 } from "@/components/ui/sheet";
 import { BrandLogo } from "./brandLogo";
 import { LanguageSwitcher } from "./languageSwitcher";
-import { navLinks } from "./navLinks";
+import { navLinks, NavLinkItem } from "./navLinks";
+import {
+  getActiveHomepageSection,
+  getSectionScrollTop,
+} from "./navScrollUtils";
 
 const THEME_CHANGE_EVENT = "biponon_theme_change";
 
@@ -48,14 +53,15 @@ function getThemeServerSnapshot(): "light" | "dark" {
   return "light";
 }
 
-function isActiveRoute(pathname: string, href: string) {
-  return href === "/" ? pathname === "/" : pathname.startsWith(href);
-}
-
 export function MobileNavbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const { t } = useLanguage();
+  const { scrollTo } = useSmoothScroll();
+  const [activeSection, setActiveSection] = useState<string>("hero");
+  const isScrollingToRef = useRef<string | null>(null);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   const theme = useSyncExternalStore(
     subscribeTheme,
     getThemeSnapshot,
@@ -72,6 +78,57 @@ export function MobileNavbar() {
     } catch {}
   }, []);
 
+  // Track active section on homepage scroll using unified navbar-adjusted reference position
+  useEffect(() => {
+    if (pathname !== "/") return;
+
+    let ticking = false;
+    const onScroll = () => {
+      // Do not override active section while smooth scrolling to a clicked link
+      if (isScrollingToRef.current) return;
+
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (!isScrollingToRef.current) {
+            setActiveSection(getActiveHomepageSection());
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    // User manual wheel or touch breaks programmatic scroll lock
+    const onUserInteraction = () => {
+      isScrollingToRef.current = null;
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+        scrollTimeoutRef.current = null;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("wheel", onUserInteraction, { passive: true });
+    window.addEventListener("touchstart", onUserInteraction, { passive: true });
+
+    // Initial check scheduled via requestAnimationFrame
+    const rafId = window.requestAnimationFrame(() => {
+      if (!isScrollingToRef.current) {
+        setActiveSection(getActiveHomepageSection());
+      }
+    });
+
+    return () => {
+      window.cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("wheel", onUserInteraction);
+      window.removeEventListener("touchstart", onUserInteraction);
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, [pathname]);
+
   const toggleTheme = useCallback(() => {
     const isDark = document.documentElement.classList.contains("dark");
     const nextTheme = isDark ? "light" : "dark";
@@ -85,6 +142,59 @@ export function MobileNavbar() {
       window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
     } catch {}
   }, []);
+
+  const handleLinkClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, link: NavLinkItem) => {
+      setOpen(false);
+      if (pathname === "/" && link.sectionId) {
+        e.preventDefault();
+        const targetEl = document.getElementById(link.sectionId);
+        if (targetEl) {
+          const targetScroll = getSectionScrollTop(targetEl);
+
+          // 1. Make the target section active immediately
+          setActiveSection(link.sectionId);
+          isScrollingToRef.current = link.sectionId;
+
+          // Lock active section during smooth scrolling animation (~1s)
+          if (scrollTimeoutRef.current) {
+            clearTimeout(scrollTimeoutRef.current);
+          }
+          scrollTimeoutRef.current = setTimeout(() => {
+            isScrollingToRef.current = null;
+            scrollTimeoutRef.current = null;
+            // Verify and re-confirm active section at final resting position
+            setActiveSection(getActiveHomepageSection());
+          }, 1100);
+
+          // 2. Scroll to the actual TOP of target section positioned just below sticky navbar
+          scrollTo(targetScroll, { duration: 1.0 });
+
+          // 3. Update URL hash cleanly
+          window.history.pushState(
+            null,
+            "",
+            link.sectionId === "hero" ? "/" : `#${link.sectionId}`
+          );
+        }
+      }
+    },
+    [pathname, scrollTo]
+  );
+
+  const isLinkActive = useCallback(
+    (link: NavLinkItem) => {
+      if (pathname.startsWith("/documentation")) {
+        return link.href === "/documentation";
+      }
+      if (pathname === "/") {
+        if (link.href === "/documentation") return false;
+        return link.sectionId === activeSection;
+      }
+      return link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
+    },
+    [pathname, activeSection]
+  );
 
   return (
     <div className="flex w-full items-center justify-between lg:hidden">
@@ -132,7 +242,7 @@ export function MobileNavbar() {
               <SheetDescription className="sr-only">
                 {t("nav.menuDescription")}
               </SheetDescription>
-              <BrandLogo />
+              <BrandLogo onNavigate={() => setOpen(false)} />
             </SheetHeader>
 
             <nav
@@ -141,13 +251,13 @@ export function MobileNavbar() {
             >
               <ul className="flex flex-col gap-1">
                 {navLinks.map((link) => {
-                  const active = isActiveRoute(pathname, link.href);
+                  const active = isLinkActive(link);
 
                   return (
                     <li key={link.href}>
                       <Link
                         href={link.href}
-                        onClick={() => setOpen(false)}
+                        onClick={(e) => handleLinkClick(e, link)}
                         aria-current={active ? "page" : undefined}
                         className={cn(
                           "flex items-center justify-between rounded-lg px-3 py-2.5 text-base font-medium transition-colors hover:bg-muted hover:text-brand",

@@ -11,6 +11,7 @@ import React, {
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
+import { getSectionScrollTop } from "@/components/navbar/navScrollUtils";
 
 interface SmoothScrollContextType {
   lenis: Lenis | null;
@@ -152,9 +153,9 @@ export function SmoothScrollProvider({
           const targetEl = document.querySelector(hash);
           if (targetEl) {
             e.preventDefault();
-            lenisInstance.scrollTo(targetEl as HTMLElement, {
-              offset: -76, // Offset to clear floating navbar
-              duration: 1.2,
+            const targetTop = getSectionScrollTop(targetEl as HTMLElement);
+            lenisInstance.scrollTo(targetTop, {
+              duration: 1.0,
             });
             window.history.pushState(null, "", hash);
           }
@@ -169,12 +170,12 @@ export function SmoothScrollProvider({
       try {
         const targetEl = document.querySelector(window.location.hash);
         if (targetEl) {
+          const targetTop = getSectionScrollTop(targetEl as HTMLElement);
           setTimeout(() => {
-            lenisInstance.scrollTo(targetEl as HTMLElement, {
-              offset: -76,
+            lenisInstance.scrollTo(targetTop, {
               immediate: true,
             });
-          }, 100);
+          }, 50);
         }
       } catch {}
     }
@@ -187,13 +188,76 @@ export function SmoothScrollProvider({
     };
   }, [reducedMotion]);
 
-  // Reset scroll to top on page navigation in Next.js App Router
+  // Handle route change / initial load / cross-page hash navigation
   useEffect(() => {
     const active = lenisStore.get();
+    const hash = typeof window !== "undefined" ? window.location.hash : "";
+
+    if (hash && hash !== "#") {
+      const tryScrollToHash = () => {
+        try {
+          const targetEl = document.querySelector(hash);
+          if (targetEl) {
+            const targetTop = getSectionScrollTop(targetEl as HTMLElement);
+            if (active) {
+              active.scrollTo(targetTop, {
+                duration: 1.0,
+              });
+            } else {
+              window.scrollTo({ top: targetTop, behavior: "smooth" });
+            }
+            return true;
+          }
+        } catch {}
+        return false;
+      };
+
+      if (!tryScrollToHash()) {
+        let frameCount = 0;
+        let rafId: number;
+        const check = () => {
+          frameCount++;
+          if (tryScrollToHash() || frameCount >= 30) {
+            return;
+          }
+          rafId = requestAnimationFrame(check);
+        };
+        rafId = requestAnimationFrame(check);
+        return () => cancelAnimationFrame(rafId);
+      }
+      return;
+    }
+
+    // No hash: reset scroll to top on page navigation in Next.js App Router
     if (active) {
       active.scrollTo(0, { immediate: true });
     }
   }, [pathname]);
+
+  // Handle browser back/forward and external hash updates
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (!hash || hash === "#") return;
+      try {
+        const targetEl = document.querySelector(hash);
+        if (targetEl) {
+          const targetTop = getSectionScrollTop(targetEl as HTMLElement);
+          const active = lenisStore.get();
+          if (active) {
+            active.scrollTo(targetTop, {
+              duration: 1.0,
+            });
+          } else {
+            window.scrollTo({ top: targetTop, behavior: "smooth" });
+          }
+        }
+      } catch {}
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
 
   const scrollTo = useCallback(
     (
@@ -206,16 +270,20 @@ export function SmoothScrollProvider({
       }
     ) => {
       const active = lenisStore.get();
+      let scrollTarget: number | string | HTMLElement = target;
+
+      if (typeof target === "string" || target instanceof HTMLElement) {
+        scrollTarget = getSectionScrollTop(target);
+      }
+
       if (active) {
-        active.scrollTo(target, options);
+        active.scrollTo(scrollTarget, options);
       } else if (typeof window !== "undefined") {
-        if (typeof target === "number") {
-          window.scrollTo({ top: target, behavior: "smooth" });
-        } else if (typeof target === "string") {
-          const el = document.querySelector(target);
-          if (el) el.scrollIntoView({ behavior: "smooth" });
-        } else if (target instanceof HTMLElement) {
-          target.scrollIntoView({ behavior: "smooth" });
+        if (typeof scrollTarget === "number") {
+          window.scrollTo({
+            top: scrollTarget,
+            behavior: options?.immediate ? "auto" : "smooth",
+          });
         }
       }
     },

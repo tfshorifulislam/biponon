@@ -44,7 +44,10 @@ export default function HeroSection() {
   const { t } = useLanguage();
 
   return (
-    <section className="relative isolate w-full overflow-hidden px-4 pt-24 pb-0 sm:px-6 sm:pt-28 lg:px-8 lg:pt-36">
+    <section
+      id="hero"
+      className="relative isolate w-full overflow-hidden px-4 pt-24 pb-0 sm:px-6 sm:pt-28 lg:px-8 lg:pt-36"
+    >
       <div
         aria-hidden
         className="hero-background pointer-events-none absolute inset-0 -z-10"

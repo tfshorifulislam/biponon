@@ -1,6 +1,5 @@
 "use client";
 
-import { Globe } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/languageContext";
 import { cn } from "@/lib/utils";
 
