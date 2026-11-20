@@ -4,6 +4,7 @@ import { FeaturesSection } from "@/components/features/featuresSection";
 import { HowItWorksSection } from "@/components/how-it-works/howItWorksSection";
 import { StoreBuilderSection } from "@/components/store-builder/storeBuilderSection";
 import { TemplatesSection } from "@/components/templates/templatesSection";
+import { PricingSection } from "@/components/pricing/pricingSection";
 
 export default function HomePage() {
   return (
@@ -14,6 +15,7 @@ export default function HomePage() {
       <HowItWorksSection />
       <StoreBuilderSection />
       <TemplatesSection />
+      <PricingSection />
     </>
   );
 }
