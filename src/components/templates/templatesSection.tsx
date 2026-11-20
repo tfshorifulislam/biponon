@@ -184,11 +184,14 @@ function AutoScrollFrame({
   return (
     <div
       ref={containerRef}
-      className={cn("relative h-full w-full overflow-hidden select-none", className)}
+      className={cn(
+        "relative h-full w-full overflow-hidden select-none pointer-events-none touch-pan-y",
+        className
+      )}
     >
       <div
         ref={contentRef}
-        className="w-full will-change-transform"
+        className="w-full will-change-transform pointer-events-none touch-pan-y"
         style={{ transform: "translate3d(0, 0, 0)" }}
       >
         {children}
@@ -390,14 +393,14 @@ function TemplateCard({
   const tagline = t(template.taglineKey) || template.fallbackTagline;
   const description = t(template.descKey) || template.fallbackDesc;
 
-  // Scrolling pause state: pauses when outside viewport, hovered, or reduced motion requested
-  const isScrollPaused = !isSectionInView || reducedMotion || isHovered;
+  // Scrolling pause state: pauses only when outside viewport or reduced motion is requested
+  const isScrollPaused = !isSectionInView || reducedMotion;
 
   return (
     <Card
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group relative overflow-hidden rounded-2xl sm:rounded-3xl border border-border/80 bg-card text-card-foreground shadow-xs transition-all duration-300 hover:shadow-lg hover:border-primary/30 dark:border-white/10 dark:bg-card/85 flex flex-col justify-between"
+      className="group relative overflow-hidden rounded-2xl sm:rounded-3xl border border-border/80 bg-card text-card-foreground shadow-xs transition-all duration-300 hover:shadow-lg hover:border-primary/30 dark:border-white/10 dark:bg-card/85 flex flex-col justify-between touch-pan-y"
     >
       {/* Top Card Header */}
       <CardHeader className="p-5 sm:p-6 pb-4 border-b border-border/60">
@@ -470,8 +473,8 @@ function TemplateCard({
       </CardHeader>
 
       {/* Main Preview Stage Container */}
-      <CardContent className="p-4 sm:p-5 flex-1 flex flex-col justify-center">
-        <div className="relative w-full h-[340px] sm:h-[350px] rounded-xl sm:rounded-2xl border border-border/70 bg-muted/30 dark:bg-white/5 p-2 sm:p-3 overflow-hidden flex items-center justify-center">
+      <CardContent className="p-4 sm:p-5 flex-1 flex flex-col justify-center touch-pan-y">
+        <div className="relative w-full h-[340px] sm:h-[350px] rounded-xl sm:rounded-2xl border border-border/70 bg-muted/30 dark:bg-white/5 p-2 sm:p-3 overflow-hidden flex items-center justify-center pointer-events-none touch-pan-y">
           {/* Subtle Ambient Background Gradient */}
           <div
             aria-hidden
@@ -487,10 +490,10 @@ function TemplateCard({
           {/* Desktop Preview Frame */}
           <div
             className={cn(
-              "relative w-full h-full flex flex-col rounded-xl border border-border/80 bg-background shadow-xs overflow-hidden transition-all duration-300",
+              "relative w-full h-full flex flex-col rounded-xl border border-border/80 bg-background shadow-xs overflow-hidden transition-all duration-300 pointer-events-none touch-pan-y",
               device === "desktop"
-                ? "opacity-100 scale-100 pointer-events-auto z-10"
-                : "opacity-0 scale-95 pointer-events-none absolute inset-2 z-0"
+                ? "opacity-100 scale-100 z-10"
+                : "opacity-0 scale-95 absolute inset-2 z-0"
             )}
           >
             {/* Browser Header Bar */}
@@ -511,7 +514,7 @@ function TemplateCard({
             </div>
 
             {/* Desktop Viewport with Auto-Scroll Engine */}
-            <div className="flex-1 min-h-0 overflow-hidden">
+            <div className="flex-1 min-h-0 overflow-hidden pointer-events-none touch-pan-y">
               <AutoScrollFrame isPaused={isScrollPaused} speed={24}>
                 {template.renderDesktop()}
               </AutoScrollFrame>
@@ -521,10 +524,10 @@ function TemplateCard({
           {/* Mobile Preview Frame (Realistic Smartphone Mockup) */}
           <div
             className={cn(
-              "relative w-[210px] sm:w-[225px] h-full flex flex-col rounded-[24px] border-[3px] border-border/90 bg-background shadow-md overflow-hidden transition-all duration-300",
+              "relative w-[210px] sm:w-[225px] h-full flex flex-col rounded-[24px] border-[3px] border-border/90 bg-background shadow-md overflow-hidden transition-all duration-300 pointer-events-none touch-pan-y",
               device === "mobile"
-                ? "opacity-100 scale-100 pointer-events-auto z-10"
-                : "opacity-0 scale-95 pointer-events-none absolute z-0"
+                ? "opacity-100 scale-100 z-10"
+                : "opacity-0 scale-95 absolute z-0"
             )}
           >
             {/* Mobile Dynamic Island / Speaker */}
@@ -535,7 +538,7 @@ function TemplateCard({
             </div>
 
             {/* Mobile Viewport with Auto-Scroll Engine */}
-            <div className="flex-1 min-h-0 overflow-hidden">
+            <div className="flex-1 min-h-0 overflow-hidden pointer-events-none touch-pan-y">
               <AutoScrollFrame isPaused={isScrollPaused} speed={20}>
                 {template.renderMobile()}
               </AutoScrollFrame>
