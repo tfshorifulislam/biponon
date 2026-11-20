@@ -446,14 +446,14 @@ function NaturalDesktopPreview() {
         </div>
         <div className="grid grid-cols-3 gap-1.5">
           <div className="flex flex-col justify-between rounded-md border border-stone-300/60 dark:border-stone-800 bg-white/70 dark:bg-[#202723] p-1.5">
-            <div className="h-12 w-full overflow-hidden rounded bg-stone-200/50">
+            <div className="h-12 w-full overflow-hidden rounded bg-stone-200/50 flex items-center justify-center">
               <Image
                 src="/products/canvas-tote.svg"
                 alt="Linen Shirt"
                 width={48}
                 height={48}
                 unoptimized
-                className="size-full object-cover"
+                className="h-full w-auto object-contain"
               />
             </div>
             <p className="truncate text-[9px] font-serif font-bold mt-1">Linen Shirt</p>
@@ -461,14 +461,14 @@ function NaturalDesktopPreview() {
           </div>
 
           <div className="flex flex-col justify-between rounded-md border border-stone-300/60 dark:border-stone-800 bg-white/70 dark:bg-[#202723] p-1.5">
-            <div className="h-12 w-full overflow-hidden rounded bg-stone-200/50">
+            <div className="h-12 w-full overflow-hidden rounded bg-stone-200/50 flex items-center justify-center">
               <Image
                 src="/products/ceramic-mug.svg"
                 alt="Clay Candle"
                 width={48}
                 height={48}
                 unoptimized
-                className="size-full object-cover"
+                className="h-full w-auto object-contain"
               />
             </div>
             <p className="truncate text-[9px] font-serif font-bold mt-1">Clay Candle</p>
@@ -476,14 +476,14 @@ function NaturalDesktopPreview() {
           </div>
 
           <div className="flex flex-col justify-between rounded-md border border-stone-300/60 dark:border-stone-800 bg-white/70 dark:bg-[#202723] p-1.5">
-            <div className="h-12 w-full overflow-hidden rounded bg-stone-200/50">
+            <div className="h-12 w-full overflow-hidden rounded bg-stone-200/50 flex items-center justify-center">
               <Image
                 src="/products/fiddle-leaf-plant.svg"
                 alt="Clay Planter"
                 width={48}
                 height={48}
                 unoptimized
-                className="size-full object-cover"
+                className="h-full w-auto object-contain"
               />
             </div>
             <p className="truncate text-[9px] font-serif font-bold mt-1">Clay Planter</p>
@@ -555,14 +555,14 @@ function NaturalMobilePreview() {
       {/* 2-Col Mobile Product Grid */}
       <div className="grid grid-cols-2 gap-1.5">
         <div className="rounded border border-stone-300/60 dark:border-stone-800 bg-white/80 dark:bg-[#202723] p-1 flex flex-col justify-between">
-          <div className="h-10 w-full overflow-hidden rounded bg-stone-200/50">
+          <div className="h-10 w-full overflow-hidden rounded bg-stone-200/50 flex items-center justify-center">
             <Image
               src="/products/canvas-tote.svg"
               alt="Linen Shirt"
               width={36}
               height={36}
               unoptimized
-              className="size-full object-cover"
+              className="h-full w-auto object-contain"
             />
           </div>
           <p className="truncate text-[8px] font-serif font-bold mt-0.5">Linen Shirt</p>
@@ -570,14 +570,14 @@ function NaturalMobilePreview() {
         </div>
 
         <div className="rounded border border-stone-300/60 dark:border-stone-800 bg-white/80 dark:bg-[#202723] p-1 flex flex-col justify-between">
-          <div className="h-10 w-full overflow-hidden rounded bg-stone-200/50">
+          <div className="h-10 w-full overflow-hidden rounded bg-stone-200/50 flex items-center justify-center">
             <Image
               src="/products/ceramic-mug.svg"
               alt="Clay Candle"
               width={36}
               height={36}
               unoptimized
-              className="size-full object-cover"
+              className="h-full w-auto object-contain"
             />
           </div>
           <p className="truncate text-[8px] font-serif font-bold mt-0.5">Clay Candle</p>
@@ -876,7 +876,7 @@ function MinimalDesktopPreview() {
                 width={40}
                 height={40}
                 unoptimized
-                className="size-full object-contain"
+                className="h-full w-auto object-contain"
               />
             </div>
             <p className="truncate font-mono text-[9px] font-bold mt-1">ANC Headset</p>
@@ -958,7 +958,7 @@ function MinimalMobilePreview() {
               width={28}
               height={28}
               unoptimized
-              className="size-full object-contain"
+              className="h-full w-auto object-contain"
             />
           </div>
           <p className="truncate font-mono text-[8px] font-bold mt-0.5">ANC Headset</p>

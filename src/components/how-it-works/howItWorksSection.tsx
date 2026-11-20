@@ -661,14 +661,14 @@ function Step3StorefrontDesign() {
               key={p.name}
               className="group flex flex-col overflow-hidden rounded-lg sm:rounded-xl border border-border/70 bg-card p-1.5 sm:p-2 shadow-2xs transition-all hover:border-primary/40"
             >
-              <div className="h-16 sm:h-20 w-full overflow-hidden rounded-md sm:rounded-lg bg-muted/60">
+              <div className="relative h-16 sm:h-20 w-full overflow-hidden rounded-md sm:rounded-lg bg-muted/60 flex items-center justify-center">
                 <Image
                   src={p.image}
                   alt={p.name}
-                  width={140}
-                  height={80}
+                  width={400}
+                  height={400}
                   unoptimized
-                  className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
               <div className="mt-1.5 flex flex-1 flex-col justify-between">
