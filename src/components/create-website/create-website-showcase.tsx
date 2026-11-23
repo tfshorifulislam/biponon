@@ -191,9 +191,9 @@ export function CreateWebsiteShowcase() {
         </p>
       </div>
 
-      <div className="relative z-10">
-        <div className="overflow-hidden rounded-[1.35rem] border border-white/15 bg-white/5 shadow-[0_35px_80px_-35px_rgba(0,0,0,0.85)] backdrop-blur-sm">
-          <div className="flex items-center gap-2 border-b border-white/10 bg-white/5 px-3 py-2">
+      <div className="relative z-10 flex flex-1 flex-col justify-between min-h-0">
+        <div className="flex flex-1 flex-col min-h-0 overflow-hidden rounded-[1.35rem] border border-white/15 bg-white/5 shadow-[0_35px_80px_-35px_rgba(0,0,0,0.85)] backdrop-blur-sm">
+          <div className="flex shrink-0 items-center gap-2 border-b border-white/10 bg-white/5 px-3 py-2">
             <div className="flex items-center gap-1.5" aria-hidden>
               <span className="size-2 rounded-full bg-rose-400/80" />
               <span className="size-2 rounded-full bg-amber-300/80" />
@@ -211,7 +211,7 @@ export function CreateWebsiteShowcase() {
             </span>
           </div>
 
-          <div className="relative h-[290px] overflow-hidden p-2 sm:h-[310px] sm:p-2.5 xl:h-[320px]">
+          <div className="relative flex-1 min-h-[350px] sm:min-h-[380px] xl:min-h-[410px] overflow-hidden p-2 sm:p-2.5">
             {scenes.map((scene, index) => {
               const isActive = index === activeIndex;
 
@@ -240,7 +240,7 @@ export function CreateWebsiteShowcase() {
           </div>
         </div>
 
-        <div className="mt-3 grid grid-cols-3 gap-1.5">
+        <div className="mt-3 grid grid-cols-3 gap-1.5 shrink-0">
           {scenes.map((scene, index) => {
             const isActive = index === activeIndex;
 
@@ -364,6 +364,20 @@ function CreateStoreScene() {
               nokshi.biponon.com
             </span>
             <CircleCheck className="ml-auto size-2.5 shrink-0 text-emerald-500" />
+          </div>
+
+          <div className="mt-auto space-y-1">
+            <div className="flex items-center justify-between rounded-md bg-muted/60 px-1.5 py-1 text-[7px]">
+              <span className="text-muted-foreground">SSL Security</span>
+              <span className="inline-flex items-center gap-0.5 font-semibold text-emerald-600 dark:text-emerald-400">
+                <CircleCheck className="size-2" />
+                Active
+              </span>
+            </div>
+            <div className="flex items-center justify-between rounded-md bg-muted/60 px-1.5 py-1 text-[7px]">
+              <span className="text-muted-foreground">Hosting</span>
+              <span className="font-semibold text-foreground">Included</span>
+            </div>
           </div>
         </div>
 

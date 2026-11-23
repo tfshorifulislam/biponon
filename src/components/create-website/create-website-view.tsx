@@ -10,7 +10,7 @@ export function CreateWebsiteView() {
   const { t } = useLanguage();
 
   return (
-    <section className="relative isolate flex min-h-[calc(100dvh-3.75rem)] sm:min-h-[calc(100dvh-4.5rem)] lg:min-h-[calc(100dvh-5rem)] w-full flex-col justify-between overflow-x-clip px-4 pt-20 pb-6 sm:px-6 sm:pt-24 sm:pb-8 lg:px-8 lg:pt-24 lg:pb-8">
+    <section className="relative isolate flex min-h-dvh w-full flex-col justify-between overflow-x-clip px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12">
       {/* Background Ambience strictly clipped to prevent horizontal overflow */}
       <div
         aria-hidden
@@ -35,7 +35,7 @@ export function CreateWebsiteView() {
       {/* Main Split Card Container */}
       <div className="relative mx-auto my-auto w-full max-w-5xl xl:max-w-6xl">
         <div className="overflow-hidden rounded-2xl border border-border/80 bg-card/95 shadow-[0_24px_70px_-30px_rgba(15,23,42,0.25)] ring-1 ring-foreground/5 backdrop-blur-xl sm:rounded-3xl dark:border-white/10 dark:bg-card/75 dark:ring-white/10 dark:shadow-[0_24px_70px_-30px_rgba(0,0,0,0.6)]">
-          <div className="grid min-w-0 grid-cols-1 lg:grid-cols-[48%_52%]">
+          <div className="grid min-w-0 grid-cols-1 lg:grid-cols-[46%_54%]">
             <div className="relative order-1 flex min-w-0 bg-card px-4 py-6 sm:px-8 sm:py-8 lg:px-8 lg:py-7 xl:px-10 xl:py-8">
               <div
                 aria-hidden

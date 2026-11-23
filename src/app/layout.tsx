@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Hind_Siliguri, Inter } from "next/font/google";
 
-import { MainNavbar } from "@/components/navbar/mainNavbar";
-import { Footer } from "@/components/footer/footer";
 import { LanguageProvider } from "@/lib/i18n/languageContext";
 import { SmoothScrollProvider } from "@/components/providers/smoothScrollProvider";
 
@@ -26,7 +24,11 @@ export const metadata: Metadata = {
     "Everything you need to create, manage, and grow your online store — all in one platform.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html
       lang="en"
@@ -34,13 +36,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${inter.variable} ${hindSiliguri.variable} ${inter.className} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="flex min-h-full flex-col ">
+      <body className="flex min-h-full flex-col">
         <LanguageProvider>
-          <SmoothScrollProvider>
-            <MainNavbar />
-            <main className="w-full flex-1">{children}</main>
-            <Footer />
-          </SmoothScrollProvider>
+          <SmoothScrollProvider>{children}</SmoothScrollProvider>
         </LanguageProvider>
       </body>
     </html>

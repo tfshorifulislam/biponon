@@ -10,7 +10,7 @@ export function LoginView() {
   const { t } = useLanguage();
 
   return (
-    <section className="relative isolate flex min-h-[calc(100dvh-3.75rem)] sm:min-h-[calc(100dvh-4.5rem)] lg:min-h-[calc(100dvh-5rem)] w-full flex-col justify-between overflow-x-clip px-4 pt-20 pb-6 sm:px-6 sm:pt-24 sm:pb-8 lg:px-8 lg:pt-24 lg:pb-8">
+    <section className="relative isolate flex min-h-dvh w-full flex-col justify-between overflow-x-clip px-4 py-8 sm:px-6 sm:py-10 lg:px-8 lg:py-12">
       {/* Background Ambience strictly clipped to prevent horizontal overflow */}
       <div
         aria-hidden

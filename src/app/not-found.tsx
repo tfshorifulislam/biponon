@@ -7,6 +7,8 @@ import { ArrowLeft, RotateCcw, Store, ShoppingBag, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/lib/i18n/languageContext";
+import { MainNavbar } from "@/components/navbar/mainNavbar";
+import { Footer } from "@/components/footer/footer";
 
 export default function NotFound() {
   const router = useRouter();
@@ -21,7 +23,10 @@ export default function NotFound() {
   }
 
   return (
-    <section className="relative isolate flex min-h-screen w-full items-center justify-center overflow-hidden px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:px-8">
+    <>
+      <MainNavbar />
+      <main className="w-full flex-1">
+        <section className="relative isolate flex min-h-screen w-full items-center justify-center overflow-hidden px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:px-8">
       <div
         aria-hidden
         className="hero-background pointer-events-none absolute inset-0 -z-10"
@@ -149,5 +154,8 @@ export default function NotFound() {
         </div>
       </div>
     </section>
+    </main>
+    <Footer />
+  </>
   );
 }
