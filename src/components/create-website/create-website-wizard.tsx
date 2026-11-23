@@ -17,12 +17,13 @@ import {
   ArrowRight,
   Check,
   CircleAlert,
+  Edit2,
   Globe,
-  LayoutTemplate,
   Loader2,
   Lock,
   Palette,
   ShieldCheck,
+  Sparkles,
   Store,
   Trash2,
   UploadCloud,
@@ -39,24 +40,18 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  CreateStoreError,
-  createStore,
-  type CreateStoreSuccess,
-} from "@/lib/website/client";
+import { useLanguage } from "@/lib/i18n/languageContext";
 import {
   LOGO_MAX_BYTES,
   STORE_CATEGORIES,
   STORE_DESCRIPTION_MAX,
   STORE_NAME_MAX,
   SUBDOMAIN_MAX,
-  getCategoryLabel,
   getStoreUrl,
   slugify,
   validateBrandColor,
+  validateCategory,
   validateDescription,
-  validateStepOne,
-  validateStepTwo,
   validateStoreDraft,
   validateStoreName,
   validateSubdomain,
@@ -74,30 +69,6 @@ const BRAND_COLOR_PRESETS = [
   "#E11D48",
   "#F59E0B",
   "#0F172A",
-];
-
-const STEPS = [
-  {
-    number: "01",
-    title: "Store Information",
-    shortTitle: "Store Info",
-    description: "Tell us the basics about your new store.",
-    icon: Store,
-  },
-  {
-    number: "02",
-    title: "Store Identity",
-    shortTitle: "Identity",
-    description: "Add your logo, brand color, and store URL.",
-    icon: Palette,
-  },
-  {
-    number: "03",
-    title: "Review & Create",
-    shortTitle: "Review",
-    description: "Review your details before we create your store.",
-    icon: LayoutTemplate,
-  },
 ];
 
 const INITIAL_DRAFT: StoreDraft = {
@@ -118,28 +89,33 @@ const LOGO_TYPES = new Set([
   "image/svg+xml",
 ]);
 
+interface CreatedStoreSuccess {
+  storeUrl: string;
+  storeName: string;
+}
+
 function WizardBrand() {
   return (
     <Link
       href="/"
       aria-label="Biponon home"
-      className="group inline-flex w-fit items-center rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      className="group inline-flex items-center rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
     >
       <Image
         src="/logo2.png"
         alt="Biponon"
-        width={150}
-        height={35}
+        width={130}
+        height={30}
         priority
-        className="block h-8 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02] dark:hidden"
+        className="block h-6.5 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02] sm:h-7 dark:hidden"
       />
       <Image
         src="/logo.png"
         alt="Biponon"
-        width={150}
-        height={35}
+        width={130}
+        height={30}
         priority
-        className="hidden h-8 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02] dark:block"
+        className="hidden h-6.5 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02] sm:h-7 dark:block"
       />
     </Link>
   );
@@ -160,18 +136,27 @@ function FieldError({ id, message }: { id: string; message?: string }) {
   );
 }
 
+interface StepItem {
+  number: string;
+  title: string;
+  shortTitle: string;
+  description: string;
+}
+
 function StepIndicator({
+  steps,
   activeStep,
   maxVisitedStep,
   onSelect,
 }: {
+  steps: StepItem[];
   activeStep: number;
   maxVisitedStep: number;
   onSelect: (index: number) => void;
 }) {
   return (
-    <div className="flex items-start gap-1.5" aria-label="Store setup progress">
-      {STEPS.map((step, index) => {
+    <div className="flex items-center gap-2" aria-label="Store setup progress">
+      {steps.map((step, index) => {
         const isActive = index === activeStep;
         const isCompleted = index < activeStep;
         const isAvailable = index <= maxVisitedStep;
@@ -187,31 +172,31 @@ function StepIndicator({
                 isCompleted ? " (completed)" : ""
               }`}
               className={cn(
-                "group flex min-w-0 flex-1 flex-col items-center gap-2 rounded-xl px-1 py-1 text-center transition-colors focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none",
-                isAvailable ? "cursor-pointer" : "cursor-default"
+                "group flex min-w-0 flex-1 flex-col items-center gap-1.5 rounded-xl px-1 py-1 text-center transition-colors focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:outline-none",
+                isAvailable ? "cursor-pointer" : "cursor-default opacity-60"
               )}
             >
               <span
                 className={cn(
-                  "grid size-9 place-items-center rounded-full border text-[11px] font-bold transition-all duration-300",
+                  "grid size-8 place-items-center rounded-full border text-xs font-bold transition-all duration-300 sm:size-8.5",
                   isActive &&
-                    "border-transparent bg-primary text-primary-foreground shadow-[0_8px_20px_-10px_rgba(0,151,107,0.9)]",
+                    "border-transparent bg-primary text-primary-foreground shadow-[0_8px_20px_-8px_rgba(0,151,107,0.9)] ring-2 ring-primary/25",
                   isCompleted &&
-                    "border-primary/25 bg-primary/10 text-primary group-hover:bg-primary/15",
+                    "border-primary/30 bg-primary/10 text-primary group-hover:bg-primary/20",
                   !isActive &&
                     !isCompleted &&
                     "border-border bg-muted/40 text-muted-foreground"
                 )}
               >
                 {isCompleted ? (
-                  <Check className="size-4" strokeWidth={3} />
+                  <Check className="size-3.5" strokeWidth={3} />
                 ) : (
                   step.number
                 )}
               </span>
               <span
                 className={cn(
-                  "block w-full truncate text-[10px] font-semibold tracking-wide transition-colors",
+                  "block w-full truncate text-[11px] font-semibold tracking-tight transition-colors",
                   isActive && "text-primary",
                   isCompleted && "text-foreground",
                   !isActive && !isCompleted && "text-muted-foreground"
@@ -220,12 +205,12 @@ function StepIndicator({
                 {step.shortTitle}
               </span>
             </button>
-            {index < STEPS.length - 1 ? (
+            {index < steps.length - 1 ? (
               <span
                 aria-hidden
                 className={cn(
-                  "mt-[18px] h-px w-4 shrink-0 rounded-full transition-colors duration-300 sm:w-7",
-                  index < activeStep ? "bg-primary/60" : "bg-border"
+                  "mb-4 h-0.5 w-4 shrink-0 rounded-full transition-colors duration-300 sm:w-6",
+                  index < activeStep ? "bg-primary" : "bg-border/80"
                 )}
               />
             ) : null}
@@ -244,9 +229,9 @@ function SummaryRow({
   children: React.ReactNode;
 }) {
   return (
-    <div className="grid gap-1 py-2.5 sm:grid-cols-[8.5rem_minmax(0,1fr)] sm:items-start sm:gap-3">
+    <div className="grid gap-1 py-1.5 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:items-start sm:gap-3 sm:py-2">
       <dt className="text-xs font-medium text-muted-foreground">{label}</dt>
-      <dd className="min-w-0 text-sm leading-relaxed break-words text-foreground">
+      <dd className="min-w-0 text-xs font-medium leading-relaxed break-words text-foreground sm:text-sm">
         {children}
       </dd>
     </div>
@@ -255,35 +240,40 @@ function SummaryRow({
 
 function SummarySection({
   title,
+  editText,
   onEdit,
   children,
 }: {
   title: string;
+  editText: string;
   onEdit: () => void;
   children: React.ReactNode;
 }) {
   return (
-    <section className="rounded-2xl border border-border/70 bg-background/60 p-4">
-      <div className="flex items-center justify-between gap-3">
-        <h3 className="text-[10px] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
+    <section className="rounded-xl border border-border/75 bg-background/60 p-3 shadow-xs sm:p-3.5">
+      <div className="flex items-center justify-between gap-3 border-b border-border/50 pb-1.5">
+        <h3 className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
           {title}
         </h3>
         <button
           type="button"
           onClick={onEdit}
-          className="rounded-md text-xs font-semibold text-primary underline-offset-4 transition-colors hover:text-primary/80 hover:underline focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none"
+          className="inline-flex items-center gap-1 rounded-md text-xs font-semibold text-primary underline-offset-4 transition-colors hover:text-primary/80 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
         >
-          Edit
+          <Edit2 className="size-3" />
+          <span>{editText}</span>
         </button>
       </div>
-      <dl className="mt-1 divide-y divide-border/60">{children}</dl>
+      <dl className="mt-1 divide-y divide-border/40">{children}</dl>
     </section>
   );
 }
 
 export function CreateWebsiteWizard() {
+  const { t } = useLanguage();
   const logoInputId = useId();
   const logoInputRef = useRef<HTMLInputElement>(null);
+
   const [stepIndex, setStepIndex] = useState(0);
   const [maxVisitedStep, setMaxVisitedStep] = useState(0);
   const [draft, setDraft] = useState<StoreDraft>(INITIAL_DRAFT);
@@ -292,16 +282,42 @@ export function CreateWebsiteWizard() {
   const [subdomainTouched, setSubdomainTouched] = useState(false);
   const [isDraggingLogo, setIsDraggingLogo] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [success, setSuccess] = useState<CreateStoreSuccess | null>(null);
+  const [success, setSuccess] = useState<CreatedStoreSuccess | null>(null);
+
+  const steps: StepItem[] = useMemo(
+    () => [
+      {
+        number: t("createWebsite.steps.step1.number"),
+        title: t("createWebsite.steps.step1.title"),
+        shortTitle: t("createWebsite.steps.step1.shortTitle"),
+        description: t("createWebsite.steps.step1.description"),
+      },
+      {
+        number: t("createWebsite.steps.step2.number"),
+        title: t("createWebsite.steps.step2.title"),
+        shortTitle: t("createWebsite.steps.step2.shortTitle"),
+        description: t("createWebsite.steps.step2.description"),
+      },
+      {
+        number: t("createWebsite.steps.step3.number"),
+        title: t("createWebsite.steps.step3.title"),
+        shortTitle: t("createWebsite.steps.step3.shortTitle"),
+        description: t("createWebsite.steps.step3.description"),
+      },
+    ],
+    [t]
+  );
 
   const storeUrl = useMemo(
     () => getStoreUrl(draft.subdomain),
     [draft.subdomain]
   );
+
   const safeBrandColor = HEX_COLOR_PATTERN.test(draft.brandColor)
     ? draft.brandColor
     : "#00976B";
-  const activeStep = STEPS[stepIndex];
+
+  const activeStep = steps[stepIndex];
 
   const clearError = (key: keyof StoreFieldErrors) => {
     setErrors((current) =>
@@ -351,7 +367,7 @@ export function CreateWebsiteWizard() {
     if (!LOGO_TYPES.has(file.type)) {
       setErrors((current) => ({
         ...current,
-        logo: "Upload a PNG, JPG, WebP, or SVG image.",
+        logo: t("createWebsite.validation.logoFormat"),
       }));
       return;
     }
@@ -359,7 +375,7 @@ export function CreateWebsiteWizard() {
     if (file.size > LOGO_MAX_BYTES) {
       setErrors((current) => ({
         ...current,
-        logo: "Logo must be 1 MB or smaller.",
+        logo: t("createWebsite.validation.logoSize"),
       }));
       return;
     }
@@ -381,7 +397,7 @@ export function CreateWebsiteWizard() {
     reader.onerror = () => {
       setErrors((current) => ({
         ...current,
-        logo: "We couldn't read that image. Please choose another file.",
+        logo: t("createWebsite.validation.logoFormat"),
       }));
     };
 
@@ -411,11 +427,48 @@ export function CreateWebsiteWizard() {
     setFormError(null);
   };
 
-  const validateCurrentStep = () => {
-    const stepErrors =
-      stepIndex === 0 ? validateStepOne(draft) : validateStepTwo(draft);
-    setErrors(stepErrors);
-    return Object.values(stepErrors).every((error) => !error);
+  const validateCurrentStep = (): boolean => {
+    if (stepIndex === 0) {
+      const stepErrors: StoreFieldErrors = {};
+      const nameErr = validateStoreName(draft.storeName);
+      if (nameErr) {
+        stepErrors.storeName =
+          draft.storeName.trim().length === 0
+            ? t("createWebsite.validation.storeNameRequired")
+            : t("createWebsite.validation.storeNameMin");
+      }
+      const catErr = validateCategory(draft.category);
+      if (catErr) {
+        stepErrors.category = t("createWebsite.validation.categoryRequired");
+      }
+      const descErr = validateDescription(draft.description);
+      if (descErr) {
+        stepErrors.description = descErr;
+      }
+      setErrors(stepErrors);
+      return !stepErrors.storeName && !stepErrors.category && !stepErrors.description;
+    }
+
+    if (stepIndex === 1) {
+      const stepErrors: StoreFieldErrors = {};
+      const subErr = validateSubdomain(draft.subdomain);
+      if (subErr) {
+        stepErrors.subdomain =
+          draft.subdomain.trim().length === 0
+            ? t("createWebsite.validation.subdomainRequired")
+            : draft.subdomain.trim().length < 3
+            ? t("createWebsite.validation.subdomainMin")
+            : t("createWebsite.validation.subdomainFormat");
+      }
+      const colErr = validateBrandColor(draft.brandColor);
+      if (colErr) {
+        stepErrors.brandColor = t("createWebsite.validation.colorInvalid");
+      }
+      setErrors(stepErrors);
+      return !stepErrors.subdomain && !stepErrors.brandColor;
+    }
+
+    return true;
   };
 
   const goToStep = (index: number) => {
@@ -434,7 +487,7 @@ export function CreateWebsiteWizard() {
   const goNext = () => {
     if (!validateCurrentStep()) return;
 
-    const next = Math.min(stepIndex + 1, STEPS.length - 1);
+    const next = Math.min(stepIndex + 1, steps.length - 1);
     setStepIndex(next);
     setMaxVisitedStep((current) => Math.max(current, next));
     setFormError(null);
@@ -447,10 +500,8 @@ export function CreateWebsiteWizard() {
     setErrors({});
   };
 
-  const handleCreateStore = async () => {
+  const handleCreateStore = () => {
     const allErrors = validateStoreDraft(draft);
-    setErrors(allErrors);
-
     if (Object.values(allErrors).some(Boolean)) {
       if (allErrors.storeName || allErrors.category || allErrors.description) {
         setStepIndex(0);
@@ -458,61 +509,33 @@ export function CreateWebsiteWizard() {
       } else {
         setStepIndex(1);
       }
-      setFormError(
-        "Please complete the highlighted fields before creating your store."
-      );
+      setErrors(allErrors);
       return;
     }
 
     setIsSubmitting(true);
     setFormError(null);
 
-    try {
-      const result = await createStore(draft);
-      setSuccess(result);
-      setMaxVisitedStep(2);
-    } catch (error) {
-      if (error instanceof CreateStoreError) {
-        setFormError(error.message);
-
-        if (error.fieldErrors) {
-          const nextErrors: StoreFieldErrors = {};
-
-          for (const [key, message] of Object.entries(error.fieldErrors)) {
-            if (
-              key === "storeName" ||
-              key === "category" ||
-              key === "description" ||
-              key === "logo" ||
-              key === "brandColor" ||
-              key === "subdomain"
-            ) {
-              nextErrors[key] = message;
-            }
-          }
-
-          setErrors((current) => ({ ...current, ...nextErrors }));
-        }
-      } else {
-        setFormError(
-          "Something went wrong while creating your store. Please try again."
-        );
-      }
-    } finally {
+    setTimeout(() => {
       setIsSubmitting(false);
-    }
+      setSuccess({
+        storeUrl: getStoreUrl(draft.subdomain),
+        storeName: draft.storeName.trim() || "Biponon Store",
+      });
+      setMaxVisitedStep(2);
+    }, 800);
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (isSubmitting) return;
-    if (stepIndex < STEPS.length - 1) {
+    if (stepIndex < steps.length - 1) {
       goNext();
       return;
     }
 
-    void handleCreateStore();
+    handleCreateStore();
   };
 
   const resetWizard = () => {
@@ -526,92 +549,100 @@ export function CreateWebsiteWizard() {
     setIsDraggingLogo(false);
   };
 
-  if (success) {
-    const destination = success.redirectTo
-      ? success.redirectTo
-      : /^https?:\/\//i.test(success.storeUrl)
-        ? success.storeUrl
-        : `https://${success.storeUrl}`;
-    const isExternal = /^https?:\/\//i.test(destination);
+  const getCategoryDisplay = (catValue: string) => {
+    if (!catValue) return "";
+    const matched = STORE_CATEGORIES.find((c) => c.value === catValue);
+    if (!matched) return catValue;
+    const keyMap: Record<string, string> = {
+      "fashion-apparel": "fashion",
+      "electronics-gadgets": "electronics",
+      "beauty-cosmetics": "beauty",
+      "organic-food": "food",
+      "home-decor": "home",
+      other: "other",
+    };
+    const key = keyMap[catValue];
+    return key ? t(`createWebsite.fields.categories.${key}`) : matched.label;
+  };
 
+  if (success) {
     return (
-      <div className="mx-auto flex w-full max-w-md flex-col">
-        <WizardBrand />
+      <div className="mx-auto flex w-full max-w-sm flex-col">
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+          <WizardBrand />
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-2.5 py-0.5 text-[10px] font-semibold tracking-wider text-primary uppercase dark:border-primary/30 dark:bg-primary/15">
+            <span className="size-1.5 rounded-full bg-primary" />
+            {t("createWebsite.success.badge")}
+          </span>
+        </div>
 
         <div
           role="status"
           aria-live="polite"
-          className="mt-10 rounded-2xl border border-primary/20 bg-primary/[0.06] p-5 sm:p-6"
+          className="mt-6 rounded-2xl border border-primary/25 bg-primary/[0.06] p-5 shadow-sm sm:mt-7 sm:p-6 dark:border-primary/35 dark:bg-primary/10"
         >
-          <span className="brand-gradient grid size-12 place-items-center rounded-2xl text-white shadow-[0_16px_32px_-16px_rgba(0,151,107,0.9)]">
+          <span className="brand-gradient grid size-12 place-items-center rounded-2xl text-white shadow-[0_16px_32px_-14px_rgba(0,151,107,0.85)]">
             <Check className="size-6" strokeWidth={3} />
           </span>
 
-          <h1 className="font-heading mt-5 text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
-            Your store is ready
+          <h1 className="font-heading mt-4 text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
+            {t("createWebsite.success.title")}
           </h1>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-            <span className="font-semibold text-foreground">
-              {draft.storeName.trim()}
-            </span>{" "}
-            has been created. Your storefront is ready for products and orders.
+          <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground sm:text-sm">
+            {t("createWebsite.success.description")}
           </p>
 
-          <div className="mt-5 rounded-xl border border-border/70 bg-background/80 px-3.5 py-3">
-            <p className="text-[10px] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
-              Store address
+          <div className="mt-5 rounded-xl border border-border/70 bg-background/90 p-3.5 shadow-xs">
+            <p className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
+              {t("createWebsite.review.storeUrl")}
             </p>
-            <p className="mt-1 flex items-center gap-2 text-sm font-semibold break-all text-foreground">
+            <p className="mt-1 flex items-center gap-2 font-mono text-xs font-semibold break-all text-primary sm:text-sm">
               <Globe className="size-4 shrink-0 text-primary" />
-              {success.storeUrl}
+              https://{success.storeUrl}
             </p>
           </div>
 
-          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
-            <span className="inline-flex items-center gap-1.5">
+          <div className="mt-4 flex flex-wrap items-center gap-x-3.5 gap-y-1.5 text-xs text-muted-foreground">
+            <span className="inline-flex items-center gap-1.5 font-medium text-foreground">
               <span
                 className="size-2.5 rounded-full ring-2 ring-background"
                 style={{ backgroundColor: draft.brandColor }}
               />
               {draft.brandColor.toUpperCase()}
             </span>
-            <span>{getCategoryLabel(draft.category)}</span>
+            <span aria-hidden className="size-1 rounded-full bg-border" />
+            <span className="font-medium text-foreground">
+              {getCategoryDisplay(draft.category)}
+            </span>
           </div>
 
-          <div className="mt-6 flex flex-col gap-2">
-            <Button
-              render={
-                <a
-                  href={destination}
-                  target={isExternal ? "_blank" : undefined}
-                  rel={isExternal ? "noreferrer" : undefined}
-                />
-              }
-              size="lg"
-              className="h-11 w-full rounded-xl text-sm font-semibold text-white shadow-[0_14px_30px_-14px_rgba(0,151,107,0.85)] [background-image:var(--brand-gradient)] transition-all duration-200 hover:brightness-105 hover:text-white"
+          <div className="mt-6 flex flex-col gap-2.5">
+            <Link
+              href="/login"
+              className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-xl text-xs font-semibold text-white shadow-[0_12px_24px_-10px_rgba(0,151,107,0.7)] [background-image:var(--brand-gradient)] transition-all duration-200 hover:brightness-105 active:scale-[0.99] sm:h-11 sm:text-sm"
             >
-              {success.redirectTo ? "Continue to Dashboard" : "Visit Your Store"}
+              <span>{t("createWebsite.success.goToDashboard")}</span>
               <ArrowRight className="size-4" />
-            </Button>
+            </Link>
             <Button
               type="button"
-              variant="ghost"
+              variant="outline"
               size="lg"
               onClick={resetWizard}
-              className="h-10 w-full rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground"
+              className="h-10 w-full rounded-xl border-border/80 bg-background/60 text-xs font-medium text-muted-foreground hover:text-foreground"
             >
               Create another store
             </Button>
           </div>
         </div>
 
-        <p className="mt-7 text-center text-xs text-muted-foreground">
-          Need to manage an existing store?{" "}
+        <p className="mt-5 text-center text-xs text-muted-foreground sm:mt-6">
+          {t("createWebsite.buttons.haveAccount")}{" "}
           <Link
             href="/login"
-            className="font-semibold text-primary underline-offset-4 transition-colors hover:text-primary/80 hover:underline focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none"
+            className="font-semibold text-primary underline-offset-4 transition-colors hover:text-primary/80 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
           >
-            Sign in
+            {t("createWebsite.buttons.signIn")}
           </Link>
         </p>
       </div>
@@ -619,42 +650,45 @@ export function CreateWebsiteWizard() {
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-md flex-col">
-      <div className="flex items-center justify-between gap-3">
+    <div className="mx-auto flex w-full max-w-sm flex-col">
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
         <WizardBrand />
-        <span className="inline-flex shrink-0 items-center gap-2 rounded-full border border-primary/15 bg-primary/10 px-2.5 py-1 text-[9px] font-semibold tracking-[0.12em] whitespace-nowrap text-primary uppercase dark:border-primary/25 dark:bg-primary/15">
-          <span className="size-1.5 rounded-full bg-brand-secondary" />
-          Store setup
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-2.5 py-0.5 text-[10px] font-semibold tracking-wider text-primary uppercase dark:border-primary/30 dark:bg-primary/15">
+          <Sparkles className="size-3 text-primary" />
+          {t("createWebsite.badge")}
         </span>
       </div>
 
-      <div className="mt-8">
-        <h1 className="font-heading text-3xl font-extrabold tracking-tight text-foreground sm:text-[2.15rem]">
-          Create Your Online Store
+      <div className="mt-5 sm:mt-6">
+        <h1 className="font-heading text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
+          {t("createWebsite.title")}
         </h1>
-        <p className="mt-3 max-w-[24rem] text-sm leading-relaxed text-muted-foreground">
-          Set up your online store in just a few simple steps.
+        <p className="mt-1 text-xs leading-relaxed text-muted-foreground sm:text-sm">
+          {t("createWebsite.subtitle")}
         </p>
       </div>
 
-      <div className="mt-6">
+      <div className="mt-4 sm:mt-5">
         <StepIndicator
+          steps={steps}
           activeStep={stepIndex}
           maxVisitedStep={maxVisitedStep}
           onSelect={goToStep}
         />
       </div>
 
-      <div className="mt-6 border-t border-border/60 pt-6">
-        <p className="text-[10px] font-semibold tracking-[0.16em] text-primary uppercase">
-          Step {activeStep.number} of 03
-        </p>
-        <h2 className="font-heading mt-2 text-lg font-bold tracking-tight text-foreground">
-          {activeStep.title}
-        </h2>
-        <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-          {activeStep.description}
-        </p>
+      <div className="mt-4 flex items-center justify-between border-t border-border/50 pt-2.5">
+        <div>
+          <span className="text-[10px] font-bold tracking-wider text-primary uppercase">
+            Step {activeStep.number} / 03 · {activeStep.shortTitle}
+          </span>
+          <h2 className="font-heading text-sm font-bold tracking-tight text-foreground">
+            {activeStep.title}
+          </h2>
+        </div>
+        <span className="rounded-full bg-muted/60 px-2 py-0.5 text-[10px] font-medium text-muted-foreground">
+          {stepIndex + 1}/3
+        </span>
       </div>
 
       {formError ? (
@@ -662,9 +696,9 @@ export function CreateWebsiteWizard() {
           id="create-store-error"
           role="alert"
           aria-live="polite"
-          className="mt-5 flex items-start gap-2.5 rounded-xl border border-destructive/25 bg-destructive/10 p-3 text-xs leading-relaxed text-destructive dark:border-destructive/35 dark:bg-destructive/15"
+          className="mt-3 flex items-start gap-2 rounded-xl border border-destructive/25 bg-destructive/10 p-2.5 text-xs text-destructive dark:border-destructive/35 dark:bg-destructive/15"
         >
-          <CircleAlert className="mt-0.5 size-4 shrink-0" />
+          <CircleAlert className="mt-0.5 size-3.5 shrink-0" />
           <span>{formError}</span>
         </div>
       ) : null}
@@ -673,27 +707,27 @@ export function CreateWebsiteWizard() {
         onSubmit={handleSubmit}
         noValidate
         aria-busy={isSubmitting}
-        className="mt-6 flex flex-col gap-5"
+        className="mt-4 flex flex-col gap-4"
       >
         {stepIndex === 0 ? (
           <>
-            <div className="space-y-2">
-              <Label htmlFor="storeName">
-                Store Name
-                <span aria-hidden className="text-destructive">
+            <div className="space-y-1.5">
+              <Label htmlFor="storeName" className="text-xs font-semibold text-foreground">
+                {t("createWebsite.fields.storeName")}
+                <span aria-hidden className="ml-1 text-destructive">
                   *
                 </span>
               </Label>
               <div className="relative">
                 <Store
                   aria-hidden
-                  className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground/80"
+                  className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground/70"
                 />
                 <Input
                   id="storeName"
                   name="storeName"
                   autoComplete="organization"
-                  placeholder="e.g. Nokshi Studio"
+                  placeholder={t("createWebsite.fields.storeNamePlaceholder")}
                   value={draft.storeName}
                   onChange={(event) =>
                     handleStoreNameChange(event.target.value)
@@ -711,16 +745,16 @@ export function CreateWebsiteWizard() {
                   aria-describedby={
                     errors.storeName ? "storeName-error" : undefined
                   }
-                  className="pl-10"
+                  className="h-10 rounded-xl border-border/80 bg-background/50 pl-10 text-sm transition-all focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/25 sm:h-11"
                 />
               </div>
               <FieldError id="storeName-error" message={errors.storeName} />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="category">
-                Store Category
-                <span aria-hidden className="text-destructive">
+            <div className="space-y-1.5">
+              <Label htmlFor="category" className="text-xs font-semibold text-foreground">
+                {t("createWebsite.fields.category")}
+                <span aria-hidden className="ml-1 text-destructive">
                   *
                 </span>
               </Label>
@@ -738,13 +772,14 @@ export function CreateWebsiteWizard() {
                   aria-describedby={
                     errors.category ? "category-error" : undefined
                   }
+                  className="h-10 rounded-xl border-border/80 bg-background/50 text-sm transition-all focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/25 sm:h-11"
                 >
-                  <SelectValue placeholder="Choose a category" />
+                  <SelectValue placeholder={t("createWebsite.fields.categoryPlaceholder")} />
                 </SelectTrigger>
                 <SelectContent>
                   {STORE_CATEGORIES.map((category) => (
                     <SelectItem key={category.value} value={category.value}>
-                      {category.label}
+                      {getCategoryDisplay(category.value)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -752,13 +787,10 @@ export function CreateWebsiteWizard() {
               <FieldError id="category-error" message={errors.category} />
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <div className="flex items-center justify-between gap-3">
-                <Label htmlFor="description">
-                  Store Description
-                  <span className="text-[10px] font-normal text-muted-foreground">
-                    Optional
-                  </span>
+                <Label htmlFor="description" className="text-xs font-semibold text-foreground">
+                  {t("createWebsite.fields.description")}
                 </Label>
                 <span className="text-[10px] tabular-nums text-muted-foreground/80">
                   {draft.description.length}/{STORE_DESCRIPTION_MAX}
@@ -767,7 +799,7 @@ export function CreateWebsiteWizard() {
               <Textarea
                 id="description"
                 name="description"
-                placeholder="Tell customers what makes your store special."
+                placeholder={t("createWebsite.fields.descriptionPlaceholder")}
                 value={draft.description}
                 onChange={(event) =>
                   handleDescriptionChange(event.target.value)
@@ -783,7 +815,7 @@ export function CreateWebsiteWizard() {
                 aria-describedby={
                   errors.description ? "description-error" : undefined
                 }
-                className="min-h-20"
+                className="min-h-16 rounded-xl border-border/80 bg-background/50 text-xs leading-relaxed transition-all focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/25 sm:min-h-20"
               />
               <FieldError
                 id="description-error"
@@ -795,13 +827,10 @@ export function CreateWebsiteWizard() {
 
         {stepIndex === 1 ? (
           <>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between gap-3">
-                <Label htmlFor="logo">Store Logo</Label>
-                <span className="text-[10px] text-muted-foreground">
-                  Optional
-                </span>
-              </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="logo" className="text-xs font-semibold text-foreground">
+                {t("createWebsite.fields.logo")}
+              </Label>
 
               <input
                 ref={logoInputRef}
@@ -814,13 +843,13 @@ export function CreateWebsiteWizard() {
               />
 
               {draft.logoDataUrl ? (
-                <div className="flex items-center gap-3 rounded-xl border border-border/70 bg-background/60 p-3">
-                  <div className="grid size-14 shrink-0 place-items-center overflow-hidden rounded-xl border border-border/60 bg-muted/50 p-1.5">
+                <div className="flex items-center gap-3 rounded-xl border border-border/75 bg-background/60 p-2.5">
+                  <div className="grid size-11 shrink-0 place-items-center overflow-hidden rounded-lg border border-border/60 bg-muted/40 p-1">
                     <Image
                       src={draft.logoDataUrl}
                       alt="Store logo preview"
-                      width={96}
-                      height={96}
+                      width={80}
+                      height={80}
                       unoptimized
                       className="max-h-full w-auto object-contain"
                     />
@@ -829,16 +858,13 @@ export function CreateWebsiteWizard() {
                     <p className="truncate text-xs font-semibold text-foreground">
                       {draft.logoFileName}
                     </p>
-                    <p className="mt-0.5 text-[10px] text-muted-foreground">
-                      Logo ready to upload
-                    </p>
-                    <div className="mt-1.5 flex items-center gap-3">
+                    <div className="mt-1 flex items-center gap-2.5">
                       <button
                         type="button"
                         onClick={() => logoInputRef.current?.click()}
                         className="text-[11px] font-semibold text-primary underline-offset-4 hover:underline"
                       >
-                        Replace
+                        {t("createWebsite.fields.changeLogo")}
                       </button>
                       <button
                         type="button"
@@ -846,7 +872,7 @@ export function CreateWebsiteWizard() {
                         className="inline-flex items-center gap-1 text-[11px] font-semibold text-muted-foreground transition-colors hover:text-destructive"
                       >
                         <Trash2 className="size-3" />
-                        Remove
+                        {t("createWebsite.fields.removeLogo")}
                       </button>
                     </div>
                   </div>
@@ -863,41 +889,41 @@ export function CreateWebsiteWizard() {
                   onDrop={handleLogoDrop}
                   aria-describedby="logo-hint"
                   className={cn(
-                    "flex w-full flex-col items-center justify-center gap-2 rounded-xl border border-dashed px-4 py-6 text-center transition-colors focus-visible:ring-3 focus-visible:ring-ring/20 focus-visible:outline-none",
+                    "flex w-full flex-col items-center justify-center gap-1 rounded-xl border border-dashed px-3 py-3.5 text-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 sm:py-4",
                     isDraggingLogo
                       ? "border-primary bg-primary/10"
-                      : "border-border/90 bg-background/50 hover:border-primary/40 hover:bg-primary/[0.04]"
+                      : "border-border/80 bg-background/40 hover:border-primary/40 hover:bg-primary/[0.03]"
                   )}
                 >
-                  <span className="grid size-9 place-items-center rounded-xl bg-primary/10 text-primary">
-                    <UploadCloud className="size-4" />
+                  <span className="grid size-7 place-items-center rounded-lg bg-primary/10 text-primary">
+                    <UploadCloud className="size-3.5" />
                   </span>
                   <span className="text-xs font-semibold text-foreground">
-                    Click to upload or drag and drop
+                    {t("createWebsite.fields.logoUploadHint")}
                   </span>
                   <span
                     id="logo-hint"
                     className="text-[10px] text-muted-foreground"
                   >
-                    PNG, JPG, WebP or SVG · up to 1 MB
+                    {t("createWebsite.fields.logoUploadFormats")}
                   </span>
                 </button>
               )}
               <FieldError id="logo-error" message={errors.logo} />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="brandColorHex">
+            <div className="space-y-1.5">
+              <Label htmlFor="brandColorHex" className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
                 <Palette className="size-3.5 text-primary" />
-                Brand Primary Color
+                <span>{t("createWebsite.fields.brandColor")}</span>
                 <span aria-hidden className="text-destructive">
                   *
                 </span>
               </Label>
               <div className="flex items-center gap-2">
                 <label
-                  className="relative size-11 shrink-0 cursor-pointer overflow-hidden rounded-xl border border-input shadow-xs ring-offset-background focus-within:ring-3 focus-within:ring-ring/20"
-                  title="Choose a custom color"
+                  className="relative size-9.5 shrink-0 cursor-pointer overflow-hidden rounded-xl border border-input shadow-xs ring-offset-background focus-within:ring-2 focus-within:ring-primary/30 sm:size-10"
+                  title="Choose custom color"
                 >
                   <span
                     aria-hidden
@@ -910,7 +936,7 @@ export function CreateWebsiteWizard() {
                     onChange={(event) =>
                       handleBrandColorChange(event.target.value)
                     }
-                    aria-label="Pick a custom brand color"
+                    aria-label="Pick custom brand color"
                     className="absolute inset-0 size-full cursor-pointer opacity-0"
                   />
                 </label>
@@ -935,11 +961,11 @@ export function CreateWebsiteWizard() {
                   aria-describedby={
                     errors.brandColor ? "brandColor-error" : undefined
                   }
-                  className="font-mono text-xs tracking-wide uppercase"
+                  className="h-9.5 rounded-xl border-border/80 bg-background/50 font-mono text-xs tracking-wider uppercase transition-all focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/25 sm:h-10"
                 />
               </div>
 
-              <div className="flex flex-wrap items-center gap-1.5 pt-1 sm:gap-2">
+              <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
                 {BRAND_COLOR_PRESETS.map((color) => {
                   const isSelected =
                     color.toLowerCase() === draft.brandColor.toLowerCase();
@@ -952,7 +978,7 @@ export function CreateWebsiteWizard() {
                       aria-label={`Use brand color ${color}`}
                       aria-pressed={isSelected}
                       className={cn(
-                        "size-6 rounded-full border border-black/5 shadow-xs transition-transform hover:scale-110 focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none sm:size-7 dark:border-white/10",
+                        "size-5.5 rounded-full border border-black/10 shadow-xs transition-transform hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 sm:size-6 dark:border-white/10",
                         isSelected &&
                           "ring-2 ring-primary ring-offset-2 ring-offset-background"
                       )}
@@ -967,23 +993,23 @@ export function CreateWebsiteWizard() {
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="subdomain">
-                Store URL / Subdomain
-                <span aria-hidden className="text-destructive">
+            <div className="space-y-1.5">
+              <Label htmlFor="subdomain" className="text-xs font-semibold text-foreground">
+                {t("createWebsite.fields.storeUrl")}
+                <span aria-hidden className="ml-1 text-destructive">
                   *
                 </span>
               </Label>
               <div
                 className={cn(
-                  "flex h-11 items-center rounded-xl border border-input bg-background/70 shadow-xs transition-[border-color,box-shadow] focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/20 dark:bg-input/25",
+                  "flex h-10 items-center rounded-xl border border-border/80 bg-background/50 shadow-xs transition-all focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/25 sm:h-11",
                   errors.subdomain &&
-                    "border-destructive focus-within:border-destructive focus-within:ring-destructive/15"
+                    "border-destructive focus-within:border-destructive focus-within:ring-destructive/20"
                 )}
               >
                 <span
                   aria-hidden
-                  className="pl-3.5 font-mono text-[11px] text-muted-foreground/70"
+                  className="pl-3 font-mono text-[11px] text-muted-foreground/70 select-none"
                 >
                   https://
                 </span>
@@ -993,7 +1019,7 @@ export function CreateWebsiteWizard() {
                   autoComplete="off"
                   autoCapitalize="none"
                   spellCheck={false}
-                  placeholder="yourstore"
+                  placeholder={t("createWebsite.fields.subdomainPlaceholder")}
                   value={draft.subdomain}
                   onChange={(event) =>
                     handleSubdomainChange(event.target.value)
@@ -1010,26 +1036,23 @@ export function CreateWebsiteWizard() {
                   aria-describedby={
                     errors.subdomain ? "subdomain-error" : "subdomain-hint"
                   }
-                  className="h-full rounded-none border-0 bg-transparent px-1 font-mono text-xs shadow-none focus-visible:border-transparent focus-visible:ring-0 dark:bg-transparent"
+                  className="h-full flex-1 rounded-none border-0 bg-transparent px-1 font-mono text-xs shadow-none focus-visible:border-transparent focus-visible:ring-0 dark:bg-transparent"
                 />
                 <span
                   aria-hidden
-                  className="shrink-0 pr-3.5 font-mono text-[11px] text-muted-foreground/70"
+                  className="shrink-0 pr-3 font-mono text-[11px] text-muted-foreground/70 select-none"
                 >
                   .biponon.com
                 </span>
               </div>
               <div
                 id="subdomain-hint"
-                className="flex items-start gap-1.5 rounded-lg bg-muted/50 px-2.5 py-2 text-[10px] leading-relaxed text-muted-foreground"
+                className="flex items-center gap-1.5 rounded-lg bg-muted/30 px-2.5 py-1.5 text-[10px] text-muted-foreground"
               >
-                <Globe className="mt-0.5 size-3 shrink-0 text-primary" />
-                <span className="min-w-0">
-                  Your store will be available at{" "}
-                  <span className="font-semibold break-all text-foreground">
-                    https://{storeUrl}
-                  </span>
-                  . Availability is confirmed when you create your store.
+                <Globe className="size-3 shrink-0 text-primary" />
+                <span className="truncate">
+                  {t("createWebsite.fields.urlPreviewNotice")}{" "}
+                  <strong className="text-foreground">{storeUrl}</strong>
                 </span>
               </div>
               <FieldError id="subdomain-error" message={errors.subdomain} />
@@ -1038,40 +1061,55 @@ export function CreateWebsiteWizard() {
         ) : null}
 
         {stepIndex === 2 ? (
-          <div className="space-y-3">
-            <SummarySection title="Store details" onEdit={() => goToStep(0)}>
-              <SummaryRow label="Store name">
-                {draft.storeName.trim() || "Not provided"}
+          <div className="space-y-2.5">
+            <div className="rounded-xl border border-primary/20 bg-primary/[0.05] p-2.5 text-xs dark:border-primary/30 dark:bg-primary/10">
+              <div className="flex items-center gap-1.5 font-semibold text-primary">
+                <Sparkles className="size-3.5" />
+                <span>{t("createWebsite.review.readyBannerTitle")}</span>
+              </div>
+              <p className="mt-0.5 text-[11px] text-muted-foreground">
+                {t("createWebsite.review.readyBannerDesc")}
+              </p>
+            </div>
+
+            <SummarySection
+              title={t("createWebsite.steps.step1.title")}
+              editText={t("createWebsite.review.edit")}
+              onEdit={() => goToStep(0)}
+            >
+              <SummaryRow label={t("createWebsite.review.storeName")}>
+                {draft.storeName.trim() || t("createWebsite.review.noDescription")}
               </SummaryRow>
-              <SummaryRow label="Category">
-                {getCategoryLabel(draft.category) || "Not selected"}
+              <SummaryRow label={t("createWebsite.review.category")}>
+                {getCategoryDisplay(draft.category) || "—"}
               </SummaryRow>
-              <SummaryRow label="Description">
+              <SummaryRow label={t("createWebsite.review.description")}>
                 {draft.description.trim() ? (
                   <span className="whitespace-pre-wrap">
                     {draft.description.trim()}
                   </span>
                 ) : (
                   <span className="text-muted-foreground">
-                    No description added.
+                    {t("createWebsite.review.noDescription")}
                   </span>
                 )}
               </SummaryRow>
             </SummarySection>
 
             <SummarySection
-              title="Brand & store URL"
+              title={t("createWebsite.steps.step2.title")}
+              editText={t("createWebsite.review.edit")}
               onEdit={() => goToStep(1)}
             >
-              <SummaryRow label="Logo">
+              <SummaryRow label={t("createWebsite.review.logo")}>
                 {draft.logoDataUrl ? (
-                  <span className="inline-flex items-center gap-2.5">
-                    <span className="grid size-9 place-items-center overflow-hidden rounded-lg border border-border/60 bg-muted/50 p-1">
+                  <span className="inline-flex items-center gap-2">
+                    <span className="grid size-6 place-items-center overflow-hidden rounded-md border border-border/60 bg-muted/40 p-0.5">
                       <Image
                         src={draft.logoDataUrl}
                         alt="Store logo preview"
-                        width={64}
-                        height={64}
+                        width={48}
+                        height={48}
                         unoptimized
                         className="max-h-full w-auto object-contain"
                       />
@@ -1081,13 +1119,15 @@ export function CreateWebsiteWizard() {
                     </span>
                   </span>
                 ) : (
-                  <span className="text-muted-foreground">Not uploaded</span>
+                  <span className="text-muted-foreground">
+                    {t("createWebsite.review.noLogo")}
+                  </span>
                 )}
               </SummaryRow>
-              <SummaryRow label="Brand color">
-                <span className="inline-flex items-center gap-2">
+              <SummaryRow label={t("createWebsite.review.brandColor")}>
+                <span className="inline-flex items-center gap-1.5">
                   <span
-                    className="size-4 rounded-full border border-black/10 shadow-xs dark:border-white/15"
+                    className="size-3.5 rounded-full border border-black/10 shadow-xs dark:border-white/15"
                     style={{ backgroundColor: draft.brandColor }}
                   />
                   <span className="font-mono text-xs">
@@ -1095,9 +1135,9 @@ export function CreateWebsiteWizard() {
                   </span>
                 </span>
               </SummaryRow>
-              <SummaryRow label="Store URL">
-                <span className="inline-flex items-start gap-1.5 font-mono text-xs break-all">
-                  <Globe className="mt-0.5 size-3.5 shrink-0 text-primary" />
+              <SummaryRow label={t("createWebsite.review.storeUrl")}>
+                <span className="inline-flex items-center gap-1 font-mono text-xs text-primary break-all">
+                  <Globe className="size-3 shrink-0" />
                   https://{storeUrl}
                 </span>
               </SummaryRow>
@@ -1105,7 +1145,7 @@ export function CreateWebsiteWizard() {
           </div>
         ) : null}
 
-        {stepIndex < STEPS.length - 1 ? (
+        {stepIndex < steps.length - 1 ? (
           <div className="flex items-center gap-2.5 pt-1">
             {stepIndex > 0 ? (
               <Button
@@ -1114,50 +1154,50 @@ export function CreateWebsiteWizard() {
                 size="lg"
                 onClick={goBack}
                 disabled={isSubmitting}
-                className="h-11 flex-1 rounded-xl border-border/80 bg-background/70 text-sm font-medium shadow-xs"
+                className="h-10 flex-1 rounded-xl border-border/80 bg-background/60 text-xs font-semibold shadow-xs sm:h-11"
               >
-                <ArrowLeft className="size-4" />
-                Back
+                <ArrowLeft className="size-3.5" />
+                <span>{t("createWebsite.buttons.back")}</span>
               </Button>
             ) : null}
             <Button
               type="submit"
               size="lg"
               disabled={isSubmitting}
-              className="h-11 flex-[1.4] rounded-xl text-sm font-semibold text-white shadow-[0_14px_30px_-14px_rgba(0,151,107,0.85)] [background-image:var(--brand-gradient)] transition-all duration-200 hover:brightness-105 hover:text-white"
+              className="h-10 flex-[1.4] rounded-xl text-xs font-semibold text-white shadow-[0_12px_24px_-10px_rgba(0,151,107,0.7)] [background-image:var(--brand-gradient)] transition-all duration-200 hover:brightness-105 active:scale-[0.99] sm:h-11 sm:text-sm"
             >
-              Continue
-              <ArrowRight className="size-4 transition-transform duration-200 group-hover/button:translate-x-0.5" />
+              <span>{t("createWebsite.buttons.next")}</span>
+              <ArrowRight className="size-4" />
             </Button>
           </div>
         ) : (
-          <div className="flex flex-col-reverse gap-2.5 pt-1 sm:flex-row">
+          <div className="flex items-center gap-2.5 pt-1">
             <Button
               type="button"
               variant="outline"
               size="lg"
               onClick={goBack}
               disabled={isSubmitting}
-              className="h-11 rounded-xl border-border/80 bg-background/70 text-sm font-medium shadow-xs sm:flex-1"
+              className="h-10 flex-1 rounded-xl border-border/80 bg-background/60 text-xs font-semibold shadow-xs sm:h-11 sm:text-sm"
             >
               <ArrowLeft className="size-4" />
-              Back
+              <span>{t("createWebsite.buttons.back")}</span>
             </Button>
             <Button
               type="button"
               size="lg"
-              onClick={() => void handleCreateStore()}
+              onClick={handleCreateStore}
               disabled={isSubmitting}
-              className="h-11 rounded-xl text-sm font-semibold text-white shadow-[0_14px_30px_-14px_rgba(0,151,107,0.85)] [background-image:var(--brand-gradient)] transition-all duration-200 hover:brightness-105 hover:text-white sm:flex-[1.35]"
+              className="h-10 flex-[1.6] rounded-xl text-xs font-semibold text-white shadow-[0_12px_24px_-10px_rgba(0,151,107,0.7)] [background-image:var(--brand-gradient)] transition-all duration-200 hover:brightness-105 active:scale-[0.99] sm:h-11 sm:text-sm"
             >
               {isSubmitting ? (
                 <>
                   <Loader2 className="size-4 animate-spin" />
-                  Creating your store...
+                  <span>{t("createWebsite.buttons.creatingStore")}</span>
                 </>
               ) : (
                 <>
-                  Create My Store
+                  <span>{t("createWebsite.buttons.createStore")}</span>
                   <ArrowRight className="size-4" />
                 </>
               )}
@@ -1166,25 +1206,25 @@ export function CreateWebsiteWizard() {
         )}
       </form>
 
-      <p className="mt-6 text-center text-xs text-muted-foreground">
-        Already have a store?{" "}
+      <p className="mt-4 text-center text-xs text-muted-foreground sm:mt-5">
+        {t("createWebsite.buttons.haveAccount")}{" "}
         <Link
           href="/login"
-          className="font-semibold text-primary underline-offset-4 transition-colors hover:text-primary/80 hover:underline focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:outline-none"
+          className="font-semibold text-primary underline-offset-4 transition-colors hover:text-primary/80 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
         >
-          Sign in
+          {t("createWebsite.buttons.signIn")}
         </Link>
       </p>
 
-      <div className="mt-8 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[10px] font-medium text-muted-foreground/80">
+      <div className="mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[10px] font-medium text-muted-foreground/80 sm:mt-6">
         <span className="inline-flex items-center gap-1.5">
           <ShieldCheck className="size-3 text-primary" />
-          Your details stay encrypted
+          {t("auth.trust.encrypted256")}
         </span>
         <span aria-hidden className="size-1 rounded-full bg-border" />
         <span className="inline-flex items-center gap-1.5">
           <Lock className="size-3 text-primary" />
-          Secure store setup
+          {t("auth.trust.secureSignIn")}
         </span>
       </div>
     </div>

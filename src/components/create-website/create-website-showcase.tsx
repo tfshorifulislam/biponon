@@ -143,7 +143,7 @@ export function CreateWebsiteShowcase() {
   return (
     <section
       aria-label="Biponon store creation preview"
-      className="relative isolate flex min-h-full min-w-0 flex-col justify-between gap-6 overflow-hidden bg-[#04281e] px-5 py-6 text-white sm:px-7 sm:py-8 lg:px-8 lg:py-9"
+      className="relative isolate flex min-h-full min-w-0 flex-col justify-between gap-4 sm:gap-5 overflow-hidden bg-[#04281e] px-5 py-6 text-white sm:px-7 sm:py-7 lg:px-8 lg:py-8"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
@@ -181,11 +181,11 @@ export function CreateWebsiteShowcase() {
           Website builder
         </span>
 
-        <h2 className="font-heading mt-5 max-w-xl text-2xl leading-[1.14] font-extrabold tracking-tight text-balance sm:text-[1.8rem] lg:text-[2.05rem]">
+        <h2 className="font-heading mt-3.5 max-w-xl text-xl leading-[1.18] font-extrabold tracking-tight text-balance xl:mt-4 xl:text-2xl">
           Everything You Need to{" "}
           <span className="text-[#8ff5ce]">Launch Your Store</span>.
         </h2>
-        <p className="mt-3 max-w-lg text-sm leading-relaxed text-white/60">
+        <p className="mt-1.5 max-w-lg text-xs leading-relaxed text-white/60 xl:text-sm">
           Create your storefront, customize your brand, and start selling — all
           in one place.
         </p>
@@ -211,7 +211,7 @@ export function CreateWebsiteShowcase() {
             </span>
           </div>
 
-          <div className="relative h-[430px] overflow-hidden p-2 sm:h-[352px] sm:p-2.5 lg:h-[360px]">
+          <div className="relative h-[290px] overflow-hidden p-2 sm:h-[310px] sm:p-2.5 xl:h-[320px]">
             {scenes.map((scene, index) => {
               const isActive = index === activeIndex;
 

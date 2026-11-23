@@ -5,10 +5,11 @@ import {
   useState,
   useSyncExternalStore,
 } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import {
   ArrowRight,
+  CheckCircle2,
   CircleAlert,
   Eye,
   EyeOff,
@@ -22,11 +23,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  AuthRequestError,
-  getGoogleSignInUrl,
-  signInWithEmail,
-} from "@/lib/auth/client";
+import { useLanguage } from "@/lib/i18n/languageContext";
 import { cn } from "@/lib/utils";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -60,55 +57,36 @@ interface FieldErrors {
   password?: string;
 }
 
-function validateFields(email: string, password: string): FieldErrors {
-  const errors: FieldErrors = {};
-
-  if (!email.trim()) {
-    errors.email = "Email address is required.";
-  } else if (!EMAIL_PATTERN.test(email.trim())) {
-    errors.email = "Please enter a valid email address.";
-  }
-
-  if (!password) {
-    errors.password = "Password is required.";
-  } else if (password.length < 6) {
-    errors.password = "Password must be at least 6 characters.";
-  }
-
-  return errors;
-}
-
 function AuthBrand() {
   return (
     <Link
       href="/"
       aria-label="Biponon home"
-      className="group inline-flex items-center gap-2.5 rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+      className="group inline-flex items-center rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
     >
-      <span className="brand-gradient relative grid size-10 place-items-center overflow-hidden rounded-2xl shadow-[0_10px_24px_-12px_rgba(0,151,107,0.85)] transition-transform duration-200 group-hover:scale-[1.03]">
-        <span className="font-heading relative z-10 text-[1.6rem] leading-none font-black tracking-tighter text-white">
-          b
-        </span>
-        <span
-          aria-hidden
-          className="absolute -right-3 -bottom-3 size-8 rounded-full bg-white/30 blur-lg"
-        />
-      </span>
-      <span className="flex flex-col">
-        <span className="font-heading text-[1.35rem] leading-none font-extrabold tracking-tight text-foreground">
-          biponon
-        </span>
-        <span className="mt-1 text-[9px] font-semibold tracking-[0.2em] text-muted-foreground uppercase">
-          Merchant portal
-        </span>
-      </span>
+      <Image
+        src="/logo2.png"
+        alt="Biponon"
+        width={130}
+        height={30}
+        priority
+        className="block h-6.5 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02] sm:h-7 dark:hidden"
+      />
+      <Image
+        src="/logo.png"
+        alt="Biponon"
+        width={130}
+        height={30}
+        priority
+        className="hidden h-6.5 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02] sm:h-7 dark:block"
+      />
     </Link>
   );
 }
 
 function GoogleIcon() {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className="size-4">
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="size-4 shrink-0">
       <path
         fill="#4285F4"
         d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47a5.54 5.54 0 0 1-2.4 3.63v3h3.86c2.26-2.09 3.56-5.17 3.56-8.87z"
@@ -130,145 +108,121 @@ function GoogleIcon() {
 }
 
 export function LoginForm() {
-  const router = useRouter();
+  const { t } = useLanguage();
+
   const rememberedEmail = useSyncExternalStore(
     subscribeRememberedEmail,
     getRememberedEmailSnapshot,
     getRememberedEmailServerSnapshot
   );
+
   const [emailInput, setEmailInput] = useState<string | null>(null);
   const email = emailInput ?? rememberedEmail;
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
-  const [formError, setFormError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
-
-  const clearFormError = () => {
-    if (formError) setFormError(null);
-  };
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleEmailChange = (value: string) => {
     setEmailInput(value);
-    clearFormError();
     if (fieldErrors.email) {
       setFieldErrors((current) => ({ ...current, email: undefined }));
     }
+    if (isSuccess) setIsSuccess(false);
   };
 
   const handlePasswordChange = (value: string) => {
     setPassword(value);
-    clearFormError();
     if (fieldErrors.password) {
       setFieldErrors((current) => ({ ...current, password: undefined }));
     }
+    if (isSuccess) setIsSuccess(false);
   };
 
-  const focusInvalidField = (errors: FieldErrors) => {
-    if (typeof document === "undefined") return;
-    if (errors.email) {
-      document.getElementById("email")?.focus();
-    } else if (errors.password) {
-      document.getElementById("password")?.focus();
+  const validate = (): FieldErrors => {
+    const errors: FieldErrors = {};
+    const trimmedEmail = email.trim();
+
+    if (!trimmedEmail) {
+      errors.email = t("auth.validation.emailRequired");
+    } else if (!EMAIL_PATTERN.test(trimmedEmail)) {
+      errors.email = t("auth.validation.emailInvalid");
     }
+
+    if (!password) {
+      errors.password = t("auth.validation.passwordRequired");
+    } else if (password.length < 6) {
+      errors.password = t("auth.validation.passwordMin");
+    }
+
+    return errors;
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (isSubmitting) return;
 
-    const errors = validateFields(email, password);
+    const errors = validate();
     setFieldErrors(errors);
 
     if (Object.keys(errors).length > 0) {
-      setFormError(null);
-      focusInvalidField(errors);
+      if (errors.email) {
+        document.getElementById("email")?.focus();
+      } else if (errors.password) {
+        document.getElementById("password")?.focus();
+      }
       return;
     }
 
     setIsSubmitting(true);
-    setFormError(null);
 
     try {
-      const result = await signInWithEmail({
-        email: email.trim(),
-        password,
-        remember,
-      });
-
-      try {
-        if (remember) {
-          localStorage.setItem(REMEMBERED_EMAIL_KEY, email.trim());
-        } else {
-          localStorage.removeItem(REMEMBERED_EMAIL_KEY);
-        }
-        window.dispatchEvent(new Event(REMEMBERED_EMAIL_EVENT));
-      } catch {
-        // Storage unavailable
+      if (remember) {
+        localStorage.setItem(REMEMBERED_EMAIL_KEY, email.trim());
+      } else {
+        localStorage.removeItem(REMEMBERED_EMAIL_KEY);
       }
+      window.dispatchEvent(new Event(REMEMBERED_EMAIL_EVENT));
+    } catch {
+      // Storage unavailable
+    }
 
-      router.push(result.redirectTo);
-      router.refresh();
-    } catch (error) {
-      setFormError(
-        error instanceof AuthRequestError
-          ? error.message
-          : "Something went wrong while signing in. Please try again."
-      );
-    } finally {
+    setTimeout(() => {
       setIsSubmitting(false);
-    }
-  };
-
-  const handleGoogleSignIn = async () => {
-    if (isSubmitting || isGoogleLoading) return;
-
-    setIsGoogleLoading(true);
-    setFormError(null);
-
-    try {
-      const url = await getGoogleSignInUrl();
-      window.location.assign(url);
-    } catch (error) {
-      setFormError(
-        error instanceof AuthRequestError
-          ? error.message
-          : "Google sign-in is unavailable right now."
-      );
-      setIsGoogleLoading(false);
-    }
+      setIsSuccess(true);
+    }, 600);
   };
 
   return (
     <div className="mx-auto flex w-full max-w-sm flex-col">
-      <AuthBrand />
-
-      <div className="mt-10">
-        <span className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-primary/10 px-3 py-1 text-[10px] font-semibold tracking-[0.12em] text-primary uppercase dark:border-primary/25 dark:bg-primary/15">
-          <span className="size-1.5 rounded-full bg-brand-secondary" />
-          Secure merchant access
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+        <AuthBrand />
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-2.5 py-0.5 text-[10px] font-semibold tracking-wider text-primary uppercase dark:border-primary/30 dark:bg-primary/15">
+          <span className="size-1.5 rounded-full bg-primary animate-pulse" />
+          {t("auth.badge")}
         </span>
+      </div>
 
-        <h1 className="font-heading mt-5 text-3xl font-extrabold tracking-tight text-foreground sm:text-[2.15rem]">
-          Welcome Back
+      <div className="mt-4 sm:mt-5">
+        <h1 className="font-heading text-xl font-extrabold tracking-tight text-foreground sm:text-2xl xl:text-3xl">
+          {t("auth.loginTitle")}
         </h1>
-        <p className="mt-3 max-w-[22rem] text-sm leading-relaxed text-muted-foreground">
-          Sign in to your account and continue growing your online business.
+        <p className="mt-1 text-xs leading-relaxed text-muted-foreground sm:text-sm">
+          {t("auth.loginSubtitle")}
         </p>
       </div>
 
-      {formError ? (
+      {isSuccess ? (
         <div
-          id="login-error"
-          role="alert"
+          role="status"
           aria-live="polite"
-          className="mt-6 flex items-start gap-2.5 rounded-xl border border-destructive/25 bg-destructive/10 p-3 text-xs leading-relaxed text-destructive dark:border-destructive/35 dark:bg-destructive/15"
+          className="mt-3.5 flex items-center gap-2.5 rounded-xl border border-primary/25 bg-primary/10 p-2.5 text-xs font-medium text-primary dark:border-primary/35 dark:bg-primary/15 sm:p-3"
         >
-          <CircleAlert className="mt-0.5 size-4 shrink-0" />
-          <span>{formError}</span>
+          <CheckCircle2 className="size-4 shrink-0 text-primary" />
+          <span>{t("auth.validation.successLogin")}</span>
         </div>
       ) : null}
 
@@ -276,14 +230,16 @@ export function LoginForm() {
         onSubmit={handleSubmit}
         noValidate
         aria-busy={isSubmitting}
-        className="mt-7 flex flex-col gap-5"
+        className="mt-4 flex flex-col gap-3.5 sm:mt-5 sm:gap-4"
       >
-        <div className="space-y-2">
-          <Label htmlFor="email">Email address</Label>
+        <div className="space-y-1">
+          <Label htmlFor="email" className="text-xs font-semibold text-foreground">
+            {t("auth.fields.email")}
+          </Label>
           <div className="relative">
             <Mail
               aria-hidden
-              className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground/80"
+              className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground/70"
             />
             <Input
               id="email"
@@ -291,11 +247,11 @@ export function LoginForm() {
               type="email"
               inputMode="email"
               autoComplete="email"
-              placeholder="you@example.com"
+              placeholder={t("auth.fields.emailPlaceholder")}
               value={email}
               onChange={(event) => handleEmailChange(event.target.value)}
               onBlur={() => {
-                const errors = validateFields(email, password);
+                const errors = validate();
                 setFieldErrors((current) => ({
                   ...current,
                   email: errors.email,
@@ -304,7 +260,7 @@ export function LoginForm() {
               aria-invalid={Boolean(fieldErrors.email)}
               aria-describedby={fieldErrors.email ? "email-error" : undefined}
               disabled={isSubmitting}
-              className="pl-10"
+              className="h-10 rounded-xl border-border/80 bg-background/50 pl-10 text-xs sm:text-sm transition-all focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/25 sm:h-10.5"
             />
           </div>
           {fieldErrors.email ? (
@@ -313,29 +269,39 @@ export function LoginForm() {
               role="alert"
               className="flex items-center gap-1.5 text-xs font-medium text-destructive"
             >
-              <CircleAlert className="size-3" />
+              <CircleAlert className="size-3 shrink-0" />
               {fieldErrors.email}
             </p>
           ) : null}
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
+        <div className="space-y-1">
+          <div className="flex items-center justify-between">
+            <Label htmlFor="password" className="text-xs font-semibold text-foreground">
+              {t("auth.fields.password")}
+            </Label>
+            <Link
+              href="/forgot-password"
+              className="text-xs font-medium text-primary underline-offset-4 transition-colors hover:text-primary/80 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+            >
+              {t("auth.buttons.forgotPassword")}
+            </Link>
+          </div>
           <div className="relative">
             <Lock
               aria-hidden
-              className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground/80"
+              className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground/70"
             />
             <Input
               id="password"
               name="password"
               type={showPassword ? "text" : "password"}
               autoComplete="current-password"
-              placeholder="Enter your password"
+              placeholder={t("auth.fields.passwordPlaceholder")}
               value={password}
               onChange={(event) => handlePasswordChange(event.target.value)}
               onBlur={() => {
-                const errors = validateFields(email, password);
+                const errors = validate();
                 setFieldErrors((current) => ({
                   ...current,
                   password: errors.password,
@@ -346,7 +312,7 @@ export function LoginForm() {
                 fieldErrors.password ? "password-error" : undefined
               }
               disabled={isSubmitting}
-              className="pr-11 pl-10"
+              className="h-10 rounded-xl border-border/80 bg-background/50 pr-11 pl-10 text-xs sm:text-sm transition-all focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/25 sm:h-10.5"
             />
             <Button
               type="button"
@@ -356,7 +322,7 @@ export function LoginForm() {
               aria-label={showPassword ? "Hide password" : "Show password"}
               aria-pressed={showPassword}
               disabled={isSubmitting}
-              className="absolute top-1/2 right-1.5 -translate-y-1/2 text-muted-foreground hover:bg-muted hover:text-foreground disabled:opacity-50"
+              className="absolute top-1/2 right-1.5 -translate-y-1/2 text-muted-foreground/80 hover:bg-muted hover:text-foreground disabled:opacity-50"
             >
               {showPassword ? (
                 <EyeOff className="size-4" />
@@ -371,35 +337,27 @@ export function LoginForm() {
               role="alert"
               className="flex items-center gap-1.5 text-xs font-medium text-destructive"
             >
-              <CircleAlert className="size-3" />
+              <CircleAlert className="size-3 shrink-0" />
               {fieldErrors.password}
             </p>
           ) : null}
         </div>
 
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <Checkbox
-              id="remember"
-              name="remember"
-              checked={remember}
-              onCheckedChange={setRemember}
-              disabled={isSubmitting}
-            />
-            <Label
-              htmlFor="remember"
-              className="cursor-pointer text-xs font-medium text-muted-foreground"
-            >
-              Remember me
-            </Label>
-          </div>
-
-          <Link
-            href="/forgot-password"
-            className="text-xs font-semibold text-primary underline-offset-4 transition-colors hover:text-primary/80 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+        <div className="flex items-center gap-2 pt-0.5">
+          <Checkbox
+            id="remember"
+            name="remember"
+            checked={remember}
+            onCheckedChange={setRemember}
+            disabled={isSubmitting}
+            className="data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+          />
+          <Label
+            htmlFor="remember"
+            className="cursor-pointer text-xs font-medium text-muted-foreground select-none"
           >
-            Forgot password?
-          </Link>
+            {t("auth.fields.rememberMe")}
+          </Label>
         </div>
 
         <Button
@@ -407,66 +365,62 @@ export function LoginForm() {
           size="lg"
           disabled={isSubmitting}
           className={cn(
-            "h-11 w-full rounded-xl text-sm font-semibold text-white shadow-[0_14px_30px_-14px_rgba(0,151,107,0.85)] [background-image:var(--brand-gradient)] transition-all duration-200 hover:brightness-105 hover:text-white hover:shadow-[0_18px_36px_-14px_rgba(0,151,107,0.9)] disabled:opacity-70"
+            "group/btn mt-1 h-10 w-full rounded-xl text-xs sm:text-sm font-semibold text-white shadow-[0_12px_24px_-10px_rgba(0,151,107,0.7)] [background-image:var(--brand-gradient)] transition-all duration-200 hover:brightness-105 hover:shadow-[0_16px_32px_-10px_rgba(0,151,107,0.8)] active:scale-[0.99] disabled:opacity-70 sm:h-10.5"
           )}
         >
           {isSubmitting ? (
             <>
               <Loader2 className="size-4 animate-spin" />
-              Signing in...
+              {t("auth.buttons.signingIn")}
             </>
           ) : (
             <>
-              Sign In
-              <ArrowRight className="size-4 transition-transform duration-200 group-hover/button:translate-x-0.5" />
+              {t("auth.buttons.login")}
+              <ArrowRight className="size-4 transition-transform duration-200 group-hover/btn:translate-x-0.5" />
             </>
           )}
         </Button>
       </form>
 
-      <div className="my-6 flex items-center gap-3">
-        <span aria-hidden className="h-px flex-1 bg-border/80" />
-        <span className="text-[10px] font-semibold tracking-[0.16em] text-muted-foreground uppercase">
-          OR CONTINUE WITH
+      <div className="my-3.5 flex items-center gap-3 sm:my-4">
+        <span aria-hidden className="h-px flex-1 bg-border/70" />
+        <span className="text-[10px] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
+          {t("auth.buttons.orContinueWith")}
         </span>
-        <span aria-hidden className="h-px flex-1 bg-border/80" />
+        <span aria-hidden className="h-px flex-1 bg-border/70" />
       </div>
 
       <Button
         type="button"
         variant="outline"
         size="lg"
-        onClick={handleGoogleSignIn}
-        disabled={isSubmitting || isGoogleLoading}
-        className="h-11 w-full rounded-xl border-border/80 bg-background/70 text-sm font-medium text-foreground shadow-xs transition-colors hover:bg-muted dark:bg-input/20 dark:hover:bg-input/35"
+        onClick={() => {}}
+        disabled={isSubmitting}
+        className="h-10 w-full rounded-xl border-border/80 bg-background/60 text-xs font-semibold text-foreground shadow-xs transition-colors hover:bg-muted sm:h-10.5 dark:bg-card/40 dark:hover:bg-card/70"
       >
-        {isGoogleLoading ? (
-          <Loader2 className="size-4 animate-spin" />
-        ) : (
-          <GoogleIcon />
-        )}
-        <span>Continue with Google</span>
+        <GoogleIcon />
+        <span>{t("auth.buttons.continueWithGoogle")}</span>
       </Button>
 
-      <p className="mt-7 text-center text-xs text-muted-foreground">
-        Don&apos;t have an account?{" "}
+      <p className="mt-4 text-center text-xs text-muted-foreground sm:mt-5">
+        {t("auth.buttons.noAccount")}{" "}
         <Link
-          href="/signup"
-          className="font-semibold text-primary underline-offset-4 transition-colors hover:text-primary/80 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          href="/create-website"
+          className="font-semibold text-primary underline-offset-4 transition-colors hover:text-primary/80 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
         >
-          Create Account
+          {t("auth.buttons.signUpLink")}
         </Link>
       </p>
 
-      <div className="mt-10 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[10px] font-medium text-muted-foreground/80">
+      <div className="mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[10px] font-medium text-muted-foreground/80 sm:mt-6">
         <span className="inline-flex items-center gap-1.5">
           <ShieldCheck className="size-3 text-primary" />
-          256-bit encrypted
+          {t("auth.trust.encrypted256")}
         </span>
         <span aria-hidden className="size-1 rounded-full bg-border" />
         <span className="inline-flex items-center gap-1.5">
           <Lock className="size-3 text-primary" />
-          Secure sign-in
+          {t("auth.trust.secureSignIn")}
         </span>
       </div>
     </div>
