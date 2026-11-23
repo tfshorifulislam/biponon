@@ -46,7 +46,7 @@ export function LoginView() {
               </div>
             </div>
 
-            <div className="order-2 hidden min-w-0 lg:flex">
+            <div className="order-2 hidden min-w-0 w-full h-full bg-[#04281e] lg:flex lg:flex-col">
               <AuthShowcase />
             </div>
           </div>

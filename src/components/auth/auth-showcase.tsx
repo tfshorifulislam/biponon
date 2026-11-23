@@ -117,7 +117,7 @@ export function AuthShowcase() {
   return (
     <section
       aria-label="Biponon platform preview"
-      className="relative isolate flex min-h-full flex-col justify-between gap-4 sm:gap-5 overflow-hidden bg-[#04281e] px-5 py-6 text-white sm:px-7 sm:py-7 lg:px-8 lg:py-8"
+      className="relative isolate flex h-full min-h-full w-full flex-1 min-w-0 flex-col justify-between gap-4 sm:gap-5 overflow-hidden bg-[#04281e] px-5 py-6 text-white sm:px-7 sm:py-7 lg:px-8 lg:py-8"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
@@ -149,7 +149,7 @@ export function AuthShowcase() {
         className="pointer-events-none absolute -top-24 -right-16 -z-10 size-72 rounded-full bg-[#00bb7d]/20 blur-3xl"
       />
 
-      <div className="relative z-10">
+      <div className="relative z-10 w-full">
         <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[10px] font-semibold tracking-[0.14em] text-white/80 uppercase backdrop-blur-sm">
           <span className="size-1.5 rounded-full bg-[#7bf7c8] shadow-[0_0_10px_rgba(123,247,200,0.9)] animate-auth-pulse-soft" />
           Live platform preview
@@ -166,8 +166,8 @@ export function AuthShowcase() {
         </p>
       </div>
 
-      <div className="relative z-10">
-        <div className="overflow-hidden rounded-[1.35rem] border border-white/15 bg-white/5 shadow-[0_35px_80px_-35px_rgba(0,0,0,0.85)] backdrop-blur-sm">
+      <div className="relative z-10 w-full">
+        <div className="w-full overflow-hidden rounded-[1.35rem] border border-white/15 bg-white/5 shadow-[0_35px_80px_-35px_rgba(0,0,0,0.85)] backdrop-blur-sm">
           <div className="flex items-center gap-2 border-b border-white/10 bg-white/5 px-3 py-2">
             <div className="flex items-center gap-1.5" aria-hidden>
               <span className="size-2 rounded-full bg-rose-400/80" />
@@ -215,7 +215,7 @@ export function AuthShowcase() {
           </div>
         </div>
 
-        <div className="mt-3 grid grid-cols-4 gap-1.5">
+        <div className="mt-3 grid w-full grid-cols-4 gap-1.5 shrink-0">
           {scenes.map((scene, index) => {
             const isActive = index === activeIndex;
 
@@ -267,7 +267,7 @@ export function AuthShowcase() {
         </div>
       </div>
 
-      <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-4 text-[10px] text-white/50">
+      <div className="relative z-10 flex w-full shrink-0 flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-4 text-[10px] text-white/50">
         <span className="inline-flex items-center gap-1.5">
           <BadgeCheck className="size-3.5 text-[#7bf7c8]" />
           Secure, encrypted access
